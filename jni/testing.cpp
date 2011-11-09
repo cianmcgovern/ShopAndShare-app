@@ -1,16 +1,18 @@
 #include <iostream>
-#include "preprocessimage.h"
 #include <opencv2/highgui/highgui.hpp>
+#include "image.h"
 
-int main()
+int main(int argc, char *argv[])
 {
-    double orig = 3.8;
-    double neww = -0.4;
-    cv::Mat image;
-    image=cv::imread("test.jpg");
+	if (argc <= 1) {
+                std::cout << "Usage: ShopAndStore <PATH_TO_IMAGE>" << std::endl;
+		exit(1);
+	}
 
-    PreprocessImage ppimage(&image);
-    //ppimage.setSharpWeights(&orig,&neww);
-    ppimage.process();
-    cv::imwrite("newtest.jpg",ppimage.getImage());
+	std::cout << argv[1] << std::endl;
+	Image *image = new Image(argv[1]);
+	cv::namedWindow("win");
+	cv::imshow("win", image->getImage());
+	cv::waitKey(0);
+	delete image;
 }
