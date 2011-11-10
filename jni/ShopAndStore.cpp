@@ -11,7 +11,7 @@ const char *dir;
 
 int main()
 {
-    Image *im = new Image(dir);
+	Image *im = new Image(dir);
 }
 
 JNIEXPORT void JNICALL Java_com_cianmcgovern_android_ShopAndStore_ShopAndStore_callnativecode(JNIEnv *env, jobject jobj, jstring path)

@@ -9,20 +9,6 @@ PreprocessImage::PreprocessImage()
 PreprocessImage::PreprocessImage(cv::Mat input)
 {
 	if (input.data) {
-		sharp_orig_weight = 1.6;
-		sharp_new_weight = -0.6;
-		image = input;
-		process();
-	} else {
-		std::cout << "No image specified" << std::endl;
-	}
-}
-
-PreprocessImage::PreprocessImage(cv::Mat input, double orig, double neww)
-{
-	if (input.data && orig != 0 && neww != 0) {
-		sharp_orig_weight = orig;
-		sharp_new_weight = neww;
 		image = input;
 		process();
 	} else {
@@ -32,10 +18,10 @@ PreprocessImage::PreprocessImage(cv::Mat input, double orig, double neww)
 
 int PreprocessImage::process()
 {
-	cv::Mat tmp;
+	cv::Mat *tmp;
 
-	tmp = grayConvert();
-	newImage = sharpenImage(&tmp);
+	*tmp = image;
+	newImage = sharpenImage(tmp);
 	if (!newImage.data)
 		return 1;
 	else
@@ -56,22 +42,29 @@ cv::Mat PreprocessImage::getImage()
 	return newImage;
 }
 
+// Sharpens the image using: sharpened_pixel = 5*current-left-right-up-down
 cv::Mat PreprocessImage::sharpenImage(cv::Mat *input)
 {
 	cv::Mat tmp;
 
-	cv::GaussianBlur(*input, tmp, cv::Size(0, 0), 3);
-	cv::addWeighted(*input, sharp_orig_weight, tmp, sharp_new_weight, 0, tmp);
+	tmp.create(input->size(), input->type());
+
+	for (int j = 1; j < input->rows - 1; j++) {
+		const uchar *previous = input->ptr<const uchar>(j - 1); //previous row
+		const uchar *current = input->ptr<const uchar>(j);      //current
+		const uchar *next = input->ptr<const uchar>(j + 1);     //next row
+
+		uchar *output = tmp.ptr<uchar>(j);                      //output row
+
+		for (int i = 1; i < input->rows - 1; i++)
+			// Saturate cast brings pixel values back into 0-255 8 bit range
+			*output++ = cv::saturate_cast<uchar>(5 * current[i] - current[i - 1] - current[i + 1] - previous[i] - next[i]);
+	}
+
+	tmp.row(0).setTo(cv::Scalar(0));
+	tmp.row(tmp.rows - 1).setTo(cv::Scalar(0));
+	tmp.col(0).setTo(cv::Scalar(0));
+	tmp.col(tmp.cols - 1).setTo(cv::Scalar(0));
+
 	return tmp;
-}
-
-int PreprocessImage::setSharpWeights(double *orig, double *neww)
-{
-	if (orig == 0 || neww == 0)
-		return 1;
-
-	sharp_orig_weight = *orig;
-	sharp_new_weight = *neww;
-
-	return 0;
 }

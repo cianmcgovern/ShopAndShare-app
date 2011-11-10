@@ -1,11 +1,13 @@
 #include "image.h"
 #include "filetomat.h"
 #include "preprocessimage.h"
+#include "bgelim.h"
 
 Image::Image(const char *dir)
 {
 	image = this->toMat(dir);
-	this->preProcess();
+	//this->preProcess();
+	this->mbgElim();
 }
 
 bool Image::preProcess()
@@ -14,6 +16,14 @@ bool Image::preProcess()
 
 	image = pm->getImage();
 	delete pm;
+}
+
+bool Image::mbgElim()
+{
+	bgElim *bge = new bgElim(&image);
+
+	image = bge->getbgElimImage();
+	delete bge;
 }
 
 cv::Mat Image::toMat(const char *dir)

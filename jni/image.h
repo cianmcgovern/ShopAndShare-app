@@ -9,6 +9,7 @@ public:
 Image(const char *);
 cv::Mat getImage();
 private:
+bool mbgElim();
 bool preProcess();
 cv::Mat image;
 cv::Mat toMat(const char *);

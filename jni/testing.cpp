@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
 	if (argc <= 1) {
-                std::cout << "Usage: ShopAndStore <PATH_TO_IMAGE>" << std::endl;
+		std::cout << "Usage: ShopAndStore <PATH_TO_IMAGE>" << std::endl;
 		exit(1);
 	}
 
