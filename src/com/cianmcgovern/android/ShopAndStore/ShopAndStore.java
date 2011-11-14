@@ -11,10 +11,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class ShopAndStore extends Activity
 {
+	private Button callPhoto;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -28,7 +31,7 @@ public class ShopAndStore extends Activity
 			e.printStackTrace();
 		}
         Intent mIntent = new Intent(this,TakePhoto.class);
-        //startActivity(mIntent);
+        startActivity(mIntent);
         callnativecode(getFilesDir().toString()+"/image.jpg");
 
     }

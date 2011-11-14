@@ -1,3 +1,4 @@
+#ifdef ANDROID
 /*
  * Interface to JNI
  */
@@ -19,3 +20,4 @@ JNIEXPORT void JNICALL Java_com_cianmcgovern_android_ShopAndStore_ShopAndStore_c
 	dir = env->GetStringUTFChars(path, 0);
 	main();
 }
+#endif

@@ -2,6 +2,7 @@
 #include "filetomat.h"
 #include "preprocessimage.h"
 #include "bgelim.h"
+#include <tesseract/baseapi.h>
 
 Image::Image(const char *dir)
 {
