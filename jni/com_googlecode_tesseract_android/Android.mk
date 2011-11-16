@@ -379,9 +379,10 @@ LOCAL_C_INCLUDES += \
 LOCAL_LDLIBS += \
   -ljnigraphics \
   -llog \
-
+  
+LOCAL_LDLIBS += -L$(LOCAL_PATH)/obj/local/armeabi/liblept.so
 # common
 
 LOCAL_PRELINK_MODULE := false
-LOCAL_SHARED_LIBRARIES := liblept
-include $(BUILD_SHARED_LIBRARY)
+LOCAL_STATIC_LIBRARIES := liblept
+include $(BUILD_STATIC_LIBRARY)

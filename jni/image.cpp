@@ -2,6 +2,7 @@
 #include "filetomat.h"
 #include "preprocessimage.h"
 #include "bgelim.h"
+#include "logger.h"
 #include <tesseract/baseapi.h>
 
 Image::Image(const char *dir)
@@ -9,6 +10,9 @@ Image::Image(const char *dir)
 	image = this->toMat(dir);
 	//this->preProcess();
 	this->mbgElim();
+	tesseract::TessBaseAPI *tmp = new tesseract::TessBaseAPI();
+        Logger::getLogger()->write(3,"Inside image constructor");
+	tmp->Init(dir,"NULL");
 }
 
 bool Image::preProcess()

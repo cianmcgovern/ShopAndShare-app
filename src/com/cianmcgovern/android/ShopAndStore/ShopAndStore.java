@@ -39,6 +39,8 @@ public class ShopAndStore extends Activity
     private native void callnativecode(String dir);
     
     static{
+	System.loadLibrary("lept");
+	System.loadLibrary("tess");
     	System.loadLibrary("ShopAndStore");
     }
     
