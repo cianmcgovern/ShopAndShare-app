@@ -1,29 +1,20 @@
 #include "image.h"
 #include "filetomat.h"
-#include "preprocessimage.h"
 #include "bgelim.h"
-#include "logger.h"
-#include <tesseract/baseapi.h>
+#include "analyse.h"
+#include "mattofile.h"
+#include "constants.h"
 
-Image::Image(const char *dir)
+Image::Image()
 {
-	image = this->toMat(dir);
+	image = this->toMat();
 	//this->preProcess();
 	this->mbgElim();
-	tesseract::TessBaseAPI *tmp = new tesseract::TessBaseAPI();
-        Logger::getLogger()->write(3,"Inside image constructor");
-	tmp->Init(dir,"NULL");
+	this->toFile(&image);
+	this->callAnalyse();
 }
 
-bool Image::preProcess()
-{
-	PreprocessImage *pm = new PreprocessImage(image);
-
-	image = pm->getImage();
-	delete pm;
-}
-
-bool Image::mbgElim()
+void Image::mbgElim()
 {
 	bgElim *bge = new bgElim(&image);
 
@@ -31,9 +22,9 @@ bool Image::mbgElim()
 	delete bge;
 }
 
-cv::Mat Image::toMat(const char *dir)
+cv::Mat Image::toMat()
 {
-	fileToMat *fm = new fileToMat(dir);
+	fileToMat *fm = new fileToMat();
 
 	return fm->getImage();
 	delete fm;
@@ -42,4 +33,16 @@ cv::Mat Image::toMat(const char *dir)
 cv::Mat Image::getImage()
 {
 	return image;
+}
+
+void Image::callAnalyse()
+{
+	analyse *tess = new analyse(constants::bgElimImage);
+
+	delete tess;
+}
+
+void Image::toFile(cv::Mat *input)
+{
+	new matToFile(input);
 }

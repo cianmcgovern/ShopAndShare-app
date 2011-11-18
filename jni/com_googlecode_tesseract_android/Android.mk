@@ -1,4 +1,4 @@
-REAL_LOCAL_PATH := home/cian/Development/ShopAndStore/jni/com_googlecode_tesseract_android
+REAL_LOCAL_PATH := /home/cian/Development/ShopAndStore/jni/com_googlecode_tesseract_android
 LOCAL_PATH :=
 
 include $(CLEAR_VARS)
@@ -17,7 +17,7 @@ LOCAL_C_INCLUDES := \
   $(LEPTONICA_PATH)/src
 
 LOCAL_CFLAGS := \
-  -DHAVE_LIBLEPT
+  -DHAVE_LIBLEPT -UTESSDATA_PREFIX
 
 # tesseract_ccutil
 
@@ -380,9 +380,9 @@ LOCAL_LDLIBS += \
   -ljnigraphics \
   -llog \
   
-LOCAL_LDLIBS += -L$(LOCAL_PATH)/obj/local/armeabi/liblept.so
 # common
 
 LOCAL_PRELINK_MODULE := false
-LOCAL_STATIC_LIBRARIES := liblept
+LOCAL_STATIC_LIBRARIES += liblept
+LOCAL_STATIC_LIBRARIES += tiff
 include $(BUILD_STATIC_LIBRARY)

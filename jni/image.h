@@ -6,13 +6,14 @@
 class Image
 {
 public:
-Image(const char *);
+Image();
 cv::Mat getImage();
 private:
-bool mbgElim();
-bool preProcess();
+void mbgElim();
 cv::Mat image;
-cv::Mat toMat(const char *);
+cv::Mat toMat();
+void callAnalyse();
+void toFile(cv::Mat *);
 };
 
 #endif // IMAGE_H

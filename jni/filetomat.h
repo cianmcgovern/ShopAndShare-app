@@ -7,13 +7,13 @@
 class fileToMat
 {
 public:
-fileToMat(const char *);
+fileToMat();
 cv::Mat getImage();
 
 private:
 const char *path;
 cv::Mat image;
-void checkFileExists(const char *);
+void checkFileExists();
 void toMat();
 };
 

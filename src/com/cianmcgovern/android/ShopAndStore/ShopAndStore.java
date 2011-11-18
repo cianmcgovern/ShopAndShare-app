@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class ShopAndStore extends Activity
@@ -24,23 +23,24 @@ public class ShopAndStore extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        Intent mIntent = new Intent(this,TakePhoto.class);
+        //startActivity(mIntent);
         try {
 			testingLoad();
+			loadTrainingData();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        Intent mIntent = new Intent(this,TakePhoto.class);
-        startActivity(mIntent);
-        callnativecode(getFilesDir().toString()+"/image.jpg");
+        callnativecode(getFilesDir().toString());
 
     }
     
     private native void callnativecode(String dir);
     
     static{
-	System.loadLibrary("lept");
-	System.loadLibrary("tess");
+    	System.loadLibrary("lept");
+    	System.loadLibrary("tess");
     	System.loadLibrary("ShopAndStore");
     }
     
@@ -53,8 +53,8 @@ public class ShopAndStore extends Activity
     private void testingLoad() throws IOException{
     	
     	InputStream is = getResources().openRawResource(R.raw.test);
-    	OutputStream os = new FileOutputStream(new File(getFilesDir().toString()+"/image.jpg"));
-    	Log.v("ShopAndStore",getFilesDir().toString()+"/image.jpg");
+    	OutputStream os = new FileOutputStream(new File(getFilesDir().toString()+"/image.tiff"));
+    	Log.v("ShopAndStore",getFilesDir().toString()+"/image.tiff");
     	BufferedInputStream bis = new BufferedInputStream(is);
     	BufferedOutputStream bos = new BufferedOutputStream(os);
     	byte[] buf = new byte[1024];
@@ -65,6 +65,23 @@ public class ShopAndStore extends Activity
     		bos.write(buf, 0, n);
     	}
 
+    	bis.close();
+    	bos.close();
+    }
+    
+    private void loadTrainingData() throws IOException{
+    	InputStream is = getResources().openRawResource(R.raw.eng);
+    	new File(getFilesDir().toString()+"/tessdata").mkdirs();
+    	OutputStream os = new FileOutputStream(new File(getFilesDir().toString()+"/tessdata/eng.traineddata"));
+    	BufferedInputStream bis = new BufferedInputStream(is);
+    	BufferedOutputStream bos = new BufferedOutputStream(os);
+    	byte[] buf = new byte[1024];
+    	
+    	int n =0;
+    	int o =0;
+    	while((n=bis.read(buf,o,buf.length))>0){
+    		bos.write(buf,0,n);
+    	}
     	bis.close();
     	bos.close();
     }

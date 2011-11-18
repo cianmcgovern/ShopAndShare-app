@@ -6,3 +6,7 @@ Now call make in the gccbuild directory, an executable called "ShopAndStore" sho
 Build Instrunctions for Android:
 cd into the "jni" directory and run "ndk-build"
 Now go back up into the projects root directory and run "ant debug", this creates an apk file called "ShopAndStore-debug.apk" in the "bin" directory.
+
+res/raw directory contents:
+eng.jpg -> files/tessdata/eng.traineddata
+test.jpg -> files/image.tiff

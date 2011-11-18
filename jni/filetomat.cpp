@@ -2,22 +2,23 @@
 #include <iostream>
 #include <opencv2/highgui/highgui.hpp>
 #include <string>
+#include "constants.h"
 
-fileToMat::fileToMat(const char *input)
+fileToMat::fileToMat()
 {
 	Logger::getLogger()->write(3, "Inside fileToMat constructor");
-	checkFileExists(input);
+	checkFileExists();
 	toMat();
 }
 
 
-void fileToMat::checkFileExists(const char *input)
+void fileToMat::checkFileExists()
 {
-	std::ifstream ifile(input);
+	std::ifstream ifile(constants::originalImage);
 
 	if (ifile) {
 		Logger::getLogger()->write(3, "File exists");
-		path = input;
+		path = constants::originalImage;
 	} else {
 		Logger::getLogger()->write(6, "File doesn't exist EXITING");
 		exit(1);
