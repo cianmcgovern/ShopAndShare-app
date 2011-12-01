@@ -1,5 +1,7 @@
 #include "logger.h"
 #include <iostream>
+#include <stdio.h>
+
 #ifdef ANDROID
 #include <android/log.h>
 #endif
@@ -25,7 +27,7 @@ Logger *Logger::getLogger()
 	}
 }
 // Log level 3 is debug, 6 is fatal
-int Logger::write(int logLevel, std::string input)
+void Logger::write(int logLevel, std::string input)
 {
 #ifdef ANDROID
 	const char *x = input.c_str();
@@ -41,5 +43,24 @@ int Logger::write(int logLevel, std::string input)
 	output.close();
 	std::cout << input << std::endl;
 #endif
-	return 0;
+}
+
+void Logger::write(int logLevel, double input)
+{
+#ifdef ANDROID
+    char buf[10];
+    sprintf(buf,"%d",input);
+    std::string strtag = "ShopAndStore";
+    const char *tag = strtag.c_str();
+    __android_log_write(logLevel, tag, buf);
+
+#elif __linux
+    output.open("log.txt",std::ios::out | std::ios::app);
+    if (logLevel == 3)
+            output << "[DEBUG] " << input << '\n';
+    else if (logLevel == 6)
+            output << "[ERROR] " << input << '\n';
+    output.close();
+    std::cout << input << std::endl;
+#endif
 }

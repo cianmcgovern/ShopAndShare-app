@@ -1,13 +1,24 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="fill_parent" android:layout_height="fill_parent"
 android:orientation="vertical">
 	<SurfaceView android:id="@+id/surface_camera"
-		android:layout_width="fill_parent" android:layout_height="10dip"
-		android:layout_weight="1">
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent">
 	</SurfaceView>
-	<Button android:id="@+id/photoButton"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:layout_alignParentBottom="true"
-    	android:text="@string/photoButton" />
-</LinearLayout>
+	<LinearLayout 	android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:layout_alignParentBottom="true">
+			<Button android:id="@+id/photoButton"
+		    		android:layout_width="wrap_content"
+		    		android:layout_height="wrap_content"
+					android:layout_alignParentBottom="true"
+					android:text="@string/photoButton"/>
+			<Button android:id="@+id/cancelPhotoButton"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentBottom="true"
+					android:layout_toRightOf="@id/photoButton"
+					android:text="@string/cancelPhotoButton" />
+			</LinearLayout>
+</RelativeLayout>

@@ -8,8 +8,7 @@
 Image::Image()
 {
 	image = this->toMat();
-	//this->preProcess();
-	this->mbgElim();
+        //this->mbgElim();
 	this->toFile(&image);
 	this->callAnalyse();
 }

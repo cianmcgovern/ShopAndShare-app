@@ -3,8 +3,8 @@ package com.cianmcgovern.android.ShopAndStore;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -23,9 +23,15 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 	private Camera mCamera;
 	private boolean mPreviewRunning;
 	private Button takePhotoButton;
+	private int counter=0;
+	Camera.Parameters p;
+	private Context con;
 	
 	public void onCreate(Bundle savedInstance){
 		super.onCreate(savedInstance);
+		// Save context for passing to LoadingPage
+		con=this;
+		// Setup window
 		getWindow().setFormat(PixelFormat.TRANSLUCENT);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -39,14 +45,17 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 		mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		this.takePhotoButton = (Button)this.findViewById(R.id.photoButton);
 		this.takePhotoButton.setOnClickListener(this);
+		Button cancel = (Button)findViewById(R.id.cancelPhotoButton);
+		cancel.setOnClickListener(new CancelButtonListener(this));
 	}
 	
 	public void onClick(View v){
-		mCamera.takePicture(null, mPictureCallback, mPictureCallback);
+		mCamera.autoFocus(cb);
 	}
 
 	public void surfaceCreated(SurfaceHolder holder){
 		mCamera = Camera.open();
+		mCamera.setDisplayOrientation(90);
 	}
 
 	public void surfaceChanged(SurfaceHolder holder,int format, int w, int h){
@@ -54,10 +63,13 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 		if(mPreviewRunning){
 			mCamera.stopPreview();
 		}
-
-		Camera.Parameters p = mCamera.getParameters();
+		
+		p = mCamera.getParameters();
 		p.setPreviewSize(w, h);
-		p.setRotation(90);
+		p.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
+		p.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
+		p.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
+		p.setJpegQuality(100);
 		mCamera.setParameters(p);
 
 		try {
@@ -70,21 +82,22 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 		mPreviewRunning = true;
 	}
 
+	@Override
 	public void surfaceDestroyed(SurfaceHolder holder){
 		mCamera.stopPreview();
-
 		mPreviewRunning=false;
-
 		mCamera.release();
 	}
 
 	Camera.PictureCallback mPictureCallback = new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] imageData, Camera c) {
+			
+			// If the data is received from the camera, call the subsequent activity LoadingPage
 			if (imageData!=null){
 				Log.d("ShopAndStore","Data received from camera");
-				Bitmap bmp = BitmapFactory.decodeByteArray(imageData,0,imageData.length);
-				new SaveBitmap(bmp,getFilesDir().toString());
-				finish();
+				Constants.ImageData=imageData;
+				Intent displayResults = new Intent(con,LoadingPage.class);
+				startActivity(displayResults);
 			}
 			else{
 				Log.e("ShopAndStore","Data not received from camera");
@@ -92,4 +105,24 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 		}
 
 	};
+	
+	Camera.AutoFocusCallback cb = new Camera.AutoFocusCallback() {
+		
+		@Override
+		public void onAutoFocus(boolean success, Camera camera) {
+			// TODO Auto-generated method stub
+			if(success || counter > 2)
+				mCamera.takePicture(null, mPictureCallback, mPictureCallback);
+			else{
+				Log.e("ShopAndStore","autoFocus did not complete successfully");
+				counter++;
+			}
+		}
+	};
+	
+	@Override
+	public void onBackPressed(){
+		Intent home = new Intent(this,ShopAndStore.class);
+		startActivity(home);
+	}
 }

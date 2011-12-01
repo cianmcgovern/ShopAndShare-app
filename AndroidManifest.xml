@@ -9,16 +9,27 @@
     <uses-feature android:name="android.hardware.camera.autofocus"/>
     <application android:label="@string/app_name" android:icon="@drawable/icon">
         <activity android:name="ShopAndStore"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name"
+                  android:configChanges="orientation"
+    android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="TakePhoto" android:label="TakePhoto">
+        <activity android:name="TakePhoto" android:label="TakePhoto" android:configChanges="orientation"
+    android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="DisplayResults" android:label="DisplayResults" android:configChanges="orientation"
+    android:screenOrientation="portrait">
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        <activity android:name="LoadingPage" android:label="LoadingPage" android:configChanges="orientation"
+    android:screenOrientation="portrait">
+            <intent-filter>
             </intent-filter>
         </activity>
     </application>

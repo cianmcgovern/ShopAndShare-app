@@ -20,12 +20,14 @@ int PreprocessImage::process()
 {
 	cv::Mat *tmp;
 
-	*tmp = image;
-	newImage = sharpenImage(tmp);
-	if (!newImage.data)
-		return 1;
-	else
-		return 0;
+        *tmp = image;
+//	newImage = sharpenImage(tmp);
+//	if (!newImage.data)
+//		return 1;
+//	else
+//		return 0;
+        *tmp=this->grayConvert();
+        image=*tmp;
 }
 
 cv::Mat PreprocessImage::grayConvert()

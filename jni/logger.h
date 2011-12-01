@@ -6,7 +6,8 @@ class Logger
 {
 public:
 static Logger *getLogger();
-int write(int, std::string);
+void write(int, std::string);
+void write(int, double);
 ~Logger();
 
 private:

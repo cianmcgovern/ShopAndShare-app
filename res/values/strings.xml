@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">ShopAndStore</string>
     <string name="photoButton">Take Photo</string>
+    <string name="cancelPhotoButton">Cancel</string>
+    <string name="callPhotoButton">Analyse Receipt</string>
 </resources>

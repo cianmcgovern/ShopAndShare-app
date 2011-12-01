@@ -11,7 +11,7 @@ bgElim::bgElim(cv::Mat *input)
 		target[0] = 0;
 		target[1] = 0;
 		target[2] = 0;
-		minDist = 300;
+                minDist = 300;
 		process();
 	}
 }
@@ -60,9 +60,9 @@ void bgElim::iteratePixels()
 {
 	for (; it != itend; ++it, ++itout) {
 		if (getDistance(*it) <= minDist)
-			*itout = 0;
+                        *itout = 255;
 		else
-			*itout = 255;
+                        *itout = 0;
 	}
 }
 
@@ -77,7 +77,7 @@ int bgElim::getDistance(const cv::Vec3b& color) const
 
 void bgElim::process()
 {
-	newImage.create(image.rows, image.cols, CV_8U);
+        newImage.create(image.rows, image.cols, CV_8U);
 	createIterators();
 	iteratePixels();
 }

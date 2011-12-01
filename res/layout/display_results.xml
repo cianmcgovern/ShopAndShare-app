@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/results"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:label="Analysis Results">
+	
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:orientation="vertical"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_weight="1">
+    	<ListView
+    		android:id="@+id/ListViewProducts"
+      		android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:orientation="vertical"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_weight="2">
+        <ListView
+    		android:id="@+id/ListViewPrices"
+      		android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    
+  	<RelativeLayout android:id="@+id/buttons"
+  	    			android:layout_alignParentBottom="true"
+  	    			android:layout_width="wrap_content"
+  	    			android:layout_height="wrap_content"
+  	    			android:layout_centerHorizontal="true"
+  	    			android:layout_below="@id/results">
+        <Button android:id="@+id/cancelResultsButton"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentBottom="true"
+					android:text="@string/cancelPhotoButton" />
+  	</RelativeLayout>
+        
+</RelativeLayout>

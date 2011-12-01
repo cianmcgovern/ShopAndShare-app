@@ -20,16 +20,16 @@ void fileToMat::checkFileExists()
 		Logger::getLogger()->write(3, "File exists");
 		path = constants::originalImage;
 	} else {
-		Logger::getLogger()->write(6, "File doesn't exist EXITING");
+                Logger::getLogger()->write(6, "Image file doesn't exist EXITING");
 		exit(1);
 	}
 }
 
 void fileToMat::toMat()
 {
-	if (cv::imread(path).data) {
+    if (cv::imread(path).data) {
 		Logger::getLogger()->write(3, "Image converted to Mat successfully");
-		image = cv::imread(path);
+                image = cv::imread(path);
 	} else {
 		Logger::getLogger()->write(6, "Image not converted to Mat EXITING!!!");
 		exit(1);
