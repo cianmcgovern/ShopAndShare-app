@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ShopAndStore</string>
+    <string name="app_name">Shop And Share</string>
     <string name="photoButton">Take Photo</string>
     <string name="cancelPhotoButton">Cancel</string>
     <string name="callPhotoButton">Analyse Receipt</string>
