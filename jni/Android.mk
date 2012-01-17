@@ -20,10 +20,10 @@ include /home/cian/Development/OpenCV-2.3.1/share/OpenCV/OpenCV.mk
 LOCAL_PATH := $(MYPATH)
 LOCAL_C_INCLUDES += headers/
 LOCAL_LDLIBS := -llog -ldl
-LOCAL_MODULE := ShopAndStore
+LOCAL_MODULE := ShopAndShare
 LOCAL_STATIC_LIBRARIES += lept
 LOCAL_STATIC_LIBRARIES += tess
 LOCAL_STATIC_LIBRARIES += libtiff
-LOCAL_SRC_FILES := ShopAndStore.cpp logger.cpp filetomat.cpp image.cpp bgelim.cpp analyse.cpp mattofile.cpp constants.cpp result.cpp
+LOCAL_SRC_FILES := ShopAndShare.cpp logger.cpp filetomat.cpp image.cpp bgelim.cpp analyse.cpp mattofile.cpp constants.cpp result.cpp
 LOCAL_CPPFLAGS := -g #debug
 include $(BUILD_SHARED_LIBRARY)

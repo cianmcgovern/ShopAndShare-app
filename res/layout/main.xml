@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:label="Shop And Store">
+    android:label="Shop And Share">
     <TextView
         android:id="@+id/label"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Hello :)"/>
+        android:text="Click button at bottom to analyse receipt"/>
     <Button android:id="@+id/callPhotoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
