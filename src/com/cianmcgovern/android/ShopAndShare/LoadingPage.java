@@ -36,7 +36,6 @@ public class LoadingPage extends Activity{
 	}
 
 	private native void callnativecode(String dir);
-	private native String[] getPrices();
 	private native String[] getProducts();
 
 	static{
@@ -53,8 +52,8 @@ public class LoadingPage extends Activity{
 	private void AnalyseImage(String imageLocation){
 		Log.d("ShopAndStore","Calling native code");
 		callnativecode(imageLocation);
+		Results.getInstance().deleteProducts();
 		Results.getInstance().setProducts(getProducts());
-		//Results.getInstance().setPrices(getPrices());
 	}
 
 	// Method to create a spinner dialog
@@ -110,7 +109,8 @@ public class LoadingPage extends Activity{
 			mState = RUNNING;   
 			total = 1;
 			while (mState == RUNNING) {
-				new SaveBitmap(Constants.ImageData,Constants.filesDir);
+				//new SaveBitmap(Constants.ImageData,Constants.filesDir);
+				// Calls native code and passes path to image excluding the file name which is expected to be image.jpg
 				AnalyseImage(Constants.filesDir);
 				Message msg = mHandler.obtainMessage();
 				Bundle b = new Bundle();

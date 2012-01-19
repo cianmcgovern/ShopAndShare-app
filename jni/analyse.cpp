@@ -67,6 +67,17 @@ void analyse::splitTessResult(std::string result)
     std::vector< std::string > a;
     std::vector< std::string >::iterator x;
 
+    // Make sure vector a is empty
+    int counter=0;
+    x=a.begin();
+    while(x!=a.end()){
+        a.erase(x);
+        x++;
+    }
+
+
+    Logger::getLogger()->write(3, "Putting tesseract results into iterator");
+
     // Add each line to a
     while(true){
         newLine = result.find("\n");
@@ -77,13 +88,15 @@ void analyse::splitTessResult(std::string result)
         result=result.substr(newLine+1,result.length());
     }
 
-    int counter=0;
+    counter=0;
     x=a.begin();
     while(x!=a.end()){
         Logger::getLogger()->write(3,*x);
         counter++;
         x++;
     }
+
+    Logger::getLogger()->write(3,"Placing results into arrays");
     int ctr = 0;
     std::string lines[counter];
     x=a.begin();
@@ -93,52 +106,8 @@ void analyse::splitTessResult(std::string result)
         x++;
     }
 
-    // 2 arrays of equal length to store product name and price
-    std::string productArr[counter];
-    std::string priceArr[counter];
-
-    // Loop through all strings in a
-    counter=0;
-    x=a.begin();
-    while(x!=a.end()){
-        std::string iter = *x;
-        std::ostringstream price;
-        price.clear();
-        int decPloc=iter.find_last_of(".");
-        int lastDigit;
-
-        // Check characters 2 places before last decimal point
-        for(int j=2;j>=1;j--){
-            int loc = decPloc-j;
-            if(loc >= 0 && isdigit(iter.at(loc))){
-                lastDigit=loc;
-                price << iter.at(loc);
-            }
-        }
-
-        // Check characters two places after last decimal point
-        for(int j=1; j<=2; j++){
-            int loc = decPloc+j;
-            if(loc < iter.length() && isdigit(iter.at(loc))){
-                price << iter.at(loc);
-            }
-        }
-
-        std::string product = iter.substr(0,lastDigit-1);
-
-        if(price.str().compare("")){
-            productArr[counter]= product;
-            priceArr[counter]=price.str();
-            Logger::getLogger()->write(3,productArr[counter]);
-            Logger::getLogger()->write(3,priceArr[counter]);
-            counter++;
-        }
-        x++;
-    }
-
     // Store results in result object
-    Result::getResult()->setPrice(priceArr,counter);
-    Result::getResult()->setProduct(lines,ctr);
+    Result::getInstance()->setResults(lines,ctr);
 }
 
 
@@ -169,6 +138,7 @@ int analyse::callInit()
 						    image.get_bpp());
 	tmp.SetImage(image.get_buffer(), image.get_xsize(), image.get_ysize(), image.get_bpp() / 8, bytes_per_line);
         std::string result=tmp.GetUTF8Text();
+        Logger::getLogger()->write(3, "Tesseract result:");
         Logger::getLogger()->write(3, result);
         if(result.find_last_of(".")<0){
             Logger::getLogger()->write(6,"Couldn't find decimal place in any string in Tesseract Result");

@@ -8,7 +8,7 @@ Result::Result()
 {
 }
 
-Result *Result::getResult()
+Result *Result::getInstance()
 {
     if(!mResult){
         mResult=new Result();
@@ -19,26 +19,17 @@ Result *Result::getResult()
     }
 }
 
-void Result::setProduct(std::string itemIn[],int length)
+void Result::setResults(std::string itemIn[],int length)
 {
+    // Empty contents of results iterator before putting new items in
+    pd.clear();
+
     for(int i=0;i<length;i++){
         pd.push_back(itemIn[i]);
     }
 }
 
-void Result::setPrice(std::string mPrice[],int length)
-{
-    for(int i=0;i<length;i++){
-        pr.push_back(mPrice[i]);
-    }
-}
-
-std::vector<std::string> Result::getPrice()
-{
-    return this->pr;
-}
-
-std::vector<std::string> Result::getProduct()
+std::vector<std::string> Result::getResults()
 {
     return this->pd;
 }

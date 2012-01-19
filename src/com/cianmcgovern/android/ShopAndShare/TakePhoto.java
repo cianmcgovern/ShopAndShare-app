@@ -113,7 +113,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 		@Override
 		public void onAutoFocus(boolean success, Camera camera) {
 			// TODO Auto-generated method stub
-			if(success || counter > 2)
+			if(success || counter > 0)
 				mCamera.takePicture(null, mPictureCallback, mPictureCallback);
 			else{
 				Log.e("ShopAndStore","autoFocus did not complete successfully");

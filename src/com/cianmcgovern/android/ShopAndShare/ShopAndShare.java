@@ -28,6 +28,7 @@ public class ShopAndShare extends Activity
 		Constants.filesDir=getFilesDir().toString();
 		try {
 			loadTrainingData();
+			loadTestPhoto();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,6 +54,21 @@ public class ShopAndShare extends Activity
 		bos.close();
 	}
 	
+	private void loadTestPhoto() throws IOException{
+		InputStream is = getResources().openRawResource(R.raw.test);
+		OutputStream out = new FileOutputStream(new File(Constants.filesDir+"/image.jpg"));
+		BufferedInputStream bis = new BufferedInputStream(is);
+		BufferedOutputStream bos = new BufferedOutputStream(out);
+		byte[] buf = new byte[1024];
+		
+		int n =0;
+		int o =0;
+		while((n=bis.read(buf,o,buf.length))>0){
+			bos.write(buf,0,n);
+		}
+		bis.close();
+		bos.close();		
+	}
 	@Override
 	public void onResume(){
 		super.onResume();

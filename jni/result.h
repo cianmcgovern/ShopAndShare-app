@@ -7,18 +7,15 @@
 class Result
 {
 public:
-    static Result* getResult();
-    void setProduct(std::string[],int);
-    void setPrice(std::string[],int);
-    std::vector<std::string> getPrice();
-    std::vector<std::string> getProduct();
+    static Result* getInstance();
+    void setResults(std::string[],int);
+    std::vector<std::string> getResults();
     ~Result();
 
 private:
     Result();
     static Result* mResult;
     std::vector<std::string> pd;
-    std::vector<std::string> pr;
     Result(Result const&)
     {
     };

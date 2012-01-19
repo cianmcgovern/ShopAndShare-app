@@ -13,7 +13,7 @@ import android.widget.ListView;
  * Activity to display the results from the native code execution
  * Displays two arrays with corresponding elements in two ListViews as specified in display_results.xml
  * 
- * @author 
+ * @author Cian Mc Govern
  *
  */
 public class DisplayResults extends Activity{
