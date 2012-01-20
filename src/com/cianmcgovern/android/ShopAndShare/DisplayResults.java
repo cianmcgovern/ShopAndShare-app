@@ -1,13 +1,22 @@
 package com.cianmcgovern.android.ShopAndShare;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import com.cianmcgovern.android.ShopAndShare.R;
 
 import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * Activity to display the results from the native code execution
@@ -16,33 +25,26 @@ import android.widget.ListView;
  * @author Cian Mc Govern
  *
  */
-public class DisplayResults extends Activity{
+public class DisplayResults extends ListActivity{
 	
-	private String[] products;
-	@Override
+	private Context context;
+	
 	public void onCreate(Bundle savedInstance){
 		
 		super.onCreate(savedInstance);
+			
+		ArrayList<String> products = new ArrayList<String>();
 		
-		products = Results.getInstance().getProducts();
-		//double[] oldPrices = Results.getInstance().getPrices();
-		//String[] prices = new String[oldPrices.length];
-//		for(int i=0;i<oldPrices.length;i++){
-//			prices[i]=Double.toString(oldPrices[i]);
-//		}
+		Iterator i = Results.getInstance().getProducts().entrySet().iterator();
 		
-
-		setContentView(R.layout.display_results);
-		ListView lv;
-		lv = (ListView)findViewById(R.id.ListViewProducts);
-		lv.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,products));
+		while(i.hasNext()){
+			Map.Entry x = (Map.Entry)i.next();
+			products.add((String) x.getKey());
+		}
 		
-		Button cancel = (Button)findViewById(R.id.cancelResultsButton);
-		cancel.setOnClickListener(new CancelButtonListener(this));
+		ArrayAdapter<String> ad = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,products);
 		
-//		ListView lv2;
-//		lv2 = (ListView)findViewById(R.id.ListViewPrices);
-//		lv2.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,prices));
+		setListAdapter(ad);
 		
         // Temporary
 		//new DeleteImages(Constants.filesDir);
@@ -53,5 +55,13 @@ public class DisplayResults extends Activity{
 	public void onBackPressed(){
 		Intent home = new Intent(this,ShopAndShare.class);
 		startActivity(home);
+	}
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id){
+		String product = (String) getListAdapter().getItem(position);
+		Intent in = new Intent(this,EditItem.class);
+		in.putExtra("Product", product);
+		startActivity(in);
 	}
 }

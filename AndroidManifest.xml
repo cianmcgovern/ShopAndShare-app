@@ -11,7 +11,7 @@
         <activity android:name="ShopAndShare"
                   android:label="@string/app_name"
                   android:configChanges="orientation"
-    android:screenOrientation="portrait">
+    			android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,6 +28,11 @@
             </intent-filter>
         </activity>
         <activity android:name="LoadingPage" android:label="LoadingPage" android:configChanges="orientation"
+    android:screenOrientation="portrait">
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        <activity android:name="EditItem" android:label="EditItem" android:configChanges="orientation"
     android:screenOrientation="portrait">
             <intent-filter>
             </intent-filter>

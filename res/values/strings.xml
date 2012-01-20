@@ -4,4 +4,7 @@
     <string name="photoButton">Take Photo</string>
     <string name="cancelPhotoButton">Cancel</string>
     <string name="callPhotoButton">Analyse Receipt</string>
+    <string name="saveButton">Save</string>
+    <string name="cancelEditButton">Cancel</string>
+    <string name="editCheckbox"> Share Item?</string>
 </resources>
