@@ -1,7 +1,5 @@
 package com.cianmcgovern.android.ShopAndShare;
 
-import android.util.Log;
-
 /**
  * Singleton object that stores the results from image analysing
  * 
@@ -10,36 +8,51 @@ import android.util.Log;
  */
 public class Results {
 	
-	private String[] products;
+	private static HashResults<String, Item> results;
 	
 	private static Results _instance;
 	
 	public static Results getInstance(){
-		if(_instance==null)
+		if(_instance==null){
 			_instance = new Results();
+			results = new HashResults<String,Item>();
+		}
 		return _instance;
 	}
 	
 	private Results(){
 	}
 	
-	public void deleteProducts(){
-		this.products=null;
-	}
-	
-	public void setProducts(String[] inProducts){
-		this.products=inProducts;
-		Log.v("ShopAndStore", "Products array has been set to: ");
-		for(int i=0;i<this.products.length;i++){
-			Log.v("ShopAndStore","Product: "+this.products[i]);
+	/**
+	 * Takes in an array containing the list of products and the length of the array
+	 * It splits each result based on the last decimal point in each slot of the array
+	 * 
+	 * @param inProducts
+	 * @param length
+	 * 
+	 */
+	public void setProducts(String[] inProducts,int length){
+		for(int i=0;i<length;i++){
+			int decimalLoc = inProducts[i].lastIndexOf(".");
+			if(decimalLoc > 0){
+				String product = inProducts[i].substring(0, (decimalLoc-2)).trim();
+				String price = inProducts[i].substring(decimalLoc-1,inProducts[i].length()).trim();
+				Item x = new Item(product,price);
+				results.put(product, x);
+			}
 		}
 	}
 	
 	
-	public String[] getProducts(){
-		String[] tmpproducts=this.products.clone();
-		this.products=null;
-		return tmpproducts;
+	public HashResults<String,Item> getProducts(){
+		return results;
+	}
+	
+	public void changeKey(String old, String snew){
+		Item x = results.get(old);
+		
+		results.remove(old);
+		results.put(snew, x);
 	}
 }
 

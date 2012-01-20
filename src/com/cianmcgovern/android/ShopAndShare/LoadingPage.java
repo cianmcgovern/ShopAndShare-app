@@ -52,8 +52,8 @@ public class LoadingPage extends Activity{
 	private void AnalyseImage(String imageLocation){
 		Log.d("ShopAndStore","Calling native code");
 		callnativecode(imageLocation);
-		Results.getInstance().deleteProducts();
-		Results.getInstance().setProducts(getProducts());
+		String[] results = getProducts();
+		Results.getInstance().setProducts(results,results.length);
 	}
 
 	// Method to create a spinner dialog
