@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
@@ -21,11 +24,14 @@ public class EditItem extends Activity implements OnClickListener{
 	private Button cancel;
 	private CheckBox upload;
 	private EditText ed1,ed2;
+	private Context context;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		
 		super.onCreate(savedInstanceState);
+		context=this;
+		
 		setContentView(R.layout.edit_item);
 		
 		// Product to edit is sent through intent
@@ -42,6 +48,8 @@ public class EditItem extends Activity implements OnClickListener{
 
 			@Override
 			public void onClick(View v) {
+				Intent home = new Intent(context,DisplayResults.class);
+				startActivity(home);
 				finish();
 			}
 		});
@@ -101,6 +109,7 @@ public class EditItem extends Activity implements OnClickListener{
 	public void onBackPressed(){
 		Intent home = new Intent(this,DisplayResults.class);
 		startActivity(home);
+		finish();
 	}
 
 	@Override
@@ -142,6 +151,26 @@ public class EditItem extends Activity implements OnClickListener{
 		// Restart the DisplayResults activity so that the new data is displayed
 		Intent home = new Intent(this,DisplayResults.class);
 		startActivity(home);
+		finish();
+	}
+	
+	// Create options menu
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		MenuInflater inf = getMenuInflater();
+		inf.inflate(R.layout.default_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+		case R.id.exit:
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 }

@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Shop And Share</string>
+    <string name="app_name">Shop and Share</string>
     <string name="photoButton">Take Photo</string>
     <string name="cancelPhotoButton">Cancel</string>
     <string name="callPhotoButton">Analyse Receipt</string>
+    <string name="callLoadButton">Load Save File</string>
     <string name="saveButton">Save</string>
     <string name="cancelEditButton">Cancel</string>
     <string name="editCheckbox"> Share Item?</string>
+    <string name="exit">Exit</string>
+    <string name="help">Help</string>
+    <string name="main">Press button at bottom</string>
+    <string name="edit">Edit</string>
+    <string name="deleteConfirm">Are you sure you would like to delete this file?</string>
+    <string name="deleteConfirmTitle">Confirm</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

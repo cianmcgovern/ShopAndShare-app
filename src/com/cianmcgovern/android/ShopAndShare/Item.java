@@ -1,7 +1,10 @@
 package com.cianmcgovern.android.ShopAndShare;
 
-public class Item {
+import java.io.Serializable;
 
+public class Item implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private String productName;
 	private String price;
 	private boolean upload;

@@ -4,5 +4,5 @@ public class Constants{
 	
 	public static byte[] ImageData=null;
 	public static String filesDir=null;
-
+	public static String saveDir=null;
 }

@@ -11,21 +11,31 @@ import java.io.OutputStream;
 import com.cianmcgovern.android.ShopAndShare.R;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class ShopAndShare extends Activity
 {
-	private Button callPhoto;
+	private Button callPhoto,callLoad;
+	private Context context;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
+		context=this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		Constants.filesDir=getFilesDir().toString();
+		Constants.saveDir=Constants.filesDir.concat("/saves");
 		try {
 			loadTrainingData();
 			loadTestPhoto();
@@ -33,8 +43,23 @@ public class ShopAndShare extends Activity
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.callPhoto=(Button)findViewById(R.id.callPhotoButton);
+		
+		// Create the saves directory if it doesn't exist
+		if(!new File(Constants.saveDir).isDirectory())
+			new File(Constants.saveDir).mkdir();
+		
+		callPhoto=(Button)findViewById(R.id.callPhotoButton);
 		callPhoto.setOnClickListener(new CallPhotoButtonListener(this));
+		callLoad=(Button)findViewById(R.id.callLoadButton);
+		callLoad.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Intent x = new Intent(context,LoadResults.class);
+				startActivity(x);
+			}
+			
+		});
 	}
 
 	private void loadTrainingData() throws IOException{
@@ -75,4 +100,23 @@ public class ShopAndShare extends Activity
 		Log.d("ShopAndStore", "Resumed");
 	}
 	
+	// Create options menu
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		MenuInflater inf = getMenuInflater();
+		inf.inflate(R.layout.default_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+		case R.id.exit:
+			System.runFinalizersOnExit(true);
+			System.exit(0);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}	
 }

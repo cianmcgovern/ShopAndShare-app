@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:label="Shop And Share">
-    <TextView
-    	android:id="@+id/label"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Click button at bottom to analyse receipt"/>
-    <Button android:id="@+id/callPhotoButton"
-        android:layout_width="fill_parent"
-		android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/callPhotoButton" />
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:label="@string/app_name">
+	<TextView android:id="@+id/label" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/main" />
+	<Button android:id="@+id/callLoadButton" android:layout_width="fill_parent"
+		android:layout_weight="1" android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true" android:text="@string/callLoadButton" />
+	<Button android:id="@+id/callPhotoButton" android:layout_width="fill_parent"
+		android:layout_weight="1" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true" android:text="@string/callPhotoButton" />
 </RelativeLayout>

@@ -82,6 +82,7 @@ public class LoadingPage extends Activity{
 				progThread.setState(ProgressThread.DONE);
 				Intent disp = new Intent(context,DisplayResults.class);
 				startActivity(disp);
+				finish();
 			}
 		}
 	};

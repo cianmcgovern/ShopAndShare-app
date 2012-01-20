@@ -11,6 +11,9 @@ import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -100,6 +103,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 				Constants.ImageData=imageData;
 				Intent displayResults = new Intent(con,LoadingPage.class);
 				startActivity(displayResults);
+				finish();
 			}
 			else{
 				Log.e("ShopAndStore","Data not received from camera");
@@ -126,5 +130,25 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 	public void onBackPressed(){
 		Intent home = new Intent(this,ShopAndShare.class);
 		startActivity(home);
+		finish();
+	}
+	
+	// Create options menu
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		MenuInflater inf = getMenuInflater();
+		inf.inflate(R.layout.default_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+		case R.id.exit:
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }
