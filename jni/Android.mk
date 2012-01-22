@@ -1,9 +1,9 @@
 LOCAL_PATH := $(call my-dir)
 MYPATH := $(LOCAL_PATH)
 
-TESSERACT_PATH :=/home/cian/Development/tesseract-3.00
-LEPTONICA_PATH :=/home/cian/Development/leptonlib-1.66
-LIBJPEG_PATH :=/home/cian/Development/libjpeg
+#TESSERACT_PATH :=/home/cian/Development/tesseract-3.00
+#LEPTONICA_PATH :=/home/cian/Development/leptonlib-1.66
+#LIBJPEG_PATH :=/home/cian/Development/libjpeg
 
 include $(CLEAR_VARS)
 
@@ -15,7 +15,7 @@ include tess/Android.mk
 
 include $(CLEAR_VARS)
 
-include /home/cian/Development/OpenCV-2.3.1/share/OpenCV/OpenCV.mk
+include OpenCV/OpenCV/OpenCV.mk
 
 LOCAL_PATH := $(MYPATH)
 LOCAL_C_INCLUDES += headers/
