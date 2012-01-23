@@ -22,15 +22,10 @@ int main(int argc, char *argv[])
 	cv::imshow("win", image->getImage());
         cv::waitKey(0);
 
-        std::vector<std::string> product=Result::getResult()->getProduct();
-        std::vector<std::string> price=Result::getResult()->getPrice();
+        std::vector<std::string> product=Result::getInstance()->getResults();
 
         for(std::vector<std::string>::iterator pdit=product.begin();pdit<product.end();pdit++){
             std::cout << "Product: " << *pdit << std::endl;
-        }
-
-        for(std::vector<std::string>::iterator prit=price.begin();prit<price.end();prit++){
-            std::cout << "Price: " << *prit << std::endl;
         }
 	delete image;
 }

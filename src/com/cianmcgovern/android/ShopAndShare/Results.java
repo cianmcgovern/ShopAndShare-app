@@ -5,8 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.util.Log;
 
@@ -14,6 +19,10 @@ import android.util.Log;
  * Singleton object that stores the results from image analysing
  * 
  * @author Cian Mc Govern
+ *
+ */
+/**
+ * @author cian
  *
  */
 public class Results {
@@ -35,7 +44,6 @@ public class Results {
 	
 	/**
 	 * Takes in an array containing the list of products and the length of the array
-	 * It splits each result based on the last decimal point in each slot of the array
 	 * 
 	 * @param inProducts
 	 * @param length
@@ -43,14 +51,62 @@ public class Results {
 	 */
 	public void setProducts(String[] inProducts,int length){
 		for(int i=0;i<length;i++){
-			int decimalLoc = inProducts[i].lastIndexOf(".");
-			if(decimalLoc > 0){
-				String product = inProducts[i].substring(0, (decimalLoc-2)).trim();
-				String price = inProducts[i].substring(decimalLoc-1,inProducts[i].length()).trim();
+			String line = inProducts[i].trim();
+			if(line.contains(".") && line.length()>4){
+				String product = parseProduct(line);
+				String price = parsePrice(line);
 				Item x = new Item(product,price);
 				results.put(product, x);
 			}
+			else
+				Log.v("ShopAndShare","Couldn't find decimal point in string");
 		}
+	}
+	
+	/**
+	 * Parses the input string for a decimal number and returns it as a string
+	 * @param x
+	 * @return
+	 */
+	public String parsePrice(String input){
+
+	    String re1=".*?";	// Non-greedy match on filler
+	    String re2="([+-]?\\d*\\.\\d+)(?![-+0-9\\.])";	// Float 1
+
+	    Pattern p = Pattern.compile(re1+re2,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+	    Matcher m = p.matcher(input);
+	    
+	    if (m.find()){
+	        String float1=m.group(1);
+	        return float1.toString();
+	    }
+	    else
+	    	return null;
+	}
+	
+	/**
+	 * Parses the input string and returns all words in the string as a single string
+	 * 
+	 * @param input
+	 * @return
+	 */
+	public String parseProduct(String input){
+		
+	    String re1="((?:[a-z][a-z]+))";
+
+	    Pattern p = Pattern.compile(re1,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+	    Matcher m = p.matcher(input);
+	    
+	    String result = null;
+	    
+	    while(m.find()){
+	    	if(result==null)
+	    		result = m.group();
+	    	else
+	    		result = result + " " + m.group();
+	    }
+	    
+	    return result.trim();
 	}
 	
 	public void setHashResults(HashResults<String,Item> in){

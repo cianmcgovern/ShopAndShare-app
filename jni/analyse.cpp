@@ -96,11 +96,12 @@ void analyse::splitTessResult(std::string result)
         x++;
     }
 
-    Logger::getLogger()->write(3,"Placing results into arrays");
+    Logger::getLogger()->write(3,"Placing results into array");
     int ctr = 0;
     std::string lines[counter];
     x=a.begin();
     while(x!=a.end()){
+        Logger::getLogger()->write(3,"Added "+*x);
         lines[ctr]=*x;
         ctr++;
         x++;

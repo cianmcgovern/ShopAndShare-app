@@ -110,7 +110,7 @@ public class LoadingPage extends Activity{
 			mState = RUNNING;   
 			total = 1;
 			while (mState == RUNNING) {
-				//new SaveBitmap(Constants.ImageData,Constants.filesDir);
+				new SaveBitmap(Constants.ImageData,Constants.filesDir);
 				// Calls native code and passes path to image excluding the file name which is expected to be image.jpg
 				AnalyseImage(Constants.filesDir);
 				Message msg = mHandler.obtainMessage();

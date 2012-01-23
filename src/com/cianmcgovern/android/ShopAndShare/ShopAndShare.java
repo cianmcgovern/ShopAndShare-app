@@ -38,7 +38,7 @@ public class ShopAndShare extends Activity
 		Constants.saveDir=Constants.filesDir.concat("/saves");
 		try {
 			loadTrainingData();
-			loadTestPhoto();
+			//loadTestPhoto();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

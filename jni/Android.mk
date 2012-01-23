@@ -25,5 +25,5 @@ LOCAL_STATIC_LIBRARIES += lept
 LOCAL_STATIC_LIBRARIES += tess
 LOCAL_STATIC_LIBRARIES += libtiff
 LOCAL_SRC_FILES := ShopAndShare.cpp logger.cpp filetomat.cpp image.cpp bgelim.cpp analyse.cpp mattofile.cpp constants.cpp result.cpp
-LOCAL_CPPFLAGS := -g #debug
+LOCAL_CPPFLAGS := 
 include $(BUILD_SHARED_LIBRARY)

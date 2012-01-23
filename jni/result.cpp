@@ -22,7 +22,8 @@ Result *Result::getInstance()
 void Result::setResults(std::string itemIn[],int length)
 {
     // Empty contents of results iterator before putting new items in
-    pd.clear();
+    if(!pd.empty())
+        pd.clear();
 
     for(int i=0;i<length;i++){
         pd.push_back(itemIn[i]);
