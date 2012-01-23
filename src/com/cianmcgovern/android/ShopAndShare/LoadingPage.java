@@ -1,5 +1,13 @@
 package com.cianmcgovern.android.ShopAndShare;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import com.cianmcgovern.android.ShopAndShare.R;
 
 import android.app.Activity;
@@ -36,7 +44,6 @@ public class LoadingPage extends Activity{
 	}
 
 	private native void callnativecode(String dir);
-	private native String[] getProducts();
 
 	static{
 		System.loadLibrary("lept");
@@ -54,6 +61,39 @@ public class LoadingPage extends Activity{
 		callnativecode(imageLocation);
 		String[] results = getProducts();
 		Results.getInstance().setProducts(results,results.length);
+	}
+	
+	private String[] getProducts(){
+		
+		ArrayList<String> as = new ArrayList<String>();
+		
+		try{
+			FileInputStream fin = new FileInputStream(Constants.filesDir+"/results");
+			DataInputStream din = new DataInputStream(fin);
+			BufferedReader br = new BufferedReader(new InputStreamReader(din));
+
+			String line;
+
+			while((line = br.readLine()) != null){
+				as.add(line);
+			}
+			br.close();
+			din.close();
+			fin.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		String[] collectedResults = new String[as.size()];
+		
+		for(int i=0;i<as.size();i++){
+			collectedResults[i]=as.get(i);
+		}
+		
+		new File(Constants.filesDir+"/results").delete();
+		
+		return collectedResults;
 	}
 
 	// Method to create a spinner dialog

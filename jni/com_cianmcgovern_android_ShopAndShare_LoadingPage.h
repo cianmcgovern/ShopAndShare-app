@@ -15,14 +15,6 @@ extern "C" {
 JNIEXPORT void JNICALL Java_com_cianmcgovern_android_ShopAndShare_LoadingPage_callnativecode
   (JNIEnv *, jobject, jstring);
 
-/*
- * Class:     com_cianmcgovern_android_ShopAndShare_LoadingPage
- * Method:    getProducts
- * Signature: ()[Ljava/lang/String;
- */
-JNIEXPORT jobjectArray JNICALL Java_com_cianmcgovern_android_ShopAndShare_LoadingPage_getProducts
-  (JNIEnv *, jobject);
-
 #ifdef __cplusplus
 }
 #endif
