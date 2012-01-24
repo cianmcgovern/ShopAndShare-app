@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import com.cianmcgovern.android.ShopAndShare.R;
+import com.cianmcgovern.android.ShopAndShare.Comparison.LoadFile;
 
 import android.app.Activity;
 import android.content.Context;
@@ -34,8 +35,12 @@ public class ShopAndShare extends Activity
 		context=this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
 		Constants.filesDir=getFilesDir().toString();
 		Constants.saveDir=Constants.filesDir.concat("/saves");
+		
+		Constants.wordList = LoadFile.fileToList(Constants.filesDir.concat("/wordlist"));
+		
 		try {
 			loadTrainingData();
 			//loadTestPhoto();
@@ -77,6 +82,20 @@ public class ShopAndShare extends Activity
 		}
 		bis.close();
 		bos.close();
+		
+		is = getResources().openRawResource(R.raw.wordlist);
+		os = new FileOutputStream(new File(Constants.filesDir.concat("/wordlist")));
+		bis = new BufferedInputStream(is);
+		bos = new BufferedOutputStream(os);
+		
+		buf = new byte[1024];
+		n =0;
+        o =0;
+        while((n=bis.read(buf,o,buf.length))>0){
+            bos.write(buf,0,n);
+        }
+        bis.close();
+        bos.close();
 	}
 	
 	private void loadTestPhoto() throws IOException{

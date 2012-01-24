@@ -68,7 +68,7 @@
         <activity
             android:configChanges="orientation"
             android:label="Click on a save to delete"
-            android:name="LoadResultsEdit"
+            android:name=".LoadResultsEdit"
             android:screenOrientation="portrait" >
             <intent-filter >
             </intent-filter>

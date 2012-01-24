@@ -5,13 +5,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.cianmcgovern.android.ShopAndShare.Comparison.Comparator;
 
 import android.util.Log;
 
@@ -52,7 +53,7 @@ public class Results {
 	public void setProducts(String[] inProducts,int length){
 		for(int i=0;i<length;i++){
 			String line = inProducts[i].trim();
-			if(line.contains(".") && line.length()>4){
+			if(line.contains(".") && line.length() > 4){
 				String product = parseProduct(line);
 				String price = parsePrice(line);
 				Item x = new Item(product,price);
@@ -105,6 +106,9 @@ public class Results {
 	    	else
 	    		result = result + " " + m.group();
 	    }
+	    
+	    // Optimise result using Comparator
+	    result = Comparator.findClosestString(result);
 	    
 	    return result.trim();
 	}
