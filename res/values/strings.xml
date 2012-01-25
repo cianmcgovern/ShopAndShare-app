@@ -19,4 +19,6 @@
     <string name="emptyList">No results</string>
     <string name="shareButton">Share</string>
     <string name="photoOptionsButton">Options</string>
+    <string name="deleteButton">Delete</string>
+    <string name="deleteItemConfirm">Are you sure you would like to delete this item?</string>
 </resources>

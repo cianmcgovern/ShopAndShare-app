@@ -15,7 +15,7 @@ public class Comparator {
         String bestMatch = string;
         
         // Base score - Score must be higher than 0.7 before a string is suggested
-        double previous = 0.7;
+        double previous = 0.8;
         
         // Loop through the wordlist and compare each string with the string to compare
         // If the score is better than the last score, store the best match

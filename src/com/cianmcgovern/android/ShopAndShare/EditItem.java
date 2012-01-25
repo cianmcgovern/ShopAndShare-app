@@ -3,7 +3,9 @@ package com.cianmcgovern.android.ShopAndShare;
 import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,22 +46,30 @@ public class EditItem extends Activity implements OnClickListener{
 		save = (Button)findViewById(R.id.saveButton);
 		save.setOnClickListener(this);
 		
-		// Cancel button finishes the activity
-		cancel = (Button)findViewById(R.id.cancelEditButton);
+		// Delete button deletes the item
+		cancel = (Button)findViewById(R.id.deleteButton);
 		cancel.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
-				Intent home = new Intent(context,ListCreator.class);
-				startActivity(home);
-				finish();
+				
+			    new AlertDialog.Builder(context)
+			    .setTitle(R.string.deleteConfirmTitle)
+			    .setMessage(R.string.deleteItemConfirm)
+			    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Results.getInstance().getProducts().remove(product);
+                        Intent in = new Intent(context,ListCreator.class);
+                        startActivity(in);
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.no, null)
+                .show();
 			}
 		});
-		
-		// Setting up the checkbox for user decision on whether to share item or not
-		// Defaults to checked ie. share item
-		upload=(CheckBox)findViewById(R.id.checkBox1);
-		upload.setChecked(Results.getInstance().getProducts().get(product).getUpload());
 		
 		// Editable text fields containing the current product and price
 		// OnKeyListener listens for enter button and hides keyboard when pressed
@@ -124,11 +134,6 @@ public class EditItem extends Activity implements OnClickListener{
 		if(product.compareTo(productText)==0){
 			// Update product with price
 			Results.getInstance().getProducts().get(productText).setPrice(priceText);
-			// Update upload boolean
-			if(!upload.isChecked())
-				Results.getInstance().getProducts().get(productText).setUpload(false);
-			else
-				Results.getInstance().getProducts().get(productText).setUpload(true);
 		}
 		
 		// If the product name has been changed
@@ -142,11 +147,6 @@ public class EditItem extends Activity implements OnClickListener{
 				Log.e("ShopAndShare", productText+" does not exist in HashResults");
 			else{
 				Results.getInstance().getProducts().get(productText).setPrice(priceText);
-				// Update upload boolean
-				if(!upload.isChecked())
-					Results.getInstance().getProducts().get(productText).setUpload(false);
-				else
-					Results.getInstance().getProducts().get(productText).setUpload(true);
 			}
 		}
 		
