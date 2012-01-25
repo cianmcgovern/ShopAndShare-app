@@ -16,4 +16,7 @@
     <string name="deleteConfirmTitle">Confirm</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="emptyList">No results</string>
+    <string name="shareButton">Share</string>
+    <string name="photoOptionsButton">Options</string>
 </resources>

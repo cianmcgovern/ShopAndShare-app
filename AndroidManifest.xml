@@ -27,15 +27,25 @@
         <activity
             android:configChanges="orientation"
             android:label="Capture Image"
-            android:name="TakePhoto"
-            android:screenOrientation="portrait" >
+            android:name=".Camera.TakePhoto"
+            android:screenOrientation="portrait"
+            android:noHistory="true" >
+            <intent-filter >
+            </intent-filter>
+        </activity>
+        <activity
+            android:configChanges="orientation"
+            android:label="Camera Options"
+            android:name=".Camera.TakePhotoOptionsActivity"
+            android:screenOrientation="portrait"
+            android:noHistory="true" >
             <intent-filter >
             </intent-filter>
         </activity>
         <activity
             android:configChanges="orientation"
             android:label="Results"
-            android:name="DisplayResults"
+            android:name=".DisplayResults.ListCreator"
             android:screenOrientation="portrait" >
             <intent-filter >
             </intent-filter>

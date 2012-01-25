@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import com.cianmcgovern.android.ShopAndShare.R;
+import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -120,7 +121,7 @@ public class LoadingPage extends Activity{
 			if (total <= 0){
 				dismissDialog(0);
 				progThread.setState(ProgressThread.DONE);
-				Intent disp = new Intent(context,DisplayResults.class);
+				Intent disp = new Intent(context,ListCreator.class);
 				startActivity(disp);
 				finish();
 			}

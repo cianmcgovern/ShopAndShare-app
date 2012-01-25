@@ -1,5 +1,7 @@
 package com.cianmcgovern.android.ShopAndShare;
 
+import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -48,7 +50,7 @@ public class EditItem extends Activity implements OnClickListener{
 
 			@Override
 			public void onClick(View v) {
-				Intent home = new Intent(context,DisplayResults.class);
+				Intent home = new Intent(context,ListCreator.class);
 				startActivity(home);
 				finish();
 			}
@@ -107,7 +109,7 @@ public class EditItem extends Activity implements OnClickListener{
 	
 	@Override
 	public void onBackPressed(){
-		Intent home = new Intent(this,DisplayResults.class);
+		Intent home = new Intent(this,ListCreator.class);
 		startActivity(home);
 		finish();
 	}
@@ -149,7 +151,7 @@ public class EditItem extends Activity implements OnClickListener{
 		}
 		
 		// Restart the DisplayResults activity so that the new data is displayed
-		Intent home = new Intent(this,DisplayResults.class);
+		Intent home = new Intent(this,ListCreator.class);
 		startActivity(home);
 		finish();
 	}

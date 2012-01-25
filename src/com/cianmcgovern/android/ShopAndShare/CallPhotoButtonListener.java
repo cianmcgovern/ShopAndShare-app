@@ -1,5 +1,7 @@
 package com.cianmcgovern.android.ShopAndShare;
 
+import com.cianmcgovern.android.ShopAndShare.Camera.TakePhoto;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;

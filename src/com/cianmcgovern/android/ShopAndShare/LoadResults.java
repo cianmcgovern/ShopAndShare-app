@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.OptionalDataException;
 import java.util.ArrayList;
 
+import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -81,7 +83,7 @@ public class LoadResults extends ListActivity{
 		f = new FileInputStream(file);
 		fo = new ObjectInputStream(f);
 		Results.getInstance().setHashResults((HashResults<String,Item>)fo.readObject());
-		Intent i = new Intent(this,DisplayResults.class);
+		Intent i = new Intent(this,ListCreator.class);
 		startActivity(i);
 		finish();
 	}
