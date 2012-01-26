@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/camera_bottom_button_border"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -22,13 +21,13 @@
             android:text="@string/shareButton" />
 
         <Button
-            android:id="@+id/cancelShareButton"
+            android:id="@+id/addButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/shareButton"
             android:layout_weight="1"
-            android:text="@string/cancelPhotoButton" />
+            android:text="@string/addButton" />
     </LinearLayout>
 
 </LinearLayout>

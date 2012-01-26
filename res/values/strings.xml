@@ -2,11 +2,10 @@
 <resources>
     <string name="app_name">Shop and Share</string>
     <string name="photoButton">Take Photo</string>
-    <string name="cancelPhotoButton">Cancel</string>
+    <string name="cancelButton">Cancel</string>
     <string name="callPhotoButton">Analyse Receipt</string>
     <string name="callLoadButton">Load Save File</string>
     <string name="saveButton">Save</string>
-    <string name="cancelEditButton">Cancel</string>
     <string name="editCheckbox"> Share Item?</string>
     <string name="exit">Exit</string>
     <string name="help">Help</string>
@@ -16,9 +15,10 @@
     <string name="deleteConfirmTitle">Confirm</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="emptyList">No results</string>
+    <string name="emptyList">No results found\n\nTry changing your camera options or move to better light</string>
     <string name="shareButton">Share</string>
     <string name="photoOptionsButton">Options</string>
     <string name="deleteButton">Delete</string>
     <string name="deleteItemConfirm">Are you sure you would like to delete this item?</string>
+    <string name="addButton">Add Item</string>
 </resources>

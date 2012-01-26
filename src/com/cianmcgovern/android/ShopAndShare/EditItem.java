@@ -18,23 +18,19 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class EditItem extends Activity implements OnClickListener{
 	
 	private String product;
 	private Button save;
-	private Button cancel;
-	private CheckBox upload;
+	private Button delete;
 	private EditText ed1,ed2;
-	private Context context;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		
 		super.onCreate(savedInstanceState);
-		context=this;
 		
 		setContentView(R.layout.edit_item);
 		
@@ -45,15 +41,17 @@ public class EditItem extends Activity implements OnClickListener{
 		// Overriding onClick() for the save button as this Class implements OnClickListener
 		save = (Button)findViewById(R.id.saveButton);
 		save.setOnClickListener(this);
+		save.setText(R.string.saveButton);
 		
 		// Delete button deletes the item
-		cancel = (Button)findViewById(R.id.deleteButton);
-		cancel.setOnClickListener(new OnClickListener(){
+		delete = (Button)findViewById(R.id.deleteButton);
+		delete.setText(R.string.deleteButton);
+		delete.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				
-			    new AlertDialog.Builder(context)
+			    new AlertDialog.Builder(ShopAndShare.sContext)
 			    .setTitle(R.string.deleteConfirmTitle)
 			    .setMessage(R.string.deleteItemConfirm)
 			    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -61,7 +59,7 @@ public class EditItem extends Activity implements OnClickListener{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Results.getInstance().getProducts().remove(product);
-                        Intent in = new Intent(context,ListCreator.class);
+                        Intent in = new Intent(ShopAndShare.sContext,ListCreator.class);
                         startActivity(in);
                         finish();
                     }
@@ -119,7 +117,7 @@ public class EditItem extends Activity implements OnClickListener{
 	
 	@Override
 	public void onBackPressed(){
-		Intent home = new Intent(this,ListCreator.class);
+		Intent home = new Intent(ShopAndShare.sContext,ListCreator.class);
 		startActivity(home);
 		finish();
 	}
@@ -151,7 +149,7 @@ public class EditItem extends Activity implements OnClickListener{
 		}
 		
 		// Restart the DisplayResults activity so that the new data is displayed
-		Intent home = new Intent(this,ListCreator.class);
+		Intent home = new Intent(ShopAndShare.sContext,ListCreator.class);
 		startActivity(home);
 		finish();
 	}

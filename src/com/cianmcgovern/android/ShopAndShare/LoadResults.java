@@ -41,7 +41,9 @@ public class LoadResults extends ListActivity{
 		for(int i=0; i<saveFiles.length;i++)
 			saves.add(saveFiles[i].getName());
 		
-		ArrayAdapter<String> ad = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,saves);
+		ArrayAdapter<String> ad = new LoadResultsAdapter<String>(this,android.R.layout.simple_list_item_1,saves);
+		
+		this.getListView().setBackgroundResource(R.drawable.default_background);
 		
 		setListAdapter(ad);
 		
@@ -83,7 +85,7 @@ public class LoadResults extends ListActivity{
 		f = new FileInputStream(file);
 		fo = new ObjectInputStream(f);
 		Results.getInstance().setHashResults((HashResults<String,Item>)fo.readObject());
-		Intent i = new Intent(this,ListCreator.class);
+		Intent i = new Intent(ShopAndShare.sContext,ListCreator.class);
 		startActivity(i);
 		finish();
 	}
@@ -100,7 +102,7 @@ public class LoadResults extends ListActivity{
 		switch(it.getItemId()){
 		// Edit menu redirects to LoadResultsEdit which allows user to delete saves
 		case R.id.edit:
-			Intent i = new Intent(this,LoadResultsEdit.class);
+			Intent i = new Intent(ShopAndShare.sContext,LoadResultsEdit.class);
 			startActivity(i);
 			finish();
 			return true;

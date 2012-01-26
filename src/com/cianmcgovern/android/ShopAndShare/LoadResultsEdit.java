@@ -1,13 +1,16 @@
 package com.cianmcgovern.android.ShopAndShare;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
@@ -17,37 +20,55 @@ import android.widget.ListView;
  *
  */
 public class LoadResultsEdit extends LoadResults{
-	
-	private String filename;
-	private Context con;
-	
-	public void onListItemClick(ListView l, View v, int position, long id){
-		
-		con = this;
-		
-		filename = (String)getListAdapter().getItem(position);
-		
-		// AlertDialog to confirm deletion of save by user
-		new AlertDialog.Builder(this)
-		.setTitle(R.string.deleteConfirmTitle)
-		.setMessage(R.string.deleteConfirm)
-		.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				File f = new File(Constants.saveDir+"/"+filename);
-				if(!f.delete())
-					Log.e("ShopAndShare",filename+" save file was not deleted");
-				else
-					Log.v("ShopAndShare",filename+" save file was deleted");
-				Intent i = new Intent(con,LoadResultsEdit.class);
-				startActivity(i);
-				finish();
-			}
-			
-		})
-		.setNegativeButton(R.string.no, null)
-		.show();
-	}
+    private String filename;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+
+        super.onCreate(savedInstanceState);
+
+        // Fetch the list of files from the saves directory and display them in the ListView
+        ArrayList<String> saves = new ArrayList<String>();
+
+        File[] saveFiles = new File(Constants.saveDir).listFiles();
+
+        for(int i=0; i<saveFiles.length;i++)
+            saves.add(saveFiles[i].getName());
+
+        ArrayAdapter<String> ad = new LoadResultsEditAdapter<String>(this,android.R.layout.simple_list_item_1,saves);
+        
+        this.getListView().setBackgroundResource(R.drawable.default_background);
+
+        setListAdapter(ad);
+
+    }
+
+    public void onListItemClick(ListView l, View v, int position, long id){
+
+        filename = (String)getListAdapter().getItem(position);
+
+        // AlertDialog to confirm deletion of save by user
+        new AlertDialog.Builder(this)
+        .setTitle(R.string.deleteConfirmTitle)
+        .setMessage(R.string.deleteConfirm)
+        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                File f = new File(Constants.saveDir+"/"+filename);
+                if(!f.delete())
+                    Log.e("ShopAndShare",filename+" save file was not deleted");
+                else
+                    Log.v("ShopAndShare",filename+" save file was deleted");
+                Intent i = new Intent(ShopAndShare.sContext,LoadResultsEdit.class);
+                startActivity(i);
+                finish();
+            }
+
+        })
+        .setNegativeButton(R.string.no, null)
+        .show();
+    }
 }

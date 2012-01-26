@@ -5,8 +5,9 @@ import java.io.IOException;
 import com.cianmcgovern.android.ShopAndShare.Constants;
 import com.cianmcgovern.android.ShopAndShare.LoadingPage;
 import com.cianmcgovern.android.ShopAndShare.R;
+import com.cianmcgovern.android.ShopAndShare.ShopAndShare;
+
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
@@ -36,7 +37,6 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
     private boolean mPreviewRunning;
     private Button takePhotoButton;
     private Camera.Parameters mParameters;
-    private Context mContext;
 
     // These options set the default parameters for the Camera
     // They can be changed by the user in TakePhotoOptionsActivity
@@ -48,8 +48,6 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
     public void onCreate(Bundle savedInstance) {
         
         super.onCreate(savedInstance);
-        // Save context for passing to LoadingPage
-        mContext = this;
         // Setup window
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -69,7 +67,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
         cancel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mContext,TakePhotoOptionsActivity.class);
+                Intent i = new Intent(ShopAndShare.sContext,TakePhotoOptionsActivity.class);
                 startActivity(i);
             }
         });
@@ -124,7 +122,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
             if (imageData!=null) {
                 Log.d("ShopAndShare","Data received from camera");
                 Constants.ImageData=imageData;
-                Intent displayResults = new Intent(mContext,LoadingPage.class);
+                Intent displayResults = new Intent(ShopAndShare.sContext,LoadingPage.class);
                 startActivity(displayResults);
                 finish();
             }
@@ -138,7 +136,8 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 
         @Override
         public void onAutoFocus(boolean success, Camera camera) {
-            mCamera.takePicture(null, mPictureCallback, mPictureCallback);
+            if(success)
+                mCamera.takePicture(null, mPictureCallback, mPictureCallback);
         }
     };
 

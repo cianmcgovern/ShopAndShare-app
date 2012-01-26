@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,6 +41,10 @@ public class Results {
 	private Results(){
 	}
 	
+	public void addItem(String productName, Item product) {
+	    results.put(productName, product);
+	}
+	
 	/**
 	 * Takes in an array containing the list of products and the length of the array
 	 * 
@@ -56,8 +58,10 @@ public class Results {
 			if(line.contains(".") && line.length() > 4){
 				String product = parseProduct(line);
 				String price = parsePrice(line);
-				Item x = new Item(product,price);
-				results.put(product, x);
+				if(product != null){
+				    Item x = new Item(product,price);
+				    results.put(product, x);
+				}
 			}
 			else
 				Log.v("ShopAndShare","Couldn't find decimal point in string");
@@ -82,7 +86,7 @@ public class Results {
 	        return float1.toString();
 	    }
 	    else
-	    	return null;
+	    	return "0.00";
 	}
 	
 	/**
@@ -108,9 +112,13 @@ public class Results {
 	    }
 	    
 	    // Optimise result using Comparator
-	    result = Comparator.findClosestString(result);
+	    if(result != null) {
+	        result = Comparator.findClosestString(result);
+	        return result.trim();
+	    }
 	    
-	    return result.trim();
+	    else
+	        return result;
 	}
 	
 	public void setHashResults(HashResults<String,Item> in){

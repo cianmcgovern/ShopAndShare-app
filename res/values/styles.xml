@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DefaultTheme" parent="android:Theme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+</resources>

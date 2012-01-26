@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/default_background" >
 
     <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -69,8 +70,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_weight="1"
-            android:text="@string/saveButton" />
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/deleteButton"
@@ -78,8 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/photoButton"
-            android:layout_weight="1"
-            android:text="@string/deleteButton" />
+            android:layout_weight="1" />
     </LinearLayout>
 
 </RelativeLayout>

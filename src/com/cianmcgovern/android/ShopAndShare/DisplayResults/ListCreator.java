@@ -5,27 +5,23 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.cianmcgovern.android.ShopAndShare.AddItem;
 import com.cianmcgovern.android.ShopAndShare.EditItem;
 import com.cianmcgovern.android.ShopAndShare.Item;
 import com.cianmcgovern.android.ShopAndShare.R;
 import com.cianmcgovern.android.ShopAndShare.Results;
 import com.cianmcgovern.android.ShopAndShare.ShopAndShare;
-import com.cianmcgovern.android.ShopAndShare.R.id;
-import com.cianmcgovern.android.ShopAndShare.R.layout;
-
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 /**
  * Activity to display the results from the native code execution
@@ -36,14 +32,25 @@ import android.widget.TextView;
  */
 public class ListCreator extends ListActivity{
 
+    private Button mAddItem;
+    
     public void onCreate(Bundle savedInstance){
 
         super.onCreate(savedInstance);
         
-        
         setContentView(R.layout.display_results);
-        
-        View v = getLayoutInflater().inflate(R.layout.display_results_buttons, null);
+        View v = getLayoutInflater().inflate(R.layout.display_results_buttons_bottom, null);
+        mAddItem = (Button)v.findViewById(R.id.addButton);
+        mAddItem.setOnClickListener(new OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(ShopAndShare.sContext,AddItem.class);
+                startActivity(in);
+                finish();
+            }
+            
+        });
         this.getListView().addFooterView(v);
 
         ArrayList<Item> products = new ArrayList<Item>();
@@ -61,15 +68,13 @@ public class ListCreator extends ListActivity{
 
     @Override
     public void onBackPressed(){
-        Intent home = new Intent(this,ShopAndShare.class);
-        startActivity(home);
         finish();
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id){
         Item product = (Item) getListAdapter().getItem(position);
-        Intent in = new Intent(this,EditItem.class);
+        Intent in = new Intent(ShopAndShare.sContext,EditItem.class);
         in.putExtra("Product", product.getProduct());
         startActivity(in);
         finish();

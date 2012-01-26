@@ -4,17 +4,14 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import com.cianmcgovern.android.ShopAndShare.R;
 import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,14 +29,11 @@ public class LoadingPage extends Activity{
 
 	ProgressThread progThread;
 	ProgressDialog progDialog;
-	private Context context;
 	private byte[] ImageData;
 
 	@Override
 	public void onCreate(Bundle savedInstance){
 		
-		context = this;
-		setContentView(R.layout.loading);
 		super.onCreate(savedInstance);
 		showDialog(0);
 	}
@@ -58,6 +52,11 @@ public class LoadingPage extends Activity{
 	 * @param imageLocation Path to the folder containing the image.jpg ie. the file from SaveBitmap
 	 */
 	private void AnalyseImage(String imageLocation){
+	    
+	    // Delete the results file before we call the native code
+	    if(new File(Constants.filesDir + "/results").exists())
+	        new File(Constants.filesDir).delete();
+	        
 		Log.d("ShopAndStore","Calling native code");
 		callnativecode(imageLocation);
 		String[] results = getProducts();
@@ -103,7 +102,8 @@ public class LoadingPage extends Activity{
             // Spinner
 			progDialog = new ProgressDialog(this);
 			progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			progDialog.setMessage("Loading...");
+			progDialog.setCancelable(false);
+			progDialog.setMessage("Analysing...");
 			progThread = new ProgressThread(handler);
 			progThread.start();
 			return progDialog;
@@ -121,7 +121,7 @@ public class LoadingPage extends Activity{
 			if (total <= 0){
 				dismissDialog(0);
 				progThread.setState(ProgressThread.DONE);
-				Intent disp = new Intent(context,ListCreator.class);
+				Intent disp = new Intent(ShopAndShare.sContext,ListCreator.class);
 				startActivity(disp);
 				finish();
 			}
@@ -170,5 +170,6 @@ public class LoadingPage extends Activity{
 		public void setState(int state) {
 			mState = state;
 		}
+		
 	}
 }

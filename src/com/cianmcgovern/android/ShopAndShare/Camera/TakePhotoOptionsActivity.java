@@ -3,6 +3,7 @@ package com.cianmcgovern.android.ShopAndShare.Camera;
 import java.util.ArrayList;
 
 import com.cianmcgovern.android.ShopAndShare.R;
+import com.cianmcgovern.android.ShopAndShare.ShopAndShare;
 
 import android.app.ExpandableListActivity;
 import android.content.Intent;
@@ -72,7 +73,7 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(this,TakePhoto.class);
+        Intent i = new Intent(ShopAndShare.sContext,TakePhoto.class);
         startActivity(i);
         finish();
     }
@@ -89,7 +90,7 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
         case R.id.exit:
-            Intent i = new Intent(this,TakePhoto.class);
+            Intent i = new Intent(ShopAndShare.sContext,TakePhoto.class);
             startActivity(i);
             finish();
             return true;
