@@ -117,6 +117,7 @@ public class ShopAndShare extends Activity
             tessDir.delete();
             Log.w("ShopAndShare","Tesseract data directory exists, deleting!");
         }
+        tessDir.mkdir();
         File tessData = new File(Constants.filesDir+"/tessdata/eng.traineddata");
         is = getResources().openRawResource(R.raw.eng);
         os = new FileOutputStream(tessData);
