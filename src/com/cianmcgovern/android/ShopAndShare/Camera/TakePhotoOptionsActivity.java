@@ -38,6 +38,7 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
     private final String FOCUSMODE = "Focus Mode";
     private final String FLASHMODE = "Flash Mode";
     private final String SCENEMODE = "Scene Mode";
+    private final String WHITEBALANCE = "White Balance";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
 
         optionsChildren.add(Camera.Parameters.FOCUS_MODE_AUTO);
         optionsChildren.add(Camera.Parameters.FOCUS_MODE_MACRO);
+        optionsChildren.add(Camera.Parameters.FOCUS_MODE_FIXED);
         mOptions.add(new TakePhotoOption(FOCUSMODE,optionsChildren));
 
         optionsChildren = new ArrayList<String>();
@@ -64,10 +66,23 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
         optionsChildren.add(Camera.Parameters.SCENE_MODE_NIGHT);
         optionsChildren.add(Camera.Parameters.SCENE_MODE_STEADYPHOTO);
         mOptions.add(new TakePhotoOption(SCENEMODE,optionsChildren));
+        
+        optionsChildren = new ArrayList<String>();
+        optionsChildren.add(Camera.Parameters.WHITE_BALANCE_AUTO);
+        optionsChildren.add(Camera.Parameters.WHITE_BALANCE_CLOUDY_DAYLIGHT);
+        optionsChildren.add(Camera.Parameters.WHITE_BALANCE_DAYLIGHT);
+        optionsChildren.add(Camera.Parameters.WHITE_BALANCE_FLUORESCENT);
+        optionsChildren.add(Camera.Parameters.WHITE_BALANCE_INCANDESCENT);
+        optionsChildren.add(Camera.Parameters.WHITE_BALANCE_SHADE);
+        optionsChildren.add(Camera.Parameters.WHITE_BALANCE_TWILIGHT);
+        optionsChildren.add(Camera.Parameters.WHITE_BALANCE_WARM_FLUORESCENT);
+        mOptions.add(new TakePhotoOption(WHITEBALANCE,optionsChildren));
 
         // Use our own ListAdapter that extends the BaseExtendableListAdapter
         mAdapter = new OptionsListAdapter();
         setListAdapter(mAdapter);
+        this.getExpandableListView().setBackgroundResource(R.drawable.default_background);
+        this.getExpandableListView().setCacheColorHint(00000000);
         registerForContextMenu(getExpandableListView());
     }
 
@@ -118,7 +133,7 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
         private boolean mFocusCheck;
         private boolean mFlashCheck;
         private boolean mSceneCheck;
-
+        private boolean mWhiteBalanceCheck;
 
         /**
          * Creates a TextView with layout parameters based on the parent
@@ -134,7 +149,7 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
             // Center the text vertically
             textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
             // Set the text starting position
-            textView.setPadding(36, 0, 0, 0);
+            textView.setPadding(64, 0, 0, 0);
             return textView;
         }
 
@@ -150,7 +165,7 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
                     ViewGroup.LayoutParams.MATCH_PARENT, 64);
             cb.setLayoutParams(lp);
             cb.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-            cb.setPadding(36, 0, 0, 0);
+            cb.setPadding(64, 0, 0, 0);
             return cb;
         }
 
@@ -188,6 +203,11 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
             else if(optionText.equals(SCENEMODE) && optionChild.equals(TakePhoto.sSceneMode)) {
                 cb.setChecked(true);
                 mSceneCheck = true;
+            }
+            
+            else if(optionText.equals(WHITEBALANCE) && optionChild.equals(TakePhoto.sWhiteBalance)) {
+                cb.setChecked(true);
+                mWhiteBalanceCheck = true;
             }
 
             cb.setText(optionChild.toUpperCase());
@@ -229,6 +249,15 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
                                 mSceneCheck = true;
                             }
                         }
+                        
+                        else if(optionText.equals(WHITEBALANCE)) {
+                            if(mWhiteBalanceCheck)
+                                cb.setChecked(false);
+                            else {
+                                TakePhoto.sWhiteBalance = cb.getText().toString().toLowerCase();
+                                mWhiteBalanceCheck = true;
+                            }
+                        }
                     }
                     // If the user unchecked the option, we set the booleans to false for the group the option belongs to
                     else {
@@ -238,6 +267,8 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
                             mFlashCheck = false;
                         else if(optionText.equals(SCENEMODE))
                             mSceneCheck = false;
+                        else if(optionText.equals(WHITEBALANCE))
+                            mWhiteBalanceCheck = false;
                     }
 
                 }

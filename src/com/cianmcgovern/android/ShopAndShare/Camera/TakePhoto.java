@@ -75,7 +75,10 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
     }
 
     public void onClick(View v) {
-        mCamera.autoFocus(cb);
+        if(sFocusMode.equalsIgnoreCase(Camera.Parameters.FOCUS_MODE_FIXED))
+            mCamera.takePicture(null, mPictureCallback, mPictureCallback);
+        else
+            mCamera.autoFocus(cb);
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
