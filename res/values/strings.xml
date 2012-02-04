@@ -21,4 +21,7 @@
     <string name="deleteButton">Delete</string>
     <string name="deleteItemConfirm">Are you sure you would like to delete this item?</string>
     <string name="addButton">Add Item</string>
+    <string name="upload">Upload</string>
+    <string name="failed">A failure occurred while attempting to upload your results\n\nPlease try again</string>
+    <string name="tryAgain">Try Again</string>
 </resources>

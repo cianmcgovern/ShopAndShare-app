@@ -1,11 +1,15 @@
 package com.cianmcgovern.android.ShopAndShare;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -153,6 +157,30 @@ public class Results {
 		ofos.writeObject(results);
 		ofos.close();
 		fos.close();
+	}
+	
+	/**
+	 * Saves the current results to a text file for uploading
+	 * 
+	 * @return filename Filename of save file
+	 * @throws IOException
+	 */
+	public String toFile() throws IOException {
+	    
+	    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss");
+	    df.setTimeZone(TimeZone.getTimeZone("GMT"));
+	    String filename = Constants.uploads + "/" + df.format(new Date());
+	    File f = new File(filename);
+	    BufferedWriter fout = new BufferedWriter(new FileWriter(f));
+	    Iterator it = this.results.entrySet().iterator();
+	    while(it.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)it.next();
+	        Item item = (Item)pairs.getValue();
+	        String line = item.getProduct() + ":" + item.getPrice();
+	        fout.write(line+"\r\n");
+	    }
+	    fout.close();
+	    return filename;
 	}
 }
 

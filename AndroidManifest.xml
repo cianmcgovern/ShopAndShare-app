@@ -6,7 +6,11 @@
     android:versionName="0.1" >
 
     <uses-sdk android:minSdkVersion="8" />
+    
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -83,6 +87,18 @@
         <activity
             android:configChanges="orientation"
             android:name=".AddItem" >
+            <intent-filter >
+            </intent-filter>
+        </activity>
+        <activity
+            android:configChanges="orientation"
+            android:name=".Share" >
+            <intent-filter >
+            </intent-filter>
+        </activity>
+        <activity
+            android:configChanges="orientation"
+            android:name=".FailedUpload" >
             <intent-filter >
             </intent-filter>
         </activity>

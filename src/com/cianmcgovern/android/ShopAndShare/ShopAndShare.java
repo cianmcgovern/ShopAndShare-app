@@ -143,6 +143,13 @@ public class ShopAndShare extends Activity
             image.delete();
             Log.w("ShopAndShare","TIFF image file found, deleting!");
         }
+        
+        Constants.uploads = Constants.filesDir + "/uploads";
+        // Delete uploads directory if it exists and create it
+        File uploadsDir = new File(Constants.uploads);
+        if(uploadsDir.exists())
+            uploadsDir.delete();
+        uploadsDir.mkdir();
     }
 
     // Create options menu
