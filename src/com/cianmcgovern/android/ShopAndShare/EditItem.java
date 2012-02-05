@@ -26,10 +26,13 @@ public class EditItem extends Activity implements OnClickListener{
 	private Button save;
 	private Button delete;
 	private EditText ed1,ed2;
+	private Context mContext;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		
+	    mContext = this;
+	    
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.edit_item);
@@ -51,7 +54,7 @@ public class EditItem extends Activity implements OnClickListener{
 			@Override
 			public void onClick(View v) {
 				
-			    new AlertDialog.Builder(ShopAndShare.sContext)
+			    new AlertDialog.Builder(mContext)
 			    .setTitle(R.string.deleteConfirmTitle)
 			    .setMessage(R.string.deleteItemConfirm)
 			    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
