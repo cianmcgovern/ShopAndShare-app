@@ -11,11 +11,4 @@
         android:layout_height="wrap_content"
         android:cacheColorHint="#00000000" />
 
-    <TextView
-        android:id="@+id/android:empty"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:textSize="25sp"
-        android:text="@string/emptyList" />
-
 </LinearLayout>

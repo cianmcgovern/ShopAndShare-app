@@ -30,8 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
+        android:layout_alignParentLeft="true"
+        android:padding="10dp"
         android:text="@string/callLoadButton"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -40,9 +40,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView2"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
         android:layout_weight="1"
         android:background="@drawable/load_button"
         android:padding="10dp" />
+
+    <Button
+        android:id="@+id/manualButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:layout_weight="1"
+        android:background="@drawable/manual_button"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignLeft="@+id/manualButton"
+        android:text="Manual Entry"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

@@ -90,7 +90,7 @@ public class AddItem extends Activity {
                     if(!price.contains("."))
                         Toast.makeText(ShopAndShare.sContext, "The price must be valid eg. 1.99", Toast.LENGTH_LONG).show();
                     else {
-                        Results.getInstance().addItem(product, new Item(product,price));
+                        Results.getInstance().addItem(product.toUpperCase(), new Item(product.toUpperCase(),price));
                         Intent in = new Intent(ShopAndShare.sContext,ListCreator.class);
                         startActivity(in);
                         finish();

@@ -84,8 +84,16 @@ public class ListCreator extends ListActivity{
             public void onClick(View v) {
                 // Only allow the user to continue if there is network access
                 if(isNetworkAvailable()) {
-                    Intent in = new Intent(ShopAndShare.sContext,Share.class);
-                    startActivity(in);
+                    if(isResultsPopulated()) {
+                        Intent in = new Intent(ShopAndShare.sContext,Share.class);
+                        startActivity(in);
+                    }
+                    else {
+                        new AlertDialog.Builder(mContext)
+                        .setTitle("No data")
+                        .setMessage("You must have at least one item to share")
+                        .show();
+                    }
                 }
                 else
                     new AlertDialog.Builder(mContext)
@@ -121,6 +129,18 @@ public class ListCreator extends ListActivity{
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
+    }
+    
+    /**
+     * Returns a boolean on whether Results is populated or not
+     * 
+     * @return boolean
+     */
+    private boolean isResultsPopulated() {
+        if(Results.getInstance().getProducts().isEmpty())
+            return false;
+        else
+            return true;
     }
 
     @Override

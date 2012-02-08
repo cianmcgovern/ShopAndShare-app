@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import com.cianmcgovern.android.ShopAndShare.R;
 import com.cianmcgovern.android.ShopAndShare.Camera.TakePhoto;
 import com.cianmcgovern.android.ShopAndShare.Comparison.LoadFile;
+import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
 
 import android.app.Activity;
 import android.content.Context;
@@ -41,7 +42,7 @@ import android.widget.Button;
 
 public class ShopAndShare extends Activity
 {
-    private Button callPhoto,callLoad;
+    private Button callPhoto,callLoad,manual;
     public static Context sContext;
 
     /** Called when the activity is first created. */
@@ -79,6 +80,17 @@ public class ShopAndShare extends Activity
                 startActivity(x);
             }
 
+        });
+        
+        manual = (Button) findViewById(R.id.manualButton);
+        manual.setOnClickListener(new OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(ShopAndShare.sContext,ListCreator.class);
+                startActivity(in);
+            }
+            
         });
     }
 
