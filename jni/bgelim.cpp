@@ -11,7 +11,7 @@ bgElim::bgElim(cv::Mat *input)
 		target[0] = 0;
 		target[1] = 0;
 		target[2] = 0;
-                minDist = 300;
+        minDist = 340;
 		process();
 	}
 }
@@ -80,6 +80,7 @@ void bgElim::process()
         newImage.create(image.rows, image.cols, CV_8U);
 	createIterators();
 	iteratePixels();
+    Logger::getLogger()->write(3,"Inside process");
 }
 
 cv::Mat bgElim::getbgElimImage()
