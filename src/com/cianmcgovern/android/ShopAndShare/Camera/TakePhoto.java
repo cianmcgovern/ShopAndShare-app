@@ -84,6 +84,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
             public void onClick(View v) {
                 Intent i = new Intent(ShopAndShare.sContext,TakePhotoOptionsActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 
