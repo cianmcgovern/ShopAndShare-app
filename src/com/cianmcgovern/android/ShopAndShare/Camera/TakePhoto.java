@@ -55,7 +55,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 
     // These options set the default parameters for the Camera
     // They can be changed by the user in TakePhotoOptionsActivity
-    public static String sFlashMode = Camera.Parameters.FLASH_MODE_AUTO;
+    public static String sFlashMode = Camera.Parameters.FLASH_MODE_ON;
     public static String sFocusMode = Camera.Parameters.FOCUS_MODE_MACRO;
     public static String sWhiteBalance = Camera.Parameters.WHITE_BALANCE_AUTO;
     public static String sSceneMode = Camera.Parameters.SCENE_MODE_STEADYPHOTO;
