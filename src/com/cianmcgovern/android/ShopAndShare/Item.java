@@ -16,24 +16,33 @@
 package com.cianmcgovern.android.ShopAndShare;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class Item implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private String productName;
 	private String price;
+	private String time;
 	private int rating;
+	private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	public Item(String product, String price,int rating){
+	    df.setTimeZone(TimeZone.getTimeZone("GMT"));
 		this.productName=product;
 		this.price=price;
 		this.rating=rating;
+		this.time = df.format(new Date());
 	}
 	
 	public Item(String product, String price){
+	    df.setTimeZone(TimeZone.getTimeZone("GMT"));
 		this.productName=product;
 		this.price=price;
 		this.rating=0;
+		this.time = df.format(new Date());
 	}
 	
 	public String getProduct(){
@@ -46,6 +55,10 @@ public class Item implements Serializable{
 	
 	public int getRating(){
 		return this.rating;
+	}
+	
+	public String getTime() {
+	    return this.time;
 	}
 	
 	public void setProduct(String product){

@@ -183,7 +183,7 @@ public class Results {
 	 */
 	public String toFile() throws IOException {
 	    
-	    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss");
+	    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 	    df.setTimeZone(TimeZone.getTimeZone("GMT"));
 	    String filename = Constants.uploads + "/" + df.format(new Date());
 	    File f = new File(filename);
@@ -192,7 +192,7 @@ public class Results {
 	    while(it.hasNext()) {
 	        Map.Entry pairs = (Map.Entry)it.next();
 	        Item item = (Item)pairs.getValue();
-	        String line = item.getProduct() + ":" + item.getPrice();
+	        String line = item.getProduct() + "/" + item.getPrice() + "/" + item.getTime();
 	        fout.write(line+"\r\n");
 	    }
 	    fout.close();
