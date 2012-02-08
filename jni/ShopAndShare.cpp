@@ -49,6 +49,8 @@ int main()
         results << x.c_str() << '\n';
     }
     results.close();
+
+    delete im;
 }
 
 char *concat(char* result,const char* one, const char* two)

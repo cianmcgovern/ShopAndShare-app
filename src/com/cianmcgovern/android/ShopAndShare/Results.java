@@ -72,6 +72,7 @@ public class Results {
 	 * 
 	 */
 	public void setProducts(String[] inProducts,int length){
+	    results = new HashResults<String,Item>();
 		for(int i=0;i<length;i++){
 			String line = inProducts[i].trim();
 			if(line.contains(".") && line.length() > 4){
