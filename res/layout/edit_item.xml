@@ -54,7 +54,9 @@
 
             <EditText
                 android:id="@+id/editPrice"
-                android:layout_width="fill_parent" />
+                android:layout_width="fill_parent"
+                android:numeric="decimal"
+                android:maxLength="5" />
         </TableRow>
     </TableLayout>
 
