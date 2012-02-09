@@ -15,6 +15,10 @@
  ******************************************************************************/
 package com.cianmcgovern.android.ShopAndShare;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
 import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
 
 import android.app.Activity;
@@ -38,6 +42,7 @@ public class AddItem extends Activity {
 
     private EditText mEd1,mEd2;
     private Button mAdd,mCancel;
+    private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,7 +95,8 @@ public class AddItem extends Activity {
                     if(!price.contains("."))
                         Toast.makeText(ShopAndShare.sContext, "The price must be valid eg. 1.99", Toast.LENGTH_LONG).show();
                     else {
-                        Results.getInstance().addItem(product.toUpperCase(), new Item(product.toUpperCase(),price));
+                        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+                        Results.getInstance().addItem(product.toUpperCase(), new Item(product.toUpperCase(),price, df.format(new Date()).toString()));
                         Intent in = new Intent(ShopAndShare.sContext,ListCreator.class);
                         startActivity(in);
                         finish();

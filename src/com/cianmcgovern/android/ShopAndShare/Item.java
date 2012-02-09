@@ -27,22 +27,19 @@ public class Item implements Serializable{
 	private String price;
 	private String time;
 	private int rating;
-	private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
-	public Item(String product, String price,int rating){
-	    df.setTimeZone(TimeZone.getTimeZone("GMT"));
+	public Item(String product, String price,int rating, String time){
 		this.productName=product;
 		this.price=price;
 		this.rating=rating;
-		this.time = df.format(new Date());
+		this.time = time;
 	}
 	
-	public Item(String product, String price){
-	    df.setTimeZone(TimeZone.getTimeZone("GMT"));
+	public Item(String product, String price, String time){
 		this.productName=product;
 		this.price=price;
 		this.rating=0;
-		this.time = df.format(new Date());
+		this.time = time;
 	}
 	
 	public String getProduct(){

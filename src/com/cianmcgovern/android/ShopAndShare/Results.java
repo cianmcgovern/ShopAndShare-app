@@ -48,6 +48,7 @@ public class Results {
 	private static HashResults<String, Item> results;
 	
 	private static Results _instance;
+	private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	public static Results getInstance(){
 		if(_instance==null){
@@ -78,8 +79,9 @@ public class Results {
 			if(line.contains(".") && line.length() > 4){
 				String product = parseProduct(line);
 				String price = parsePrice(line);
-				if(product != null){
-				    Item x = new Item(product,price);
+				if(product != null && product.length() < 15){
+				    df.setTimeZone(TimeZone.getTimeZone("GMT"));;
+				    Item x = new Item(product,price,df.format(new Date()).toString());
 				    results.put(product, x);
 				}
 			}
@@ -151,7 +153,7 @@ public class Results {
 	
 	public void changeKey(String old, String snew){
 		Item x = results.get(old);
-		
+		x.setProduct(snew);
 		results.remove(old);
 		results.put(snew, x);
 	}

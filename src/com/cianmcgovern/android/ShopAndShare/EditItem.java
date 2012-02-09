@@ -128,9 +128,6 @@ public class EditItem extends Activity implements OnClickListener{
 			
 		});
 		
-		Log.v("ShopAndShare","Price value has been set to: "+Results.getInstance().getProducts().get(product));
-		
-		
 	}
 	
 	@Override
@@ -143,7 +140,7 @@ public class EditItem extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		
-		final String productText = ed1.getText().toString();
+		final String productText = ed1.getText().toString().toUpperCase();
 		final String priceText = ed2.getText().toString();
 		
 		// If the product name has not been changed
