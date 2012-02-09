@@ -17,6 +17,8 @@ package com.cianmcgovern.android.ShopAndShare;
 
 import java.util.ArrayList;
 
+import android.content.pm.PackageManager;
+
 public class Constants{
 	
 	public static byte[] ImageData = null;
@@ -25,4 +27,5 @@ public class Constants{
 	public static String uploads = null;
 	public static final String url = "http://176.34.209.205/submit/upload";
 	public static ArrayList<String> wordList = null;
+	public static final PackageManager packageManager = ShopAndShare.sContext.getPackageManager();
 }

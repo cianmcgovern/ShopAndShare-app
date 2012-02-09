@@ -17,6 +17,7 @@ package com.cianmcgovern.android.ShopAndShare.Camera;
 
 import java.util.ArrayList;
 
+import com.cianmcgovern.android.ShopAndShare.CheckFeatures;
 import com.cianmcgovern.android.ShopAndShare.R;
 import com.cianmcgovern.android.ShopAndShare.ShopAndShare;
 
@@ -81,7 +82,7 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
         optionsChildren.add(Camera.Parameters.SCENE_MODE_NIGHT);
         optionsChildren.add(Camera.Parameters.SCENE_MODE_STEADYPHOTO);
         mOptions.add(new TakePhotoOption(SCENEMODE,optionsChildren));
-        
+
         optionsChildren = new ArrayList<String>();
         optionsChildren.add(Camera.Parameters.WHITE_BALANCE_AUTO);
         optionsChildren.add(Camera.Parameters.WHITE_BALANCE_CLOUDY_DAYLIGHT);
@@ -204,22 +205,30 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
             final String optionText = option.getOption();
             final String optionChild = option.getOptionChildren().get(childPosition);
 
-            // Make this checkbox checked if option is selected in TakePhoto
-            if(optionText.equals(FOCUSMODE) && optionChild.equals(TakePhoto.sFocusMode)) {
-                cb.setChecked(true);
-                mFocusCheck = true;
+            if(optionText.equals(FLASHMODE) && !CheckFeatures.haveFlash())
+                cb.setEnabled(false);
+
+            else if(optionText.equals(FOCUSMODE) && !CheckFeatures.haveAutoFocus())
+                cb.setEnabled(false);
+
+            else {
+                // Make this checkbox checked if option is selected in TakePhoto
+                if(optionText.equals(FOCUSMODE) && optionChild.equals(TakePhoto.sFocusMode)) {
+                    cb.setChecked(true);
+                    mFocusCheck = true;
+                }
+
+                else if(optionText.equals(FLASHMODE) && optionChild.equals(TakePhoto.sFlashMode)) {
+                    cb.setChecked(true);
+                    mFlashCheck = true;
+                }
             }
 
-            else if(optionText.equals(FLASHMODE) && optionChild.equals(TakePhoto.sFlashMode)) {
-                cb.setChecked(true);
-                mFlashCheck = true;
-            }
-
-            else if(optionText.equals(SCENEMODE) && optionChild.equals(TakePhoto.sSceneMode)) {
+            if(optionText.equals(SCENEMODE) && optionChild.equals(TakePhoto.sSceneMode)) {
                 cb.setChecked(true);
                 mSceneCheck = true;
             }
-            
+
             else if(optionText.equals(WHITEBALANCE) && optionChild.equals(TakePhoto.sWhiteBalance)) {
                 cb.setChecked(true);
                 mWhiteBalanceCheck = true;
@@ -232,7 +241,7 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView,
                         boolean isChecked) {
-                    
+
                     // If it is checked, we check what group this child belongs to and then we see if no other childs have been checked
                     // If not, we can set the particular option in TakePhoto
                     // If there is already a checkbox checked in the same group, we change the state of the checkbox to not checked
@@ -264,7 +273,7 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
                                 mSceneCheck = true;
                             }
                         }
-                        
+
                         else if(optionText.equals(WHITEBALANCE)) {
                             if(mWhiteBalanceCheck)
                                 cb.setChecked(false);

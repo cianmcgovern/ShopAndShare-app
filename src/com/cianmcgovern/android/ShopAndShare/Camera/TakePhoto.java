@@ -17,6 +17,7 @@ package com.cianmcgovern.android.ShopAndShare.Camera;
 
 import java.io.IOException;
 
+import com.cianmcgovern.android.ShopAndShare.CheckFeatures;
 import com.cianmcgovern.android.ShopAndShare.Constants;
 import com.cianmcgovern.android.ShopAndShare.LoadingPage;
 import com.cianmcgovern.android.ShopAndShare.R;
@@ -87,7 +88,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
                 finish();
             }
         });
-
+        
     }
 
     public void onClick(View v) {
@@ -115,8 +116,10 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
         // Set up the camera with the parameters from the method call
         mParameters = mCamera.getParameters();
         mParameters.setPreviewSize(w, h);
-        mParameters.setFocusMode(sFocusMode);
-        mParameters.setFlashMode(sFlashMode);
+        if(CheckFeatures.haveAutoFocus())
+            mParameters.setFocusMode(sFocusMode);
+        if(CheckFeatures.haveFlash())
+            mParameters.setFlashMode(sFlashMode);
         mParameters.setWhiteBalance(sWhiteBalance);
         mParameters.setJpegQuality(100);
         mCamera.setParameters(mParameters);

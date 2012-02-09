@@ -29,6 +29,7 @@ import com.cianmcgovern.android.ShopAndShare.Comparison.LoadFile;
 import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -66,8 +67,15 @@ public class ShopAndShare extends Activity
 
             @Override
             public void onClick(View v) {
-                Intent photo = new Intent(ShopAndShare.sContext,TakePhoto.class);
-                startActivity(photo);
+                if(!CheckFeatures.haveCamera())
+                    new AlertDialog.Builder(sContext)
+                    .setTitle("Camera Required")
+                    .setMessage("You need to have a camera to use this feature")
+                    .show();
+                else {
+                    Intent photo = new Intent(ShopAndShare.sContext,TakePhoto.class);
+                    startActivity(photo);
+                }
             }
             
         });

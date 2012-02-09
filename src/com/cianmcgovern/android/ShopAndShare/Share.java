@@ -153,8 +153,15 @@ public class Share extends Activity {
             @Override
             public void onClick(View v) {
                 locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+                if(!CheckFeatures.haveGPS()){
+                    new AlertDialog.Builder(mContext)
+                    .setTitle("GPS Required")
+                    .setMessage("You must have GPS to use this feature")
+                    .show();
+                }
                 // Only use GPS if it is enabled
-                if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                else if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    search.setEnabled(false);
                     search.setBackgroundResource(R.drawable.world);
                     getLocation();
                 }
@@ -301,6 +308,7 @@ public class Share extends Activity {
                 location.setLatitude(loc.getLatitude());
                 getAddress();
                 locationManager.removeUpdates(this);
+                search.setEnabled(true);
             }
 
             @Override
