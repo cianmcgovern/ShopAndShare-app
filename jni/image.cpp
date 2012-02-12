@@ -24,9 +24,9 @@ void Image::mbgElim()
 cv::Mat Image::toMat()
 {
 	fileToMat *fm = new fileToMat();
-
-	return fm->getImage();
-	delete fm;
+    cv::Mat result = fm->getImage();
+    delete fm;
+    return result;
 }
 
 cv::Mat Image::getImage()
@@ -43,5 +43,6 @@ void Image::callAnalyse()
 
 void Image::toFile(cv::Mat *input)
 {
-	new matToFile(input);
+    matToFile *m = new matToFile(input);
+    delete m;
 }

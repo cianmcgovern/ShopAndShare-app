@@ -139,6 +139,7 @@ int analyse::callInit()
 						    image.get_bpp());
 	tmp.SetImage(image.get_buffer(), image.get_xsize(), image.get_ysize(), image.get_bpp() / 8, bytes_per_line);
         std::string result=tmp.GetUTF8Text();
+
         Logger::getLogger()->write(3, "Tesseract result:");
         Logger::getLogger()->write(3, result);
         if(result.find_last_of(".")<0){

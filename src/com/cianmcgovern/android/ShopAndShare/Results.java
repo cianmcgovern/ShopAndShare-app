@@ -30,6 +30,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.cianmcgovern.android.ShopAndShare.Comparison.Comparator;
+import com.cianmcgovern.android.ShopAndShare.Comparison.CompareStrings;
 
 import android.util.Log;
 
@@ -74,19 +75,46 @@ public class Results {
 	 */
 	public void setProducts(String[] inProducts,int length){
 	    results = new HashResults<String,Item>();
+		boolean reducedPriceDone = false;
+		String reducedPriceKey = null;
 		for(int i=0;i<length;i++){
 			String line = inProducts[i].trim();
-			if(line.contains(".") && line.length() > 4){
+			String nextLine = null;
+			if(i+1 < length)
+				nextLine = inProducts[i+1].trim();
+
+			if( reducedPriceDone ) {
+				results.remove(reducedPriceKey);
+				reducedPriceDone = false;
+			}
+			else if(line.contains(".") && line.length() > 4){
 				String product = parseProduct(line);
 				String price = parsePrice(line);
 				if(product != null && product.length() < 15){
-				    df.setTimeZone(TimeZone.getTimeZone("GMT"));;
-				    Item x = new Item(product,price,df.format(new Date()).toString());
-				    results.put(product, x);
+					if( !results.containsKey(product.trim()) ) {
+						df.setTimeZone(TimeZone.getTimeZone("GMT"));;
+						Item x = new Item(product.trim(),price.trim(),df.format(new Date()).toString());
+						Log.v("ShopAndShare","Added parsed product: " + product + " with price: " + price);
+						results.put(product.trim(), x);
+					}
+					else
+						Log.w("ShopAndShare","Map already contains " + product + "! Not adding...");
 				}
 			}
+			// If there was no price in the current result, check if the next product is similar to "Reduced Price" then store this price as the products price
+			else if( nextLine != null && nextLine .contains(".") && nextLine.length() > 4 ) {
+				String price = parsePrice(nextLine);
+				String reducedPrice = parseProduct(nextLine);
+				String product = parseProduct(line);
+				if( reducedPrice != null && CompareStrings.similarity(reducedPrice.trim(), "REDUCED PRICE") > 0.8 ) {
+					Log.v("ShopAndShare","Added parsed product: " + product + " with reduced price: " + price);
+					results.put(product, new Item(product,price,df.format(new Date()).toString()));
+					reducedPriceDone = true;
+				}
+
+			}
 			else
-				Log.v("ShopAndShare","Couldn't find decimal point in string");
+				Log.w("ShopAndShare","Couldn't find decimal point in string");
 		}
 	}
 	

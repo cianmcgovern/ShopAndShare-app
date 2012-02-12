@@ -16,11 +16,10 @@ int main(int argc, char *argv[])
 	constants::originalImage = argv[1];
         constants::bgElimImage = "image.tiff";
         constants::dataPath = "/home/cian/Development/ShopAndStore/jni/";
-	constants::dataPathFull = "/home/cian/Development/ShopAndStore/jni/tessdata/eng.traineddata";
+    	constants::dataPathFull = "/home/cian/Development/ShopAndShare-app/jni/tessdata/eng.traineddata";
 	Image *image = new Image();
-	cv::namedWindow("win");
-	cv::imshow("win", image->getImage());
-        cv::waitKey(0);
+    	//cv::namedWindow("win");
+    	//cv::imshow("win", image->getImage());
 
         std::vector<std::string> product=Result::getInstance()->getResults();
 
