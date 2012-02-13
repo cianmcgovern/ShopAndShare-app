@@ -102,6 +102,12 @@
             <intent-filter >
             </intent-filter>
         </activity>
+        <activity
+            android:configChanges="orientation"
+            android:name=".EmptyResult" >
+            <intent-filter >
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

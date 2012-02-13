@@ -24,6 +24,7 @@ import org.apache.http.client.ClientProtocolException;
 
 import com.cianmcgovern.android.ShopAndShare.AddItem;
 import com.cianmcgovern.android.ShopAndShare.EditItem;
+import com.cianmcgovern.android.ShopAndShare.EmptyResult;
 import com.cianmcgovern.android.ShopAndShare.Item;
 import com.cianmcgovern.android.ShopAndShare.R;
 import com.cianmcgovern.android.ShopAndShare.Results;
@@ -107,6 +108,12 @@ public class ListCreator extends ListActivity{
 
         ArrayList<Item> products = new ArrayList<Item>();
 
+        if(Results.getInstance().getProducts().isEmpty()) {
+            Intent in = new Intent(ShopAndShare.sContext,EmptyResult.class);
+            startActivity(in);
+            finish();
+        }
+        
         Iterator i = Results.getInstance().getProducts().entrySet().iterator();
 
         while(i.hasNext()){

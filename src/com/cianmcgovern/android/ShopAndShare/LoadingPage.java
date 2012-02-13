@@ -118,7 +118,7 @@ public class LoadingPage extends Activity{
 			progDialog = new ProgressDialog(this);
 			progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 			progDialog.setCancelable(false);
-			progDialog.setMessage("Analysing...");
+			progDialog.setMessage("Analysing your receipt... this shouldn't take more than a few moments");
 			progThread = new ProgressThread(handler);
 			progThread.start();
 			return progDialog;

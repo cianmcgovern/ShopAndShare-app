@@ -94,8 +94,10 @@ public class Share extends Activity {
                 String userLoc = mLocation.getText().toString();
                 String userStore = mStore.getText().toString();
                 // Don't allow empty text fields
-                if(userLoc.length() > 1 && userStore.length() > 1)
+                if(userLoc.length() > 1 && userStore.length() > 1) {
                     runUpload(Results.getInstance(),userLoc,userStore);
+                    Results.getInstance().clearResults();
+                }
                 else
                     new AlertDialog.Builder(mContext).setTitle("Invalid inputs").setMessage("Store name and location must be valid").show();
             }

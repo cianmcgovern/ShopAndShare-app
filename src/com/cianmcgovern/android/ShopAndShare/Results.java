@@ -46,7 +46,7 @@ import android.util.Log;
  */
 public class Results {
 	
-	private static HashResults<String, Item> results;
+	private HashResults<String, Item> results;
 	
 	private static Results _instance;
 	private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -54,7 +54,7 @@ public class Results {
 	public static Results getInstance(){
 		if(_instance==null){
 			_instance = new Results();
-			results = new HashResults<String,Item>();
+			_instance.results = new HashResults<String,Item>();
 		}
 		return _instance;
 	}
@@ -74,7 +74,7 @@ public class Results {
 	 * 
 	 */
 	public void setProducts(String[] inProducts,int length){
-	    results = new HashResults<String,Item>();
+	    clearResults();
 		boolean reducedPriceDone = false;
 		String reducedPriceKey = null;
 		for(int i=0;i<length;i++){
@@ -118,6 +118,12 @@ public class Results {
 		}
 	}
 	
+	/**
+	 * Clears the current results
+	 */
+	public void clearResults() {
+	    this.results.clear();
+	}
 	/**
 	 * Parses the input string for a decimal number and returns it as a string
 	 * @param x
@@ -203,6 +209,8 @@ public class Results {
 		ofos.writeObject(results);
 		ofos.close();
 		fos.close();
+		// Empty the results so they don't get appended to a new result
+		this.clearResults();
 	}
 	
 	/**
