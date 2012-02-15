@@ -23,15 +23,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.cianmcgovern.android.ShopAndShare.R;
-import com.cianmcgovern.android.ShopAndShare.Camera.TakePhoto;
-import com.cianmcgovern.android.ShopAndShare.Comparison.LoadFile;
-import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -41,9 +37,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.cianmcgovern.android.ShopAndShare.Camera.TakePhoto;
+import com.cianmcgovern.android.ShopAndShare.Comparison.LoadFile;
+import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
+
 public class ShopAndShare extends Activity
 {
-    private Button callPhoto,callLoad,manual;
+    private Button callPhoto,callLoad,manual,mBrowser;
     public static Context sContext;
 
     /** Called when the activity is first created. */
@@ -96,6 +96,17 @@ public class ShopAndShare extends Activity
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(ShopAndShare.sContext,ListCreator.class);
+                startActivity(in);
+            }
+            
+        });
+        
+        mBrowser = (Button) findViewById(R.id.webBrowser);
+        mBrowser.setOnClickListener(new OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse("http://108.60.143.109"));
                 startActivity(in);
             }
             

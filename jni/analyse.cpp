@@ -23,7 +23,7 @@ void read_tiff_image(TIFF *tif, IMAGE *image)
 	TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &image_width);
 	TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &image_height);
 	if (!TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bpp))
-		bpp = 1;  // Binary is default if no value provided.
+	    bpp = 1;  // Binary is default if no value provided.
 	TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samples_per_pixel);
 	TIFFGetField(tif, TIFFTAG_PHOTOMETRIC, &photometric);
 	if (samples_per_pixel > 1)
@@ -75,7 +75,7 @@ void analyse::splitTessResult(std::string result)
         x++;
     }
 
-
+    
     Logger::getLogger()->write(3, "Putting tesseract results into iterator");
 
     // Add each line to a
@@ -123,30 +123,43 @@ int analyse::callInit()
 {
 	tesseract::TessBaseAPI tmp;
 
+    tmp.SetPageSegMode(tesseract::PSM_SINGLE_COLUMN);
+    Logger::getLogger()->write(3,"Setting page mode");
+    tmp.SetVariable("tessedit_char_whitelist",".0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ/ ");
 	Logger::getLogger()->write(3, "After tesseract api creation");
+
 	if (tmp.Init(constants::dataPath, "eng") != 0) {
 		Logger::getLogger()->write(6, "Tesseract API not initialised");
 		exit(1);
 	}
-	Logger::getLogger()->write(3, "Setting tesseract page mode");
-        tmp.SetPageSegMode(tesseract::PSM_SINGLE_COLUMN);
-        tmp.SetVariable("tessedit_char_whitelist",".0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ/ ");
+	//Logger::getLogger()->write(3, "Setting tesseract page mode");
+        //tmp.SetPageSegMode(tesseract::PSM_SINGLE_COLUMN);
+        //tmp.SetVariable("tessedit_char_whitelist",".0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ/ ");
 
 	this->getImage();
 
 	int bytes_per_line = check_legal_image_size(image.get_xsize(),
 						    image.get_ysize(),
 						    image.get_bpp());
-	tmp.SetImage(image.get_buffer(), image.get_xsize(), image.get_ysize(), image.get_bpp() / 8, bytes_per_line);
-        std::string result=tmp.GetUTF8Text();
 
-        Logger::getLogger()->write(3, "Tesseract result:");
-        Logger::getLogger()->write(3, result);
-        if(result.find_last_of(".")<0){
-            Logger::getLogger()->write(6,"Couldn't find decimal place in any string in Tesseract Result");
-            exit(1);
-        }
-        this->splitTessResult(result);
+	tmp.SetImage(image.get_buffer(), 
+                image.get_xsize(), 
+                image.get_ysize(), 
+                image.get_bpp() / 8, 
+                bytes_per_line);
+
+    Logger::getLogger()->write(3,"After SetImage");
+
+    std::string result=tmp.GetUTF8Text();
+    tmp.End();
+    Logger::getLogger()->write(3, "Tesseract result:");
+    Logger::getLogger()->write(3, result);
+
+    if(result.find_last_of(".")<0){
+        Logger::getLogger()->write(6,"Couldn't find decimal place in any string in Tesseract Result");
+        exit(1);
+    }
+    this->splitTessResult(result);
 	return 0;
 }
 
@@ -164,7 +177,7 @@ void analyse::checkDataFileExists()
 void analyse::getImage()
 {
 	TIFF *archive = NULL;
-        archive = TIFFOpen(constants::bgElimImage, "r");
+    archive = TIFFOpen(constants::bgElimImage, "r");
 	read_tiff_image(archive, &image);
 	TIFFClose(archive);
 }

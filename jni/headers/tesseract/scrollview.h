@@ -201,10 +201,8 @@ class ScrollView {
 * constructor, so this is not listed here)
 *******************************************************************************/
 
-#ifdef HAVE_LIBLEPT
 // Draw a Pix on (x,y).
   void Image(struct Pix* image, int x_pos, int y_pos);
-#endif
 
 // Flush buffers and update display.
   static void Update();
@@ -347,14 +345,12 @@ class ScrollView {
   int TranslateYCoordinate(int y);
 
  private:
-#ifdef HAVE_LIBLEPT
 // Transfers a binary Image.
   void TransferBinaryImage(struct Pix* image);
 // Transfers a gray scale Image.
   void TransferGrayImage(struct Pix* image);
 // Transfers a 32-Bit Image.
   void Transfer32bppImage(struct Pix* image);
-#endif
 
 // Sets up ScrollView, depending on the variables from the constructor.
   void Initialize(const char* name, int x_pos, int y_pos, int x_size,
@@ -398,6 +394,9 @@ class ScrollView {
   int y_size_;
   // # of created windows (used to assign an id to each ScrollView* for svmap).
   static int nr_created_windows_;
+  // Serial number of sent images to ensure that the viewer knows they
+  // are distinct.
+  static int image_index_;
 
   // The stream through which the c++ client is connected to the server.
   static SVNetwork* stream_;

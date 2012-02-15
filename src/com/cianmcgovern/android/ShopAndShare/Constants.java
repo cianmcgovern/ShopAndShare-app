@@ -25,7 +25,7 @@ public class Constants{
 	public static String filesDir = null;
 	public static String saveDir = null;
 	public static String uploads = null;
-	public static final String url = "http://176.34.209.205/submit/upload";
+	public static final String url = "http://108.60.143.109/submit/upload";
 	public static ArrayList<String> wordList = null;
 	public static final PackageManager packageManager = ShopAndShare.sContext.getPackageManager();
 }

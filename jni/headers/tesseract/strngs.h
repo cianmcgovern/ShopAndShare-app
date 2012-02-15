@@ -1,4 +1,4 @@
-/**********************************************************************
+﻿/**********************************************************************
  * File:        strngs.h  (Formerly strings.h)
  * Description: STRING class definition.
  * Author:					Ray Smith
@@ -34,7 +34,15 @@
 // cannot assume we know the strlen.
 #define STRING_IS_PROTECTED  0
 
-class DLLSYM STRING
+#ifdef CCUTIL_EXPORTS
+#define CCUTIL_API __declspec(dllexport)
+#elif defined(CCUTIL_IMPORTS)
+#define CCUTIL_API __declspec(dllimport)
+#else
+#define CCUTIL_API
+#endif
+
+class CCUTIL_API STRING
 {
   public:
     STRING();
@@ -75,16 +83,6 @@ class DLLSYM STRING
     // be ambiguous, and ints usually need a string before or between them
     // anyway.
     void add_str_int(const char* str, int number);
-
-    // WARNING
-    // This method leaks the underlying pointer,
-    // but that is what the original implementation did
-    void prep_serialise();
-
-    void dump(FILE *f);
-    void de_dump(FILE *f);
-
-    make_serialise (STRING)
 
     // ensure capcaity but keep pointer encapsulated
     inline void ensure(inT32 min_capacity) { ensure_cstr(min_capacity); }
@@ -130,6 +128,14 @@ class DLLSYM STRING
     inline const char* GetCStr() const {
       return ((const char *)data_) + sizeof(STRING_HEADER);
     };
+    inline bool InvariantOk() const {
+#if STRING_IS_PROTECTED
+      return (GetHeader()->used_ == 0) ?
+        (string() == NULL) : (GetHeader()->used_ == (strlen(string()) + 1));
+#else
+      return true;
+#endif
+    }
 
     // Ensure string has requested capacity as optimization
     // to avoid unnecessary reallocations.

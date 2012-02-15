@@ -43,10 +43,16 @@ typedef struct
   PROTO_ID MaxProtoId;
   LIST ContextsSeen;
   BIT_VECTOR Protos;
+  int FontinfoId;  // font information inferred from pre-trained templates
 } TEMP_CONFIG_STRUCT;
 typedef TEMP_CONFIG_STRUCT *TEMP_CONFIG;
 
-typedef UNICHAR_ID *PERM_CONFIG;
+typedef struct
+{
+  UNICHAR_ID *Ambigs;
+  int FontinfoId;  // font information inferred from pre-trained templates
+} PERM_CONFIG_STRUCT;
+typedef PERM_CONFIG_STRUCT *PERM_CONFIG;
 
 typedef union
 {
@@ -57,7 +63,8 @@ typedef union
 typedef struct
 {
   uinT8 NumPermConfigs;
-  uinT8 dummy[3];
+  uinT8 MaxNumTimesSeen;  // maximum number of times any TEMP_CONFIG was seen
+  uinT8 dummy[2];         // (cut at matcher_min_examples_for_prototyping)
   BIT_VECTOR PermProtos;
   BIT_VECTOR PermConfigs;
   LIST TempProtos;
@@ -81,7 +88,7 @@ typedef ADAPT_TEMPLATES_STRUCT *ADAPT_TEMPLATES;
 #define NumNonEmptyClassesIn(Template) ((Template)->NumNonEmptyClasses)
 
 #define IsEmptyAdaptedClass(Class) ((Class)->NumPermConfigs == 0 &&      \
-(Class)->TempProtos == NIL)
+(Class)->TempProtos == NIL_LIST)
 
 #define ConfigIsPermanent(Class,ConfigId)		\
 (test_bit ((Class)->PermConfigs, ConfigId))
@@ -115,7 +122,7 @@ void free_adapted_class(ADAPT_CLASS adapt_class);
 
 void free_adapted_templates(ADAPT_TEMPLATES templates);
 
-TEMP_CONFIG NewTempConfig(int MaxProtoId);
+TEMP_CONFIG NewTempConfig(int MaxProtoId, int FontinfoId);
 
 TEMP_PROTO NewTempProto();
 

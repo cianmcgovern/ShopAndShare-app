@@ -31,7 +31,7 @@
 // Remove newline (if any) at the end of the string.
 inline void chomp_string(char *str) {
   int last_index = strlen(str) - 1;
-  if (str[last_index] == '\n') {
+  if (last_index >= 0 && str[last_index] == '\n') {
     str[last_index] = '\0';
   }
 }
@@ -102,6 +102,11 @@ inline int Modulo(int a, int b) {
 // Results with b negative are not defined.
 inline int DivRounded(int a, int b) {
   return a >= 0 ? (a + b / 2) / b : (a - b / 2) / b;
+}
+
+// Return a double cast to int with rounding.
+inline int IntCastRounded(double x) {
+  return x >= 0.0 ? static_cast<int>(x + 0.5) : -static_cast<int>(-x + 0.5);
 }
 
 // Reverse the order of bytes in a n byte quantity for big/little-endian switch.

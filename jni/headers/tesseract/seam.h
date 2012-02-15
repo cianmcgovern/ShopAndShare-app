@@ -28,6 +28,7 @@
 /*----------------------------------------------------------------------
               I n c l u d e s
 ----------------------------------------------------------------------*/
+#include "blobs.h"
 #include "split.h"
 #include "tessarray.h"
 
@@ -41,7 +42,7 @@ typedef struct seam_record
   PRIORITY priority;
   inT8 widthp;
   inT8 widthn;
-  inT16 location;
+  TPOINT location;
   SPLIT *split1;
   SPLIT *split2;
   SPLIT *split3;
@@ -60,20 +61,20 @@ extern SEAM *newseam();
  * Create a new seam record and copy the contents of this seam into it.
  */
 
-#define clone_seam(dest,source)                       \
-if (source) {                                       \
-	(dest) = newseam ();                     \
-	(dest)->location = (source)->location;           \
-	(dest)->widthp = (source)->widthp;           \
-	(dest)->widthn = (source)->widthn;           \
-	(dest)->priority = (source)->priority;           \
-	clone_split ((dest)->split1, (source)->split1);  \
-	clone_split ((dest)->split2, (source)->split2);  \
-	clone_split ((dest)->split3, (source)->split3);  \
-}                                                   \
-else {                                              \
-	(dest) = (SEAM*) NULL;                           \
-}                                                   \
+#define clone_seam(dest,source)                    \
+if (source) {                                      \
+  (dest) = newseam ();                             \
+  (dest)->location = (source)->location;           \
+  (dest)->widthp = (source)->widthp;               \
+  (dest)->widthn = (source)->widthn;               \
+  (dest)->priority = (source)->priority;           \
+  clone_split ((dest)->split1, (source)->split1);  \
+  clone_split ((dest)->split2, (source)->split2);  \
+  clone_split ((dest)->split3, (source)->split3);  \
+}                                                  \
+else {                                             \
+  (dest) = (SEAM*) NULL;                           \
+}                                                  \
 
 
 /**
@@ -84,7 +85,7 @@ else {                                              \
  */
 
 #define exact_point(p1,p2)                    \
-	(! ((p1->pos.x - p2->pos.x) || (p1->pos.y - p2->pos.y)))
+        (! ((p1->pos.x - p2->pos.x) || (p1->pos.y - p2->pos.y)))
 
 /*----------------------------------------------------------------------
               F u n c t i o n s
@@ -98,6 +99,8 @@ SEAMS add_seam(SEAMS seam_list, SEAM *seam);
 void combine_seams(SEAM *dest_seam, SEAM *source_seam);
 
 void delete_seam(void *arg);  //SEAM  *seam);
+
+SEAMS start_seam_list(TBLOB *blobs);
 
 void free_seam_list(SEAMS seam_list);
 
@@ -116,12 +119,15 @@ int account_splits_right(SEAM *seam, TBLOB *blob);
 
 int account_splits_left(SEAM *seam, TBLOB *blob, TBLOB *end_blob);
 
+void account_splits_left_helper(SEAM *seam, TBLOB *blob, TBLOB *end_blob,
+                                inT32 *depth, inT8 *width, inT8 *found_em);
+
 bool find_split_in_blob(SPLIT *split, TBLOB *blob);
 
 SEAM *join_two_seams(SEAM *seam1, SEAM *seam2);
 
 SEAM *new_seam(PRIORITY priority,
-               int x_location,
+               const TPOINT& location,
                SPLIT *split1,
                SPLIT *split2,
                SPLIT *split3);
@@ -133,4 +139,17 @@ void print_seam(const char *label, SEAM *seam);
 void print_seams(const char *label, SEAMS seams);
 
 int shared_split_points(SEAM *seam1, SEAM *seam2);
+
+void break_pieces(TBLOB *blobs, SEAMS seams, inT16 start, inT16 end);
+
+void join_pieces(TBLOB *piece_blobs, SEAMS seams, inT16 start, inT16 end);
+
+void hide_seam(SEAM *seam);
+
+void hide_edge_pair(EDGEPT *pt1, EDGEPT *pt2);
+
+void reveal_seam(SEAM *seam);
+
+void reveal_edge_pair(EDGEPT *pt1, EDGEPT *pt2);
+
 #endif

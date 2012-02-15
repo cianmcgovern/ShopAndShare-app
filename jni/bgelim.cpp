@@ -11,7 +11,7 @@ bgElim::bgElim(cv::Mat *input)
 		target[0] = 0;
 		target[1] = 0;
 		target[2] = 0;
-        minDist = 340;
+        minDist = 150;
 		process();
 	}
 }

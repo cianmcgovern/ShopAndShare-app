@@ -27,7 +27,7 @@ namespace tesseract {
 
 /// Base class for all tesseract image thresholding classes.
 /// Specific classes can add new thresholding methods by
-/// overriding ThresholdToIMAGE and/or ThresholdToPix.
+/// overriding ThresholdToPix.
 /// Each instance deals with a single image, but the design is intended to
 /// be useful for multiple calls to SetRectangle and ThresholdTo* if
 /// desired.
@@ -66,20 +66,26 @@ class ImageThresholder {
   virtual void GetImageSizes(int* left, int* top, int* width, int* height,
                              int* imagewidth, int* imageheight);
 
-  /// Return true if HAVE_LIBLEPT and this thresholder implements the Pix
-  /// interface.
-  virtual bool HasThresholdToPix() const;
-
   /// Return true if the source image is color.
   bool IsColor() const {
     return image_bytespp_ >= 3;
   }
 
-  /// Threshold the source image as efficiently as possible to the output
-  /// tesseract IMAGE class.
-  virtual void ThresholdToIMAGE(IMAGE* image);
+  /// Returns true if the source image is binary.
+  bool IsBinary() const {
+    return image_bytespp_ == 0;
+  }
 
-#ifdef HAVE_LIBLEPT
+  int GetScaleFactor() const {
+    return scale_;
+  }
+  int GetSourceYResolution() const {
+    return yres_;
+  }
+  int GetScaledYResolution() const {
+    return scale_ * yres_;
+  }
+
   /// Pix vs raw, which to use?
   /// Implementations should provide the ability to source and target Pix
   /// where possible. A future version of Tesseract may choose to use Pix
@@ -101,7 +107,13 @@ class ImageThresholder {
   /// the layout analysis that uses it will only be available with Leptonica,
   /// so there is no raw equivalent.
   Pix* GetPixRect();
-#endif
+
+  /// Get a clone/copy of the source image rectangle, reduced to greyscale.
+  /// The returned Pix must be pixDestroyed.
+  /// This function will be used in the future by the page layout analysis, and
+  /// the layout analysis that uses it will only be available with Leptonica,
+  /// so there is no raw equivalent.
+  Pix* GetPixRectGrey();
 
  protected:
   // ----------------------------------------------------------------------
@@ -116,24 +128,6 @@ class ImageThresholder {
            rect_width_ == image_width_ && rect_height_ == image_height_;
   }
 
-  /// Otsu threshold the rectangle, taking everything except the image buffer
-  /// pointer from the class, to the output IMAGE.
-  void OtsuThresholdRectToIMAGE(const unsigned char* imagedata,
-                                int bytes_per_pixel, int bytes_per_line,
-                                IMAGE* image) const;
-
-  /// Threshold the rectangle, taking everything except the image buffer pointer
-  /// from the class, using thresholds/hi_values to the output IMAGE.
-  void ThresholdRectToIMAGE(const unsigned char* imagedata,
-                            int bytes_per_pixel, int bytes_per_line,
-                            const int* thresholds, const int* hi_values,
-                            IMAGE* image) const;
-
-  /// Cut out the requested rectangle of the source raw binary image to the
-  /// output IMAGE.
-  void CopyBinaryRectRawToIMAGE(IMAGE* image) const;
-
-#ifdef HAVE_LIBLEPT
   /// Otsu threshold the rectangle, taking everything except the image buffer
   /// pointer from the class, to the output Pix.
   void OtsuThresholdRectToPix(const unsigned char* imagedata,
@@ -150,16 +144,10 @@ class ImageThresholder {
   /// Copy the raw image rectangle, taking all data from the class, to the Pix.
   void RawRectToPix(Pix** pix) const;
 
-  /// Cut out the requested rectangle of the binary image to the output IMAGE.
-  void CopyBinaryRectPixToIMAGE(IMAGE* image) const;
-#endif
-
  protected:
-#ifdef HAVE_LIBLEPT
   /// Clone or other copy of the source Pix.
   /// The pix will always be PixDestroy()ed on destruction of the class.
   Pix*                 pix_;
-#endif
   /// Exactly one of pix_ and image_data_ is not NULL.
   const unsigned char* image_data_;     //< Raw source image.
 
@@ -168,6 +156,8 @@ class ImageThresholder {
   int                  image_bytespp_;  //< Bytes per pixel of source image/pix.
   int                  image_bytespl_;  //< Bytes per line of source image/pix.
   // Limits of image rectangle to be processed.
+  int                  scale_;          //< Scale factor from original image.
+  int                  yres_;           //< y pixels/inch in source image
   int                  rect_left_;
   int                  rect_top_;
   int                  rect_width_;
@@ -177,5 +167,4 @@ class ImageThresholder {
 }  // namespace tesseract.
 
 #endif  // TESSERACT_CCMAIN_THRESHOLDER_H__
-
 

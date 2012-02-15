@@ -5,26 +5,6 @@
     android:background="@drawable/default_background"
     android:label="@string/app_name" >
 
-    <Button
-        android:id="@+id/callPhotoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/label"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:layout_weight="1"
-        android:background="@drawable/photo_button"
-        android:padding="10dp" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/callPhotoButton"
-        android:layout_centerHorizontal="true"
-        android:text="@string/callPhotoButton"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -64,5 +44,46 @@
         android:layout_alignLeft="@+id/manualButton"
         android:text="Manual Entry"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/callPhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="42dp"
+        android:layout_weight="1"
+        android:background="@drawable/photo_button"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/webBrowser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/callPhotoButton"
+        android:layout_alignBottom="@+id/callPhotoButton"
+        android:layout_alignRight="@+id/textView3"
+        android:background="@drawable/web_button" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/callPhotoButton"
+        android:text="@string/callPhotoButton"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignLeft="@+id/manualButton"
+        android:text="View Results"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="10dp" />
 
 </RelativeLayout>

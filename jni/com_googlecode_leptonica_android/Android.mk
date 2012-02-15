@@ -1,5 +1,5 @@
 #REAL_LOCAL_PATH := $(call my-dir)
-REAL_LOCAL_PATH := /home/cian/Development/ShopAndStore/jni/com_googlecode_leptonica_android
+REAL_LOCAL_PATH := /home/cian/Development/ShopAndShare-app/jni/com_googlecode_leptonica_android
 LOCAL_PATH :=
 
 include $(CLEAR_VARS)
@@ -21,6 +21,8 @@ LOCAL_CFLAGS := \
 
 LOCAL_C_INCLUDES := \
   $(LIBJPEG_PATH)
+
+LOCAL_C_INCLUDES += $(LEPTONICA_PATH)/src
 
 LOCAL_LDLIBS := \
   -lz
@@ -60,4 +62,4 @@ LOCAL_LDLIBS += \
 LOCAL_SHARED_LIBRARIES:= libjpeg
 LOCAL_PRELINK_MODULE:= false
 
-include $(BUILD_STATIC_LIBRARY)
+include $(BUILD_SHARED_LIBRARY)
