@@ -98,8 +98,8 @@ public class AddItem extends Activity {
                 if (product.length() > 0 && price.length() > 0)
                     if (!price.contains("."))
                         Toast.makeText(ShopAndShare.sContext,
-                                "The price must be valid eg. 1.99",
-                                Toast.LENGTH_LONG).show();
+                                R.string.invalidPrice, Toast.LENGTH_LONG)
+                                .show();
                     else {
                         mDf.setTimeZone(TimeZone.getTimeZone("GMT"));
                         Results.getInstance().addItem(
@@ -112,8 +112,7 @@ public class AddItem extends Activity {
                         finish();
                     }
                 else
-                    Toast.makeText(ShopAndShare.sContext,
-                            "Product or price cannot be empty!",
+                    Toast.makeText(ShopAndShare.sContext, R.string.emptyFields,
                             Toast.LENGTH_LONG).show();
             }
 

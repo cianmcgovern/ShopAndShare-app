@@ -68,9 +68,9 @@ public class ShopAndShare extends Activity {
             public void onClick(View v) {
                 if (!CheckFeatures.haveCamera())
                     new AlertDialog.Builder(sContext)
-                            .setTitle("Camera Required")
+                            .setTitle(R.string.cameraRequired)
                             .setMessage(
-                                    "You need to have a camera to use this feature")
+                                    sContext.getText(R.string.cameraRequiredMessage))
                             .show();
                 else {
                     Intent photo = new Intent(ShopAndShare.sContext,
@@ -128,7 +128,8 @@ public class ShopAndShare extends Activity {
         // Creates the saves directory if it doesn't exist
         if (!saveDir.exists()) {
             saveDir.mkdir();
-            Log.w(Constants.LOG_TAG, "Saves directory doesn't exists, creating!");
+            Log.w(Constants.LOG_TAG,
+                    "Saves directory doesn't exists, creating!");
         }
 
         InputStream is;
@@ -164,7 +165,8 @@ public class ShopAndShare extends Activity {
         File tessDir = new File(Constants.FILES_DIR + "/tessdata");
         if (tessDir.exists()) {
             tessDir.delete();
-            Log.w(Constants.LOG_TAG, "Tesseract data directory exists, deleting!");
+            Log.w(Constants.LOG_TAG,
+                    "Tesseract data directory exists, deleting!");
         }
         tessDir.mkdir();
         File tessData = new File(Constants.FILES_DIR

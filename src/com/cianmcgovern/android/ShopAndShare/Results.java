@@ -38,7 +38,7 @@ import android.util.Log;
  * Singleton object that stores the results from image analysing
  * 
  * @author Cian Mc Govern
- *
+ * 
  */
 public class Results {
 
@@ -98,8 +98,8 @@ public class Results {
                         mResults.put(product.trim(), x);
                     }
                     else
-                        Log.w(Constants.LOG_TAG, "Map already contains " + product
-                                + "! Not adding...");
+                        Log.w(Constants.LOG_TAG, "Map already contains "
+                                + product + "! Not adding...");
                 }
             }
             // If there was no price in the current result, check if the next
@@ -123,7 +123,8 @@ public class Results {
 
             }
             else
-                Log.w(Constants.LOG_TAG, "Couldn't find decimal point in string");
+                Log.w(Constants.LOG_TAG,
+                        "Couldn't find decimal point in string");
         }
     }
 

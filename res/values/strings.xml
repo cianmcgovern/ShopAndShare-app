@@ -24,4 +24,17 @@
     <string name="upload">Upload</string>
     <string name="failed">A failure occurred while attempting to upload your results\n\nPlease try again</string>
     <string name="tryAgain">Try Again</string>
+    <string name="invalidPrice">The price must be valid eg. 1.99</string>
+    <string name="emptyFields">Product or price cannot be empty!</string>
+    <string name="loadingMessage">Analysing your receipt.... this should not take more than a few moments</string>
+    <string name="invalidInput">Invalid inputs</string>
+    <string name="invalidFields">Store name and location must be valid</string>
+    <string name="gpsDisabled">GPS Disabled</string>
+    <string name="gpsDisabledMessage">GPS must be enabled to use this feature</string>
+    <string name="cameraRequired">Camera Required</string>
+    <string name="cameraRequiredMessage">You need to have a camera to use this feature</string>
+    <string name="emptyResult">No data</string>
+    <string name="emptyResultMessage">You must have at least one item to share</string>
+    <string name="networkDisabled">Network unavailable</string>
+    <string name="networkDisabledMessage">Network access must be available to use this feature</string>
 </resources>

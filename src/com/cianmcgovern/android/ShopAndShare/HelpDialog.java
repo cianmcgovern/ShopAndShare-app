@@ -24,7 +24,7 @@ public class HelpDialog {
     public HelpDialog(Context con, String message) {
 
         mDialog = new AlertDialog.Builder(con).create();
-        mDialog.setTitle("Help");
+        mDialog.setTitle(R.string.help);
         mDialog.setMessage(message);
     }
 

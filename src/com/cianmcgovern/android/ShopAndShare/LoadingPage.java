@@ -27,6 +27,7 @@ import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,12 +46,16 @@ public class LoadingPage extends Activity {
 
     private ProgressThread mProgThread;
     private ProgressDialog mProgDialog;
+    private Context mCon;
     private byte[] mImageData;
 
     @Override
     public void onCreate(Bundle savedInstance) {
 
         super.onCreate(savedInstance);
+
+        mCon = this;
+
         showDialog(0);
     }
 
@@ -121,8 +126,7 @@ public class LoadingPage extends Activity {
         mProgDialog = new ProgressDialog(this);
         mProgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgDialog.setCancelable(false);
-        mProgDialog
-                .setMessage("Analysing your receipt... this shouldn't take more than a few moments");
+        mProgDialog.setMessage(mCon.getText(R.string.loadingMessage));
         mProgThread = new ProgressThread(handler);
         mProgThread.start();
         return mProgDialog;

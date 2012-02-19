@@ -74,7 +74,8 @@ public class Share extends Activity {
     private ProgressDialog mDialog;
     private String message;
     private LocationManager mLocationManager;
-    private final Location mLocation = new Location(LocationManager.GPS_PROVIDER);
+    private final Location mLocation = new Location(
+            LocationManager.GPS_PROVIDER);
     private AlertDialog mGpsDialog;
     private Button mSearch;
     private LocationListener mLocationListener = null;
@@ -102,9 +103,8 @@ public class Share extends Activity {
                 }
                 else
                     new AlertDialog.Builder(mContext)
-                            .setTitle("Invalid inputs")
-                            .setMessage("Store name and location must be valid")
-                            .show();
+                            .setTitle(R.string.invalidInput)
+                            .setMessage(R.string.invalidFields).show();
             }
 
         });
@@ -180,9 +180,9 @@ public class Share extends Activity {
                 }
                 else {
                     mGpsDialog = new AlertDialog.Builder(mContext).create();
-                    mGpsDialog.setTitle("GPS Disabled");
-                    mGpsDialog
-                            .setMessage("GPS must be enabled to use this feature");
+                    mGpsDialog.setTitle(R.string.gpsDisabled);
+                    mGpsDialog.setMessage(mContext
+                            .getText(R.string.gpsDisabledMessage));
                     mGpsDialog.show();
                 }
             }
@@ -356,8 +356,8 @@ public class Share extends Activity {
 
         };
 
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-                0, locationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                0, 0, locationListener);
     }
 
     @Override

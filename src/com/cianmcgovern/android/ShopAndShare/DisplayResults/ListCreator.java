@@ -92,17 +92,17 @@ public class ListCreator extends ListActivity {
                     }
                     else {
                         new AlertDialog.Builder(mContext)
-                                .setTitle("No data")
+                                .setTitle(R.string.emptyResult)
                                 .setMessage(
-                                        "You must have at least one item to share")
+                                        mContext.getText(R.string.emptyResultMessage))
                                 .show();
                     }
                 }
                 else
                     new AlertDialog.Builder(mContext)
-                            .setTitle("Network unavailable")
+                            .setTitle(R.string.networkDisabled)
                             .setMessage(
-                                    "Network access must be available to use this feature")
+                                    mContext.getText(R.string.networkDisabledMessage))
                             .show();
             }
 

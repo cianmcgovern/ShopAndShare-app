@@ -103,7 +103,8 @@ public class EditItem extends Activity implements OnClickListener {
                 if ((event.getAction()) == KeyEvent.ACTION_DOWN
                         && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(mEd1.getApplicationWindowToken(),
+                    in.hideSoftInputFromWindow(
+                            mEd1.getApplicationWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
                     return true;
                 }
@@ -117,7 +118,8 @@ public class EditItem extends Activity implements OnClickListener {
         if ((x = Results.getInstance().getProducts().get(mProduct).getPrice()) != null)
             mEd2.setText(x);
         else
-            Log.v(Constants.LOG_TAG, "Product not found in HashResult: " + mProduct);
+            Log.v(Constants.LOG_TAG, "Product not found in HashResult: "
+                    + mProduct);
 
         mEd2.setOnKeyListener(new OnKeyListener() {
 
@@ -126,7 +128,8 @@ public class EditItem extends Activity implements OnClickListener {
                 if ((event.getAction()) == KeyEvent.ACTION_DOWN
                         && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(mEd2.getApplicationWindowToken(),
+                    in.hideSoftInputFromWindow(
+                            mEd2.getApplicationWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
                     return true;
                 }
