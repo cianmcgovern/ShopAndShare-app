@@ -210,7 +210,7 @@ public class Share extends Activity {
         for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
             fullAddress.append(address.getAddressLine(i) + " ");
         }
-        Log.v("ShopAndShare", "Got address: " + fullAddress.toString());
+        Log.v(Constants.LOG_TAG, "Got address: " + fullAddress.toString());
 
         mLocationEdit.setText(fullAddress.toString().trim());
 
@@ -255,11 +255,11 @@ public class Share extends Activity {
                         finish();
                     }
                 } catch (ClientProtocolException e) {
-                    Log.e("ShopAndShare",
+                    Log.e(Constants.LOG_TAG,
                             "Encountered exception when uploading results");
                     e.printStackTrace();
                 } catch (IOException e) {
-                    Log.e("ShopAndShare",
+                    Log.e(Constants.LOG_TAG,
                             "Encountered exception when uploading results");
                     e.printStackTrace();
                 }
@@ -285,7 +285,7 @@ public class Share extends Activity {
     private String upload(Results instance, String location, String store)
             throws ClientProtocolException, IOException {
 
-        Log.v("ShopAndShare", "Inside upload");
+        Log.v(Constants.LOG_TAG, "Inside upload");
         HttpClient httpClient = new DefaultHttpClient();
         httpClient.getParams().setParameter(
                 CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
@@ -304,12 +304,12 @@ public class Share extends Activity {
         ContentBody cbStore = new StringBody(store);
         entity.addPart("store", cbStore);
         httpPost.setEntity(entity);
-        Log.v("ShopAndShare", "Sending post");
+        Log.v(Constants.LOG_TAG, "Sending post");
         HttpResponse response = httpClient.execute(httpPost);
         HttpEntity resEntity = response.getEntity();
 
         String message = EntityUtils.toString(resEntity);
-        Log.v("ShopAndShare", "Response from upload is: " + message);
+        Log.v(Constants.LOG_TAG, "Response from upload is: " + message);
         resEntity.consumeContent();
 
         httpClient.getConnectionManager().shutdown();
@@ -332,8 +332,8 @@ public class Share extends Activity {
 
             @Override
             public void onLocationChanged(Location loc) {
-                Log.v("ShopAndShare", "Got longitude: " + loc.getLongitude());
-                Log.v("ShopAndShare", "Got latitude: " + loc.getLatitude());
+                Log.v(Constants.LOG_TAG, "Got longitude: " + loc.getLongitude());
+                Log.v(Constants.LOG_TAG, "Got latitude: " + loc.getLatitude());
                 mLocation.setLongitude(loc.getLongitude());
                 mLocation.setLatitude(loc.getLatitude());
                 getAddress();

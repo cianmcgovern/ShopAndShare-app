@@ -133,7 +133,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,
             mCamera.setPreviewDisplay(holder);
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("ShopAndShare", "Camera Preview Display not set");
+            Log.e(Constants.LOG_TAG, "Camera Preview Display not set");
         }
         mCamera.startPreview();
         mPreviewRunning = true;
@@ -153,7 +153,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,
             // If the data is received from the camera, call the subsequent
             // activity LoadingPage
             if (imageData != null) {
-                Log.d("ShopAndShare", "Data received from camera");
+                Log.d(Constants.LOG_TAG, "Data received from camera");
                 Constants.IMAGE_DATA = imageData;
                 Intent displayResults = new Intent(ShopAndShare.sContext,
                         LoadingPage.class);
@@ -161,7 +161,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,
                 finish();
             }
             else
-                Log.e("ShopAndShare", "Data not received from camera");
+                Log.e(Constants.LOG_TAG, "Data not received from camera");
         }
 
     };

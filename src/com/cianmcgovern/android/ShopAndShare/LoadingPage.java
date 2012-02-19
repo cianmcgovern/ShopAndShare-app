@@ -75,7 +75,7 @@ public class LoadingPage extends Activity {
         if (new File(Constants.FILES_DIR + "/results").exists())
             new File(Constants.FILES_DIR).delete();
 
-        Log.d("ShopAndStore", "Calling native code");
+        Log.d(Constants.LOG_TAG, "Calling native code");
         callnativecode(imageLocation);
         String[] results = getProducts();
         Results.getInstance().setProducts(results, results.length);
@@ -163,7 +163,7 @@ public class LoadingPage extends Activity {
 
         Handler mHandler;
         int mState;
-        int total;
+        int mTotal;
 
         ProgressThread(Handler h) {
             mHandler = h;
@@ -172,7 +172,7 @@ public class LoadingPage extends Activity {
         @Override
         public void run() {
             mState = mRunning;
-            total = 1;
+            mTotal = 1;
             while (mState == mRunning) {
                 new SaveBitmap(Constants.IMAGE_DATA, Constants.FILES_DIR);
                 // Calls native code and passes path to image excluding the file
@@ -180,12 +180,12 @@ public class LoadingPage extends Activity {
                 AnalyseImage(Constants.FILES_DIR);
                 Message msg = mHandler.obtainMessage();
                 Bundle b = new Bundle();
-                total = 0;
-                b.putInt("total", total);
+                mTotal = 0;
+                b.putInt("total", mTotal);
                 msg.setData(b);
                 mHandler.sendMessage(msg);
                 setState(ProgressThread.mDone);
-                total = 0; // Count down
+                mTotal = 0; // Count down
                 setState(ProgressThread.mDone);
             }
         }

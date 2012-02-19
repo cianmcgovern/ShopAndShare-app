@@ -80,10 +80,10 @@ public class LoadResultsEdit extends LoadResults {
                                 File f = new File(Constants.SAVE_DIR + "/"
                                         + mFilename);
                                 if (!f.delete())
-                                    Log.e("ShopAndShare", mFilename
+                                    Log.e(Constants.LOG_TAG, mFilename
                                             + " save file was not deleted");
                                 else
-                                    Log.v("ShopAndShare", mFilename
+                                    Log.v(Constants.LOG_TAG, mFilename
                                             + " save file was deleted");
                                 Intent i = new Intent(ShopAndShare.sContext,
                                         LoadResultsEdit.class);

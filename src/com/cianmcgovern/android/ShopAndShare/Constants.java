@@ -29,4 +29,5 @@ public class Constants {
     public static ArrayList<String> WORDLIST = null;
     public static final PackageManager PACKAGE_MANAGER = ShopAndShare.sContext
             .getPackageManager();
+    public static final String LOG_TAG = "ShopAndShare";
 }

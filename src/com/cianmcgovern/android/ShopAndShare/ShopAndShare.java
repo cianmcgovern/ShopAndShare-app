@@ -57,7 +57,7 @@ public class ShopAndShare extends Activity {
         try {
             prepareFiles();
         } catch (IOException e) {
-            Log.e("ShopAndShare", "Unable to execute prepareFiles()");
+            Log.e(Constants.LOG_TAG, "Unable to execute prepareFiles()");
             e.printStackTrace();
         }
 
@@ -128,7 +128,7 @@ public class ShopAndShare extends Activity {
         // Creates the saves directory if it doesn't exist
         if (!saveDir.exists()) {
             saveDir.mkdir();
-            Log.w("ShopAndShare", "Saves directory doesn't exists, creating!");
+            Log.w(Constants.LOG_TAG, "Saves directory doesn't exists, creating!");
         }
 
         InputStream is;
@@ -143,7 +143,7 @@ public class ShopAndShare extends Activity {
         File wordList = new File(Constants.FILES_DIR.concat("/wordlist"));
         if (wordList.exists()) {
             wordList.delete();
-            Log.w("ShopAndShare", "Wordlist exists, deleting!");
+            Log.w(Constants.LOG_TAG, "Wordlist exists, deleting!");
         }
         is = getResources().openRawResource(R.raw.wordlist);
         os = new FileOutputStream(wordList);
@@ -164,7 +164,7 @@ public class ShopAndShare extends Activity {
         File tessDir = new File(Constants.FILES_DIR + "/tessdata");
         if (tessDir.exists()) {
             tessDir.delete();
-            Log.w("ShopAndShare", "Tesseract data directory exists, deleting!");
+            Log.w(Constants.LOG_TAG, "Tesseract data directory exists, deleting!");
         }
         tessDir.mkdir();
         File tessData = new File(Constants.FILES_DIR
@@ -186,12 +186,12 @@ public class ShopAndShare extends Activity {
         File image = new File(Constants.FILES_DIR + "/image.jpg");
         if (image.exists()) {
             image.delete();
-            Log.w("ShopAndShare", "Image file found, deleting!");
+            Log.w(Constants.LOG_TAG, "Image file found, deleting!");
         }
         image = new File(Constants.FILES_DIR + "/bgimage.tiff");
         if (image.exists()) {
             image.delete();
-            Log.w("ShopAndShare", "TIFF image file found, deleting!");
+            Log.w(Constants.LOG_TAG, "TIFF image file found, deleting!");
         }
 
         Constants.UPLOADS = Constants.FILES_DIR + "/uploads";

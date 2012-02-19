@@ -40,12 +40,12 @@ public class SaveBitmap {
     public SaveBitmap(byte[] bmp, String x) {
         mPath = x;
         if (bmp != null) {
-            Log.d("ShopAndStore", "Bitmap input is not empty");
+            Log.d(Constants.LOG_TAG, "Bitmap input is not empty");
             this.mOrigBmp = bmp;
             save();
         }
         else {
-            Log.e("ShopAndStore", "SaveBitmap input is empty");
+            Log.e(Constants.LOG_TAG, "SaveBitmap input is empty");
         }
 
     }
@@ -68,7 +68,7 @@ public class SaveBitmap {
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("ShopAndStore", "Could not save bitmap");
+            Log.e(Constants.LOG_TAG, "Could not save bitmap");
         }
     }
 

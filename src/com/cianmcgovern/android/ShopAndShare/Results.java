@@ -40,10 +40,6 @@ import android.util.Log;
  * @author Cian Mc Govern
  *
  */
-/**
- * @author cian
- * 
- */
 public class Results {
 
     private HashResults<String, Item> mResults;
@@ -97,12 +93,12 @@ public class Results {
                         ;
                         Item x = new Item(product.trim(), price.trim(), mDf
                                 .format(new Date()).toString());
-                        Log.v("ShopAndShare", "Added parsed product: "
+                        Log.v(Constants.LOG_TAG, "Added parsed product: "
                                 + product + " with price: " + price);
                         mResults.put(product.trim(), x);
                     }
                     else
-                        Log.w("ShopAndShare", "Map already contains " + product
+                        Log.w(Constants.LOG_TAG, "Map already contains " + product
                                 + "! Not adding...");
                 }
             }
@@ -117,7 +113,7 @@ public class Results {
                 if (reducedPrice != null
                         && CompareStrings.similarity(reducedPrice.trim(),
                                 "REDUCED PRICE") > 0.8) {
-                    Log.v("ShopAndShare", "Added parsed product: " + product
+                    Log.v(Constants.LOG_TAG, "Added parsed product: " + product
                             + " with reduced price: " + price);
                     mResults.put(product,
                             new Item(product, price, mDf.format(new Date())
@@ -127,7 +123,7 @@ public class Results {
 
             }
             else
-                Log.w("ShopAndShare", "Couldn't find decimal point in string");
+                Log.w(Constants.LOG_TAG, "Couldn't find decimal point in string");
         }
     }
 
@@ -219,7 +215,7 @@ public class Results {
         df.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         String filename = Constants.SAVE_DIR + "/" + df.format(new Date());
-        Log.v("ShopAndShare", "Save file is: " + filename);
+        Log.v(Constants.LOG_TAG, "Save file is: " + filename);
 
         File f = new File(filename);
         FileOutputStream fos = new FileOutputStream(f);

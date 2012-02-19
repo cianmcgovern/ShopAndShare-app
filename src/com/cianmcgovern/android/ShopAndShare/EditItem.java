@@ -54,7 +54,7 @@ public class EditItem extends Activity implements OnClickListener {
 
         // Product to edit is sent through intent
         mProduct = this.getIntent().getStringExtra("Product");
-        Log.v("ShopAndShare", "Value recieved from intent is: " + mProduct);
+        Log.v(Constants.LOG_TAG, "Value recieved from intent is: " + mProduct);
 
         // Overriding onClick() for the save button as this Class implements
         // OnClickListener
@@ -117,7 +117,7 @@ public class EditItem extends Activity implements OnClickListener {
         if ((x = Results.getInstance().getProducts().get(mProduct).getPrice()) != null)
             mEd2.setText(x);
         else
-            Log.v("ShopAndShare", "Product not found in HashResult: " + mProduct);
+            Log.v(Constants.LOG_TAG, "Product not found in HashResult: " + mProduct);
 
         mEd2.setOnKeyListener(new OnKeyListener() {
 
@@ -159,14 +159,14 @@ public class EditItem extends Activity implements OnClickListener {
 
         // If the product name has been changed
         else {
-            Log.v("ShopAndShare", "Changing product name from: " + mProduct
+            Log.v(Constants.LOG_TAG, "Changing product name from: " + mProduct
                     + " to: " + productText);
             // Change the product name in the map
             Results.getInstance().changeKey(mProduct, productText);
 
             // Check to see if the product id was changed correctly
             if (!Results.getInstance().getProducts().containsKey(productText))
-                Log.e("ShopAndShare", productText
+                Log.e(Constants.LOG_TAG, productText
                         + " does not exist in HashResults");
             else {
                 Results.getInstance().getProducts().get(productText)

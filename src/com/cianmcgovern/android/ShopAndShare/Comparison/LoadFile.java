@@ -19,6 +19,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+
+import com.cianmcgovern.android.ShopAndShare.Constants;
+
 import android.util.Log;
 
 public class LoadFile {
@@ -37,13 +40,13 @@ public class LoadFile {
                     list.add(line);
                 }
             } catch (Exception e) {
-                Log.e("ShopAndShare",
+                Log.e(Constants.LOG_TAG,
                         "Exception when when reading from file in Comparator.LoadFile");
                 e.printStackTrace();
             }
         }
         else
-            Log.e("ShopAndShare", path + " doesn't exist!!");
+            Log.e(Constants.LOG_TAG, path + " doesn't exist!!");
 
         return list;
     }
