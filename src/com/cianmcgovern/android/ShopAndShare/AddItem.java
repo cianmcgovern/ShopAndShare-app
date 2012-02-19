@@ -39,10 +39,10 @@ import android.widget.Toast;
 
 public class AddItem extends Activity {
 
-
-    private EditText mEd1,mEd2;
-    private Button mAdd,mCancel;
-    private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private EditText mEd1, mEd2;
+    private Button mAdd, mCancel;
+    private final SimpleDateFormat mDf = new SimpleDateFormat(
+            "yyyy-MM-dd HH:mm:ss");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,14 +50,16 @@ public class AddItem extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_item);
 
-        mEd1 = (EditText)findViewById(R.id.editProduct);
-        mEd1.setOnKeyListener(new OnKeyListener(){
+        mEd1 = (EditText) findViewById(R.id.editProduct);
+        mEd1.setOnKeyListener(new OnKeyListener() {
 
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if((event.getAction())==KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)){
+                if ((event.getAction()) == KeyEvent.ACTION_DOWN
+                        && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(mEd1.getApplicationWindowToken(),
+                    in.hideSoftInputFromWindow(
+                            mEd1.getApplicationWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
                     return true;
                 }
@@ -66,14 +68,16 @@ public class AddItem extends Activity {
 
         });
 
-        mEd2 = (EditText)findViewById(R.id.editPrice);
-        mEd2.setOnKeyListener(new OnKeyListener(){
+        mEd2 = (EditText) findViewById(R.id.editPrice);
+        mEd2.setOnKeyListener(new OnKeyListener() {
 
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if((event.getAction())==KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)){
+                if ((event.getAction()) == KeyEvent.ACTION_DOWN
+                        && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(mEd2.getApplicationWindowToken(),
+                    in.hideSoftInputFromWindow(
+                            mEd2.getApplicationWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
                     return true;
                 }
@@ -82,38 +86,46 @@ public class AddItem extends Activity {
 
         });
 
-        mAdd = (Button)findViewById(R.id.saveButton);
+        mAdd = (Button) findViewById(R.id.saveButton);
         mAdd.setText(R.string.addButton);
 
-        mAdd.setOnClickListener(new OnClickListener(){
+        mAdd.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
                 String product = mEd1.getText().toString();
                 String price = mEd2.getText().toString();
-                if(product.length() > 0 && price.length() > 0)
-                    if(!price.contains("."))
-                        Toast.makeText(ShopAndShare.sContext, "The price must be valid eg. 1.99", Toast.LENGTH_LONG).show();
+                if (product.length() > 0 && price.length() > 0)
+                    if (!price.contains("."))
+                        Toast.makeText(ShopAndShare.sContext,
+                                "The price must be valid eg. 1.99",
+                                Toast.LENGTH_LONG).show();
                     else {
-                        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-                        Results.getInstance().addItem(product.toUpperCase(), new Item(product.toUpperCase(),price, df.format(new Date()).toString()));
-                        Intent in = new Intent(ShopAndShare.sContext,ListCreator.class);
+                        mDf.setTimeZone(TimeZone.getTimeZone("GMT"));
+                        Results.getInstance().addItem(
+                                product.toUpperCase(),
+                                new Item(product.toUpperCase(), price, mDf
+                                        .format(new Date()).toString()));
+                        Intent in = new Intent(ShopAndShare.sContext,
+                                ListCreator.class);
                         startActivity(in);
                         finish();
                     }
                 else
-                    Toast.makeText(ShopAndShare.sContext, "Product or price cannot be empty!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ShopAndShare.sContext,
+                            "Product or price cannot be empty!",
+                            Toast.LENGTH_LONG).show();
             }
 
         });
 
-        mCancel = (Button)findViewById(R.id.deleteButton);
+        mCancel = (Button) findViewById(R.id.deleteButton);
         mCancel.setText(R.string.cancelButton);
-        mCancel.setOnClickListener(new OnClickListener(){
+        mCancel.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(ShopAndShare.sContext,ListCreator.class);
+                Intent in = new Intent(ShopAndShare.sContext, ListCreator.class);
                 startActivity(in);
                 finish();
             }
@@ -122,23 +134,23 @@ public class AddItem extends Activity {
     }
 
     @Override
-    public void onBackPressed(){
-        Intent in = new Intent(ShopAndShare.sContext,ListCreator.class);
+    public void onBackPressed() {
+        Intent in = new Intent(ShopAndShare.sContext, ListCreator.class);
         startActivity(in);
         finish();
     }
-    
+
     // Create options menu
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
         inf.inflate(R.layout.default_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
         case R.id.exit:
             finish();
             return true;

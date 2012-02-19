@@ -44,14 +44,15 @@ import android.widget.Button;
  * Displays the camera output to the screen and allows the user to take a photo
  * 
  * @author Cian Mc Govern <cian@cianmcgovern.com>
- *
+ * 
  */
-public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClickListener {
+public class TakePhoto extends Activity implements SurfaceHolder.Callback,
+        OnClickListener {
 
     private SurfaceView mSurfaceView;
     private Camera mCamera;
     private boolean mPreviewRunning;
-    private Button takePhotoButton;
+    private Button mTakePhotoButton;
     private Camera.Parameters mParameters;
 
     // These options set the default parameters for the Camera
@@ -61,8 +62,9 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
     public static String sWhiteBalance = Camera.Parameters.WHITE_BALANCE_AUTO;
     public static String sSceneMode = Camera.Parameters.SCENE_MODE_STEADYPHOTO;
 
+    @Override
     public void onCreate(Bundle savedInstance) {
-        
+
         super.onCreate(savedInstance);
         // Setup window
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
@@ -76,50 +78,53 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
         SurfaceHolder mSurfaceHolder = mSurfaceView.getHolder();
         mSurfaceHolder.addCallback(this);
         mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        this.takePhotoButton = (Button)this.findViewById(R.id.photoButton);
-        this.takePhotoButton.setOnClickListener(this);
+        this.mTakePhotoButton = (Button) this.findViewById(R.id.photoButton);
+        this.mTakePhotoButton.setOnClickListener(this);
 
-        Button cancel = (Button)findViewById(R.id.photoOptionsButton);
+        Button cancel = (Button) findViewById(R.id.photoOptionsButton);
         cancel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ShopAndShare.sContext,TakePhotoOptionsActivity.class);
+                Intent i = new Intent(ShopAndShare.sContext,
+                        TakePhotoOptionsActivity.class);
                 startActivity(i);
                 finish();
             }
         });
-        
+
     }
 
+    @Override
     public void onClick(View v) {
-        if(sFocusMode.equalsIgnoreCase(Camera.Parameters.FOCUS_MODE_FIXED)) {
+        if (sFocusMode.equalsIgnoreCase(Camera.Parameters.FOCUS_MODE_FIXED)) {
             mCamera.takePicture(null, mPictureCallback, mPictureCallback);
-            this.takePhotoButton.setEnabled(false);
+            this.mTakePhotoButton.setEnabled(false);
         }
         else {
-            this.takePhotoButton.setEnabled(false);
+            this.mTakePhotoButton.setEnabled(false);
             mCamera.autoFocus(cb);
         }
     }
 
+    @Override
     public void surfaceCreated(SurfaceHolder holder) {
         mCamera = Camera.open();
         mCamera.setDisplayOrientation(90);
     }
 
-    public void surfaceChanged(SurfaceHolder holder,int format, int w, int h) {
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
 
-        if(mPreviewRunning) {
+        if (mPreviewRunning) {
             mCamera.stopPreview();
         }
 
         // Set up the camera with the parameters from the method call
         mParameters = mCamera.getParameters();
         mParameters.setPreviewSize(w, h);
-        if(CheckFeatures.haveAutoFocus())
+        if (CheckFeatures.haveAutoFocus())
             mParameters.setFocusMode(sFocusMode);
-        if(CheckFeatures.haveFlash())
-            mParameters.setFlashMode(sFlashMode);
+        if (CheckFeatures.haveFlash()) mParameters.setFlashMode(sFlashMode);
         mParameters.setWhiteBalance(sWhiteBalance);
         mParameters.setJpegQuality(100);
         mCamera.setParameters(mParameters);
@@ -128,7 +133,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
             mCamera.setPreviewDisplay(holder);
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("ShopAndShare","Camera Preview Display not set");
+            Log.e("ShopAndShare", "Camera Preview Display not set");
         }
         mCamera.startPreview();
         mPreviewRunning = true;
@@ -142,18 +147,21 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
     }
 
     Camera.PictureCallback mPictureCallback = new Camera.PictureCallback() {
+        @Override
         public void onPictureTaken(byte[] imageData, Camera c) {
 
-            // If the data is received from the camera, call the subsequent activity LoadingPage
-            if (imageData!=null) {
-                Log.d("ShopAndShare","Data received from camera");
-                Constants.ImageData=imageData;
-                Intent displayResults = new Intent(ShopAndShare.sContext,LoadingPage.class);
+            // If the data is received from the camera, call the subsequent
+            // activity LoadingPage
+            if (imageData != null) {
+                Log.d("ShopAndShare", "Data received from camera");
+                Constants.IMAGE_DATA = imageData;
+                Intent displayResults = new Intent(ShopAndShare.sContext,
+                        LoadingPage.class);
                 startActivity(displayResults);
                 finish();
             }
             else
-                Log.e("ShopAndShare","Data not received from camera");
+                Log.e("ShopAndShare", "Data not received from camera");
         }
 
     };
@@ -162,10 +170,10 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 
         @Override
         public void onAutoFocus(boolean success, Camera camera) {
-            if(success)
+            if (success)
                 mCamera.takePicture(null, mPictureCallback, mPictureCallback);
             else
-                takePhotoButton.setEnabled(true);
+                mTakePhotoButton.setEnabled(true);
         }
     };
 
@@ -184,7 +192,7 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,OnClic
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
         case R.id.exit:
             finish();
             return true;

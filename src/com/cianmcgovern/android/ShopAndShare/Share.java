@@ -57,25 +57,27 @@ import android.widget.Button;
 import android.widget.EditText;
 
 /**
- * Activity that allows the user to upload the results to the server specified in Constants
+ * Activity that allows the user to upload the results to the server specified
+ * in Constants
  * 
- * The user can obtain their location by clicking on the search icon beside the text field
- * The upload will start a new activity if it doesn't get an empty response from the server
+ * The user can obtain their location by clicking on the search icon beside the
+ * text field The upload will start a new activity if it doesn't get an empty
+ * response from the server
  * 
  * @author Cian Mc Govern <cian@cianmcgovern.com>
- *
+ * 
  */
 public class Share extends Activity {
 
-    private EditText mLocation,mStore;
+    private EditText mLocationEdit, mStore;
     private Context mContext;
     private ProgressDialog mDialog;
     private String message;
-    private LocationManager locationManager;
-    private final Location location = new Location(LocationManager.GPS_PROVIDER);
-    private AlertDialog gpsDialog;
-    private Button search;
-    private LocationListener locationListener = null;
+    private LocationManager mLocationManager;
+    private final Location mLocation = new Location(LocationManager.GPS_PROVIDER);
+    private AlertDialog mGpsDialog;
+    private Button mSearch;
+    private LocationListener mLocationListener = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,44 +89,49 @@ public class Share extends Activity {
 
         Button upload = (Button) findViewById(R.id.uploadButton);
         upload.setText(R.string.upload);
-        upload.setOnClickListener(new OnClickListener(){
+        upload.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                String userLoc = mLocation.getText().toString();
+                String userLoc = mLocationEdit.getText().toString();
                 String userStore = mStore.getText().toString();
                 // Don't allow empty text fields
-                if(userLoc.length() > 1 && userStore.length() > 1) {
-                    runUpload(Results.getInstance(),userLoc,userStore);
+                if (userLoc.length() > 1 && userStore.length() > 1) {
+                    runUpload(Results.getInstance(), userLoc, userStore);
                     Results.getInstance().clearResults();
                 }
                 else
-                    new AlertDialog.Builder(mContext).setTitle("Invalid inputs").setMessage("Store name and location must be valid").show();
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("Invalid inputs")
+                            .setMessage("Store name and location must be valid")
+                            .show();
             }
 
         });
 
         Button cancel = (Button) findViewById(R.id.cancelShareButton);
         cancel.setText(R.string.cancelButton);
-        cancel.setOnClickListener(new OnClickListener(){
+        cancel.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(locationListener != null)
-                    locationManager.removeUpdates(locationListener);
+                if (mLocationListener != null)
+                    mLocationManager.removeUpdates(mLocationListener);
                 finish();
             }
 
         });
 
-        mLocation = (EditText) findViewById(R.id.enterLocation);
-        mLocation.setOnKeyListener(new OnKeyListener(){
+        mLocationEdit = (EditText) findViewById(R.id.enterLocation);
+        mLocationEdit.setOnKeyListener(new OnKeyListener() {
 
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if((event.getAction())==KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)){
+                if ((event.getAction()) == KeyEvent.ACTION_DOWN
+                        && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(mLocation.getApplicationWindowToken(),
+                    in.hideSoftInputFromWindow(
+                            mLocationEdit.getApplicationWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
                     return true;
                 }
@@ -133,13 +140,15 @@ public class Share extends Activity {
 
         });
         mStore = (EditText) findViewById(R.id.enterStore);
-        mStore.setOnKeyListener(new OnKeyListener(){
+        mStore.setOnKeyListener(new OnKeyListener() {
 
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if((event.getAction())==KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)){
+                if ((event.getAction()) == KeyEvent.ACTION_DOWN
+                        && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(mStore.getApplicationWindowToken(),
+                    in.hideSoftInputFromWindow(
+                            mStore.getApplicationWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
                     return true;
                 }
@@ -148,30 +157,33 @@ public class Share extends Activity {
 
         });
 
-        search = (Button) findViewById(R.id.locationButton);
-        search.setBackgroundResource(R.drawable.search);
-        search.setOnClickListener(new OnClickListener(){
+        mSearch = (Button) findViewById(R.id.locationButton);
+        mSearch.setBackgroundResource(R.drawable.search);
+        mSearch.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-                if(!CheckFeatures.haveGPS()){
+                mLocationManager = (LocationManager) mContext
+                        .getSystemService(Context.LOCATION_SERVICE);
+                if (!CheckFeatures.haveGPS()) {
                     new AlertDialog.Builder(mContext)
-                    .setTitle("GPS Required")
-                    .setMessage("You must have GPS to use this feature")
-                    .show();
+                            .setTitle("GPS Required")
+                            .setMessage("You must have GPS to use this feature")
+                            .show();
                 }
                 // Only use GPS if it is enabled
-                else if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    search.setEnabled(false);
-                    search.setBackgroundResource(R.drawable.world);
+                else if (mLocationManager
+                        .isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    mSearch.setEnabled(false);
+                    mSearch.setBackgroundResource(R.drawable.world);
                     getLocation();
                 }
                 else {
-                    gpsDialog = new AlertDialog.Builder(mContext).create();
-                    gpsDialog.setTitle("GPS Disabled");
-                    gpsDialog.setMessage("GPS must be enabled to use this feature");
-                    gpsDialog.show();
+                    mGpsDialog = new AlertDialog.Builder(mContext).create();
+                    mGpsDialog.setTitle("GPS Disabled");
+                    mGpsDialog
+                            .setMessage("GPS must be enabled to use this feature");
+                    mGpsDialog.show();
                 }
             }
 
@@ -181,64 +193,74 @@ public class Share extends Activity {
     /**
      * 
      * Gets the address using the latitude and longitude from the getLocation()
-     *  
+     * 
      */
     public void getAddress() {
 
-        Geocoder geo = new Geocoder(this,Locale.ENGLISH);
+        Geocoder geo = new Geocoder(this, Locale.ENGLISH);
         Address address = null;
         try {
-            address = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1).get(0);
+            address = geo.getFromLocation(mLocation.getLatitude(),
+                    mLocation.getLongitude(), 1).get(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         StringBuilder fullAddress = new StringBuilder();
-        for(int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
             fullAddress.append(address.getAddressLine(i) + " ");
         }
-        Log.v("ShopAndShare","Got address: " + fullAddress.toString());
+        Log.v("ShopAndShare", "Got address: " + fullAddress.toString());
 
-        mLocation.setText(fullAddress.toString().trim());
-        
-        search.setBackgroundResource(R.drawable.search);
+        mLocationEdit.setText(fullAddress.toString().trim());
+
+        mSearch.setBackgroundResource(R.drawable.search);
     }
 
     /**
-     * Calls upload() in a separate thread and displays a progress dialog while it's executing
+     * Calls upload() in a separate thread and displays a progress dialog while
+     * it's executing
      * 
-     * @param instance The results instance to use
-     * @param location The location as specified by the user
-     * @param store The store as specified by the user
+     * @param instance
+     *            The results instance to use
+     * @param location
+     *            The location as specified by the user
+     * @param store
+     *            The store as specified by the user
      * 
      */
-    private void runUpload(final Results instance,final String location, final String store){
+    private void runUpload(final Results instance, final String location,
+            final String store) {
 
         mDialog = ProgressDialog.show(this, "", "Uploading. Please wait...");
 
-        new Thread(new Runnable(){
+        new Thread(new Runnable() {
 
             @Override
             public void run() {
                 try {
-                    message = upload(instance,location,store);
+                    message = upload(instance, location, store);
                     mDialog.dismiss();
-                    // If we get a response that contains data then something went wrong so we prompt the user to try again
+                    // If we get a response that contains data then something
+                    // went wrong so we prompt the user to try again
                     // An empty response signals a successful upload
-                    if(message.length() > 1){
-                        Intent in = new Intent(ShopAndShare.sContext,FailedUpload.class);
+                    if (message.length() > 1) {
+                        Intent in = new Intent(ShopAndShare.sContext,
+                                FailedUpload.class);
                         startActivity(in);
                     }
                     else {
-                        if(locationListener != null)
-                            locationManager.removeUpdates(locationListener);
+                        if (mLocationListener != null)
+                            mLocationManager.removeUpdates(mLocationListener);
                         finish();
                     }
                 } catch (ClientProtocolException e) {
-                    Log.e("ShopAndShare","Encountered exception when uploading results");
+                    Log.e("ShopAndShare",
+                            "Encountered exception when uploading results");
                     e.printStackTrace();
                 } catch (IOException e) {
-                    Log.e("ShopAndShare","Encountered exception when uploading results");
+                    Log.e("ShopAndShare",
+                            "Encountered exception when uploading results");
                     e.printStackTrace();
                 }
             }
@@ -250,39 +272,44 @@ public class Share extends Activity {
     /**
      * Uploads the text file specified by filename
      * 
-     * @param instance The results instance to use
-     * @param location The location as specified by the user
-     * @param store The store as specified by the user
+     * @param instance
+     *            The results instance to use
+     * @param location
+     *            The location as specified by the user
+     * @param store
+     *            The store as specified by the user
      * @return Response message from server
      * @throws ClientProtocolException
      * @throws IOException
      */
-    private String upload(Results instance,String location, String store) throws ClientProtocolException, IOException {
+    private String upload(Results instance, String location, String store)
+            throws ClientProtocolException, IOException {
 
-        Log.v("ShopAndShare","Inside upload");
+        Log.v("ShopAndShare", "Inside upload");
         HttpClient httpClient = new DefaultHttpClient();
-        httpClient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+        httpClient.getParams().setParameter(
+                CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 
         String filename = Results.getInstance().toFile();
-        HttpPost httpPost = new HttpPost(Constants.url);
+        HttpPost httpPost = new HttpPost(Constants.URL);
         File file = new File(filename);
 
         MultipartEntity entity = new MultipartEntity();
-        ContentBody cb = new FileBody(file,"plain/text");
-        entity.addPart("inputfile",cb);
+        ContentBody cb = new FileBody(file, "plain/text");
+        entity.addPart("inputfile", cb);
 
         ContentBody cbLocation = new StringBody(location);
-        entity.addPart("location",cbLocation);
+        entity.addPart("location", cbLocation);
 
         ContentBody cbStore = new StringBody(store);
-        entity.addPart("store",cbStore);
+        entity.addPart("store", cbStore);
         httpPost.setEntity(entity);
-        Log.v("ShopAndShare","Sending post");
+        Log.v("ShopAndShare", "Sending post");
         HttpResponse response = httpClient.execute(httpPost);
         HttpEntity resEntity = response.getEntity();
 
         String message = EntityUtils.toString(resEntity);
-        Log.v("ShopAndShare","Response from upload is: " + message);
+        Log.v("ShopAndShare", "Response from upload is: " + message);
         resEntity.consumeContent();
 
         httpClient.getConnectionManager().shutdown();
@@ -294,23 +321,24 @@ public class Share extends Activity {
 
     /**
      * 
-     * Gets the location using the LocationListener and sets the class wide location variable with the latitude and longitude
-     * Only gets the location once and removes the listener after that result is obtained
+     * Gets the location using the LocationListener and sets the class wide
+     * location variable with the latitude and longitude Only gets the location
+     * once and removes the listener after that result is obtained
      * 
      */
     public void getLocation() {
 
-        LocationListener locationListener = new LocationListener(){
+        LocationListener locationListener = new LocationListener() {
 
             @Override
             public void onLocationChanged(Location loc) {
-                Log.v("ShopAndShare","Got longitude: " + loc.getLongitude());
-                Log.v("ShopAndShare","Got latitude: " + loc.getLatitude());
-                location.setLongitude(loc.getLongitude());
-                location.setLatitude(loc.getLatitude());
+                Log.v("ShopAndShare", "Got longitude: " + loc.getLongitude());
+                Log.v("ShopAndShare", "Got latitude: " + loc.getLatitude());
+                mLocation.setLongitude(loc.getLongitude());
+                mLocation.setLatitude(loc.getLatitude());
                 getAddress();
-                locationManager.removeUpdates(this);
-                search.setEnabled(true);
+                mLocationManager.removeUpdates(this);
+                mSearch.setEnabled(true);
             }
 
             @Override
@@ -318,7 +346,7 @@ public class Share extends Activity {
             }
 
             @Override
-            public void onProviderEnabled(String provider) { 
+            public void onProviderEnabled(String provider) {
             }
 
             @Override
@@ -328,30 +356,31 @@ public class Share extends Activity {
 
         };
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+                0, locationListener);
     }
 
     @Override
-    public void onBackPressed(){
-        if(locationListener != null)
-            locationManager.removeUpdates(locationListener);
+    public void onBackPressed() {
+        if (mLocationListener != null)
+            mLocationManager.removeUpdates(mLocationListener);
         finish();
     }
 
     // Create options menu
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
         inf.inflate(R.layout.default_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
         case R.id.exit:
-            if(locationListener != null)
-                locationManager.removeUpdates(locationListener);
+            if (mLocationListener != null)
+                mLocationManager.removeUpdates(mLocationListener);
             finish();
             return true;
         default:

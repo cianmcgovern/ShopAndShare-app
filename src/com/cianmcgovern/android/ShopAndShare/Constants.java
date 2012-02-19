@@ -19,13 +19,14 @@ import java.util.ArrayList;
 
 import android.content.pm.PackageManager;
 
-public class Constants{
-	
-	public static byte[] ImageData = null;
-	public static String filesDir = null;
-	public static String saveDir = null;
-	public static String uploads = null;
-	public static final String url = "http://108.60.143.109/submit/upload";
-	public static ArrayList<String> wordList = null;
-	public static final PackageManager packageManager = ShopAndShare.sContext.getPackageManager();
+public class Constants {
+
+    public static byte[] IMAGE_DATA = null;
+    public static String FILES_DIR = null;
+    public static String SAVE_DIR = null;
+    public static String UPLOADS = null;
+    public static final String URL = "http://108.60.143.109/submit/upload";
+    public static ArrayList<String> WORDLIST = null;
+    public static final PackageManager PACKAGE_MANAGER = ShopAndShare.sContext
+            .getPackageManager();
 }

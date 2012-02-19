@@ -39,10 +39,11 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 /**
- * Displays options for the camera to the user and allows the user to change them to suit their needs
+ * Displays options for the camera to the user and allows the user to change
+ * them to suit their needs
  * 
  * @author Cian Mc Govern <cian@cianmcgovern.com>
- *
+ * 
  */
 public class TakePhotoOptionsActivity extends ExpandableListActivity {
 
@@ -51,37 +52,38 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
     private OptionsListAdapter mAdapter;
 
     // Constants for storing the main options
-    private final String FOCUSMODE = "Focus Mode";
-    private final String FLASHMODE = "Flash Mode";
-    private final String SCENEMODE = "Scene Mode";
-    private final String WHITEBALANCE = "White Balance";
+    private final String mFocusMode = "Focus Mode";
+    private final String mFlashMode = "Flash Mode";
+    private final String mSceneMode = "Scene Mode";
+    private final String mWhiteBalance = "White Balance";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        // We put our main options and their specific children into TakePhotoOption objects
+        // We put our main options and their specific children into
+        // TakePhotoOption objects
         ArrayList<String> optionsChildren = new ArrayList<String>();
 
         optionsChildren.add(Camera.Parameters.FOCUS_MODE_AUTO);
         optionsChildren.add(Camera.Parameters.FOCUS_MODE_MACRO);
         optionsChildren.add(Camera.Parameters.FOCUS_MODE_FIXED);
-        mOptions.add(new TakePhotoOption(FOCUSMODE,optionsChildren));
+        mOptions.add(new TakePhotoOption(mFocusMode, optionsChildren));
 
         optionsChildren = new ArrayList<String>();
         optionsChildren.add(Camera.Parameters.FLASH_MODE_AUTO);
         optionsChildren.add(Camera.Parameters.FLASH_MODE_OFF);
         optionsChildren.add(Camera.Parameters.FLASH_MODE_ON);
         optionsChildren.add(Camera.Parameters.FLASH_MODE_TORCH);
-        mOptions.add(new TakePhotoOption(FLASHMODE,optionsChildren));
+        mOptions.add(new TakePhotoOption(mFlashMode, optionsChildren));
 
         optionsChildren = new ArrayList<String>();
         optionsChildren.add(Camera.Parameters.SCENE_MODE_AUTO);
         optionsChildren.add(Camera.Parameters.SCENE_MODE_BARCODE);
         optionsChildren.add(Camera.Parameters.SCENE_MODE_NIGHT);
         optionsChildren.add(Camera.Parameters.SCENE_MODE_STEADYPHOTO);
-        mOptions.add(new TakePhotoOption(SCENEMODE,optionsChildren));
+        mOptions.add(new TakePhotoOption(mSceneMode, optionsChildren));
 
         optionsChildren = new ArrayList<String>();
         optionsChildren.add(Camera.Parameters.WHITE_BALANCE_AUTO);
@@ -92,19 +94,20 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
         optionsChildren.add(Camera.Parameters.WHITE_BALANCE_SHADE);
         optionsChildren.add(Camera.Parameters.WHITE_BALANCE_TWILIGHT);
         optionsChildren.add(Camera.Parameters.WHITE_BALANCE_WARM_FLUORESCENT);
-        mOptions.add(new TakePhotoOption(WHITEBALANCE,optionsChildren));
+        mOptions.add(new TakePhotoOption(mWhiteBalance, optionsChildren));
 
         // Use our own ListAdapter that extends the BaseExtendableListAdapter
         mAdapter = new OptionsListAdapter();
         setListAdapter(mAdapter);
-        this.getExpandableListView().setBackgroundResource(R.drawable.default_background);
+        this.getExpandableListView().setBackgroundResource(
+                R.drawable.default_background);
         this.getExpandableListView().setCacheColorHint(00000000);
         registerForContextMenu(getExpandableListView());
     }
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(ShopAndShare.sContext,TakePhoto.class);
+        Intent i = new Intent(ShopAndShare.sContext, TakePhoto.class);
         startActivity(i);
         finish();
     }
@@ -119,9 +122,9 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
         case R.id.exit:
-            Intent i = new Intent(ShopAndShare.sContext,TakePhoto.class);
+            Intent i = new Intent(ShopAndShare.sContext, TakePhoto.class);
             startActivity(i);
             finish();
             return true;
@@ -133,19 +136,22 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
     /**
      * Our OptionsListAdapter extends the BaseExpandableListAdapter.
      * 
-     * Each group item is set to the main options specified above.
-     * These are obtained from the ArrayList mOptions which contains all of our TakePhotoOption objects.
-     * The childView is populated with the children by calling getOptionChildren on the TakePhotoOption object.
+     * Each group item is set to the main options specified above. These are
+     * obtained from the ArrayList mOptions which contains all of our
+     * TakePhotoOption objects. The childView is populated with the children by
+     * calling getOptionChildren on the TakePhotoOption object.
      * 
-     * Each childView is a checkbox that toggles whether the option is selected or not.
-     * The booleans mFocusCheck, mFlashCheck & mSceneCheck prevent more than one option being selected in the same childView.
+     * Each childView is a checkbox that toggles whether the option is selected
+     * or not. The booleans mFocusCheck, mFlashCheck & mSceneCheck prevent more
+     * than one option being selected in the same childView.
      * 
      * @author Cian Mc Govern <cian@cianmcgovern.com>
-     *
+     * 
      */
     private class OptionsListAdapter extends BaseExpandableListAdapter {
 
-        // These booleans prevent more than one option being selected in the same child view
+        // These booleans prevent more than one option being selected in the
+        // same child view
         private boolean mFocusCheck;
         private boolean mFlashCheck;
         private boolean mSceneCheck;
@@ -169,7 +175,6 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
             return textView;
         }
 
-
         /**
          * Creates a CheckBox with layout parameters based on the parent
          * 
@@ -187,7 +192,8 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
 
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            return mOptions.get(groupPosition).getOptionChildren().get(childPosition);
+            return mOptions.get(groupPosition).getOptionChildren()
+                    .get(childPosition);
         }
 
         @Override
@@ -199,37 +205,44 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
         public View getChildView(int groupPosition, int childPosition,
                 boolean isLastChild, View convertView, ViewGroup parent) {
 
-            // This childView will contain a checkbox with text matching the child option at getOptionChildren().get(childPosition)
+            // This childView will contain a checkbox with text matching the
+            // child option at getOptionChildren().get(childPosition)
             final CheckBox cb = getCheckBox();
-            TakePhotoOption option = (TakePhotoOption)getGroup(groupPosition);
+            TakePhotoOption option = (TakePhotoOption) getGroup(groupPosition);
             final String optionText = option.getOption();
-            final String optionChild = option.getOptionChildren().get(childPosition);
+            final String optionChild = option.getOptionChildren().get(
+                    childPosition);
 
-            if(optionText.equals(FLASHMODE) && !CheckFeatures.haveFlash())
+            if (optionText.equals(mFlashMode) && !CheckFeatures.haveFlash())
                 cb.setEnabled(false);
 
-            else if(optionText.equals(FOCUSMODE) && !CheckFeatures.haveAutoFocus())
+            else if (optionText.equals(mFocusMode)
+                    && !CheckFeatures.haveAutoFocus())
                 cb.setEnabled(false);
 
             else {
                 // Make this checkbox checked if option is selected in TakePhoto
-                if(optionText.equals(FOCUSMODE) && optionChild.equals(TakePhoto.sFocusMode)) {
+                if (optionText.equals(mFocusMode)
+                        && optionChild.equals(TakePhoto.sFocusMode)) {
                     cb.setChecked(true);
                     mFocusCheck = true;
                 }
 
-                else if(optionText.equals(FLASHMODE) && optionChild.equals(TakePhoto.sFlashMode)) {
+                else if (optionText.equals(mFlashMode)
+                        && optionChild.equals(TakePhoto.sFlashMode)) {
                     cb.setChecked(true);
                     mFlashCheck = true;
                 }
             }
 
-            if(optionText.equals(SCENEMODE) && optionChild.equals(TakePhoto.sSceneMode)) {
+            if (optionText.equals(mSceneMode)
+                    && optionChild.equals(TakePhoto.sSceneMode)) {
                 cb.setChecked(true);
                 mSceneCheck = true;
             }
 
-            else if(optionText.equals(WHITEBALANCE) && optionChild.equals(TakePhoto.sWhiteBalance)) {
+            else if (optionText.equals(mWhiteBalance)
+                    && optionChild.equals(TakePhoto.sWhiteBalance)) {
                 cb.setChecked(true);
                 mWhiteBalanceCheck = true;
             }
@@ -242,56 +255,63 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
                 public void onCheckedChanged(CompoundButton buttonView,
                         boolean isChecked) {
 
-                    // If it is checked, we check what group this child belongs to and then we see if no other childs have been checked
+                    // If it is checked, we check what group this child belongs
+                    // to and then we see if no other childs have been checked
                     // If not, we can set the particular option in TakePhoto
-                    // If there is already a checkbox checked in the same group, we change the state of the checkbox to not checked
-                    if(cb.isChecked()){
-                        if(optionText.equals(FOCUSMODE)) {
-                            if(mFocusCheck)
+                    // If there is already a checkbox checked in the same group,
+                    // we change the state of the checkbox to not checked
+                    if (cb.isChecked()) {
+                        if (optionText.equals(mFocusMode)) {
+                            if (mFocusCheck)
                                 cb.setChecked(false);
                             else {
-                                TakePhoto.sFocusMode = cb.getText().toString().toLowerCase();
+                                TakePhoto.sFocusMode = cb.getText().toString()
+                                        .toLowerCase();
                                 mFocusCheck = true;
                             }
                         }
 
-                        else if(optionText.equals(FLASHMODE)) {
-                            if(mFlashCheck)
+                        else if (optionText.equals(mFlashMode)) {
+                            if (mFlashCheck)
                                 cb.setChecked(false);
                             else {
-                                TakePhoto.sFlashMode = cb.getText().toString().toLowerCase();
+                                TakePhoto.sFlashMode = cb.getText().toString()
+                                        .toLowerCase();
                                 mFlashCheck = true;
                             }
 
                         }
 
-                        else if(optionText.equals(SCENEMODE)) {
-                            if(mSceneCheck)
+                        else if (optionText.equals(mSceneMode)) {
+                            if (mSceneCheck)
                                 cb.setChecked(false);
                             else {
-                                TakePhoto.sSceneMode = cb.getText().toString().toLowerCase();
+                                TakePhoto.sSceneMode = cb.getText().toString()
+                                        .toLowerCase();
                                 mSceneCheck = true;
                             }
                         }
 
-                        else if(optionText.equals(WHITEBALANCE)) {
-                            if(mWhiteBalanceCheck)
+                        else if (optionText.equals(mWhiteBalance)) {
+                            if (mWhiteBalanceCheck)
                                 cb.setChecked(false);
                             else {
-                                TakePhoto.sWhiteBalance = cb.getText().toString().toLowerCase();
+                                TakePhoto.sWhiteBalance = cb.getText()
+                                        .toString().toLowerCase();
                                 mWhiteBalanceCheck = true;
                             }
                         }
                     }
-                    // If the user unchecked the option, we set the booleans to false for the group the option belongs to
+                    // If the user unchecked the option, we set the booleans to
+                    // false for the group the option belongs to
                     else {
-                        if(optionText.equals(FOCUSMODE))
+                        if (optionText.equals(mFocusMode))
                             mFocusCheck = false;
-                        else if(optionText.equals(FLASHMODE))
+                        else if (optionText.equals(mFlashMode))
                             mFlashCheck = false;
-                        else if(optionText.equals(SCENEMODE))
+                        else if (optionText.equals(mSceneMode))
                             mSceneCheck = false;
-                        else if(optionText.equals(WHITEBALANCE))
+                        else if (optionText.equals(mWhiteBalance))
                             mWhiteBalanceCheck = false;
                     }
 
@@ -320,7 +340,8 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
             return groupPosition;
         }
 
-        // GroupView is a TextView with text matching the option category ie. focus mode, flash mode etc.
+        // GroupView is a TextView with text matching the option category ie.
+        // focus mode, flash mode etc.
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded,
                 View convertView, ViewGroup parent) {

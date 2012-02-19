@@ -19,7 +19,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,61 +28,69 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
- * LoadResultsEdit activity extends LoadResults and overrides the onListItemClick to allow a user to delete a save
+ * LoadResultsEdit activity extends LoadResults and overrides the
+ * onListItemClick to allow a user to delete a save
  * 
  * @author Cian Mc Govern <cian@cianmcgovern.com>
- *
+ * 
  */
-public class LoadResultsEdit extends LoadResults{
+public class LoadResultsEdit extends LoadResults {
 
-    private String filename;
+    private String mFilename;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        // Fetch the list of files from the saves directory and display them in the ListView
+        // Fetch the list of files from the saves directory and display them in
+        // the ListView
         ArrayList<String> saves = new ArrayList<String>();
 
-        File[] saveFiles = new File(Constants.saveDir).listFiles();
+        File[] saveFiles = new File(Constants.SAVE_DIR).listFiles();
 
-        for(int i=0; i<saveFiles.length;i++)
+        for (int i = 0; i < saveFiles.length; i++)
             saves.add(saveFiles[i].getName());
 
-        ArrayAdapter<String> ad = new LoadResultsEditAdapter<String>(this,android.R.layout.simple_list_item_1,saves);
-        
+        ArrayAdapter<String> ad = new LoadResultsEditAdapter<String>(this,
+                android.R.layout.simple_list_item_1, saves);
+
         this.getListView().setBackgroundResource(R.drawable.default_background);
 
         setListAdapter(ad);
 
     }
 
-    public void onListItemClick(ListView l, View v, int position, long id){
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
 
-        filename = (String)getListAdapter().getItem(position);
+        mFilename = (String) getListAdapter().getItem(position);
 
         // AlertDialog to confirm deletion of save by user
         new AlertDialog.Builder(this)
-        .setTitle(R.string.deleteConfirmTitle)
-        .setMessage(R.string.deleteConfirm)
-        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+                .setTitle(R.string.deleteConfirmTitle)
+                .setMessage(R.string.deleteConfirm)
+                .setPositiveButton(R.string.yes,
+                        new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-                File f = new File(Constants.saveDir+"/"+filename);
-                if(!f.delete())
-                    Log.e("ShopAndShare",filename+" save file was not deleted");
-                else
-                    Log.v("ShopAndShare",filename+" save file was deleted");
-                Intent i = new Intent(ShopAndShare.sContext,LoadResultsEdit.class);
-                startActivity(i);
-                finish();
-            }
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                // TODO Auto-generated method stub
+                                File f = new File(Constants.SAVE_DIR + "/"
+                                        + mFilename);
+                                if (!f.delete())
+                                    Log.e("ShopAndShare", mFilename
+                                            + " save file was not deleted");
+                                else
+                                    Log.v("ShopAndShare", mFilename
+                                            + " save file was deleted");
+                                Intent i = new Intent(ShopAndShare.sContext,
+                                        LoadResultsEdit.class);
+                                startActivity(i);
+                                finish();
+                            }
 
-        })
-        .setNegativeButton(R.string.no, null)
-        .show();
+                        }).setNegativeButton(R.string.no, null).show();
     }
 }

@@ -22,8 +22,7 @@ public class CompareStrings {
     // to implement the Jaro Winkler string comparison algorithm
     public static double similarity(String a, String b) {
 
-        if (a.equalsIgnoreCase(b))
-            return 1.0;
+        if (a.equalsIgnoreCase(b)) return 1.0;
 
         int common = 0, transpositions = 0, prevpos = -1;
 
@@ -49,8 +48,7 @@ public class CompareStrings {
                 if (x == b.charAt(j)) {
                     common++;
                     // Increment the transposition counter
-                    if (prevpos != -1 && j < prevpos)
-                        transpositions++;
+                    if (prevpos != -1 && j < prevpos) transpositions++;
                     prevpos = j;
                     break;
                 }
@@ -58,8 +56,7 @@ public class CompareStrings {
         }
 
         // If no common characters are found, return 0.0
-        if (common == 0)
-            return 0.0;
+        if (common == 0) return 0.0;
 
         // Calculate the score ie. the Jaro distance
         double score = ((common / (double) a.length())

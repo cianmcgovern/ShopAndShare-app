@@ -35,157 +35,168 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class EditItem extends Activity implements OnClickListener{
-	
-	private String product;
-	private Button save;
-	private Button delete;
-	private EditText ed1,ed2;
-	private Context mContext;
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState){
-		
-	    mContext = this;
-	    
-		super.onCreate(savedInstanceState);
-		
-		setContentView(R.layout.edit_item);
-		
-		// Product to edit is sent through intent
-		product = this.getIntent().getStringExtra("Product");
-		Log.v("ShopAndShare","Value recieved from intent is: "+product);
-		
-		// Overriding onClick() for the save button as this Class implements OnClickListener
-		save = (Button)findViewById(R.id.saveButton);
-		save.setOnClickListener(this);
-		save.setText(R.string.saveButton);
-		
-		// Delete button deletes the item
-		delete = (Button)findViewById(R.id.deleteButton);
-		delete.setText(R.string.deleteButton);
-		delete.setOnClickListener(new OnClickListener(){
+public class EditItem extends Activity implements OnClickListener {
 
-			@Override
-			public void onClick(View v) {
-				
-			    new AlertDialog.Builder(mContext)
-			    .setTitle(R.string.deleteConfirmTitle)
-			    .setMessage(R.string.deleteItemConfirm)
-			    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Results.getInstance().getProducts().remove(product);
-                        Intent in = new Intent(ShopAndShare.sContext,ListCreator.class);
-                        startActivity(in);
-                        finish();
-                    }
-                })
-                .setNegativeButton(R.string.no, null)
-                .show();
-			}
-		});
-		
-		// Editable text fields containing the current product and price
-		// OnKeyListener listens for enter button and hides keyboard when pressed
-		ed1 = (EditText)findViewById(R.id.editProduct);
-		ed1.setText(product);
-		ed1.setOnKeyListener(new OnKeyListener(){
+    private String mProduct;
+    private Button mSave;
+    private Button mDelete;
+    private EditText mEd1, mEd2;
+    private Context mContext;
 
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if((event.getAction())==KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)){
-					InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-	                in.hideSoftInputFromWindow(ed1.getApplicationWindowToken(),
-	                		InputMethodManager.HIDE_NOT_ALWAYS);
-	                return true;
-				}
-				return false;
-			}
-			
-		});
-		
-		ed2 = (EditText)findViewById(R.id.editPrice);
-		String x;
-		if((x = Results.getInstance().getProducts().get(product).getPrice())!=null)
-			ed2.setText(x);
-		else
-			Log.v("ShopAndShare","Product not found in HashResult: "+product);
-		
-		ed2.setOnKeyListener(new OnKeyListener(){
-			
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if((event.getAction())==KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)){
-					InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-	                in.hideSoftInputFromWindow(ed2.getApplicationWindowToken(),
-	                		InputMethodManager.HIDE_NOT_ALWAYS);
-	                return true;
-				}
-				return false;
-			}
-			
-		});
-		
-	}
-	
-	@Override
-	public void onBackPressed(){
-		Intent home = new Intent(ShopAndShare.sContext,ListCreator.class);
-		startActivity(home);
-		finish();
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
 
-	@Override
-	public void onClick(View v) {
-		
-		final String productText = ed1.getText().toString().toUpperCase();
-		final String priceText = ed2.getText().toString();
-		
-		// If the product name has not been changed
-		if(product.compareTo(productText)==0){
-			// Update product with price
-			Results.getInstance().getProducts().get(productText).setPrice(priceText);
-		}
-		
-		// If the product name has been changed
-		else{
-			Log.v("ShopAndShare","Changing product name from: "+product+" to: "+productText);
-			// Change the product name in the map
-			Results.getInstance().changeKey(product, productText);
-			
-			// Check to see if the product id was changed correctly
-			if(!Results.getInstance().getProducts().containsKey(productText))
-				Log.e("ShopAndShare", productText+" does not exist in HashResults");
-			else{
-				Results.getInstance().getProducts().get(productText).setPrice(priceText);
-			}
-		}
-		
-		// Restart the DisplayResults activity so that the new data is displayed
-		Intent home = new Intent(ShopAndShare.sContext,ListCreator.class);
-		startActivity(home);
-		finish();
-	}
-	
-	// Create options menu
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu){
-		MenuInflater inf = getMenuInflater();
-		inf.inflate(R.layout.default_menu, menu);
-		return true;
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
-		case R.id.exit:
-			finish();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+        mContext = this;
+
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.edit_item);
+
+        // Product to edit is sent through intent
+        mProduct = this.getIntent().getStringExtra("Product");
+        Log.v("ShopAndShare", "Value recieved from intent is: " + mProduct);
+
+        // Overriding onClick() for the save button as this Class implements
+        // OnClickListener
+        mSave = (Button) findViewById(R.id.saveButton);
+        mSave.setOnClickListener(this);
+        mSave.setText(R.string.saveButton);
+
+        // Delete button deletes the item
+        mDelete = (Button) findViewById(R.id.deleteButton);
+        mDelete.setText(R.string.deleteButton);
+        mDelete.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                new AlertDialog.Builder(mContext)
+                        .setTitle(R.string.deleteConfirmTitle)
+                        .setMessage(R.string.deleteItemConfirm)
+                        .setPositiveButton(R.string.yes,
+                                new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialog,
+                                            int which) {
+                                        Results.getInstance().getProducts()
+                                                .remove(mProduct);
+                                        Intent in = new Intent(
+                                                ShopAndShare.sContext,
+                                                ListCreator.class);
+                                        startActivity(in);
+                                        finish();
+                                    }
+                                }).setNegativeButton(R.string.no, null).show();
+            }
+        });
+
+        // Editable text fields containing the current product and price
+        // OnKeyListener listens for enter button and hides keyboard when
+        // pressed
+        mEd1 = (EditText) findViewById(R.id.editProduct);
+        mEd1.setText(mProduct);
+        mEd1.setOnKeyListener(new OnKeyListener() {
+
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction()) == KeyEvent.ACTION_DOWN
+                        && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(mEd1.getApplicationWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                    return true;
+                }
+                return false;
+            }
+
+        });
+
+        mEd2 = (EditText) findViewById(R.id.editPrice);
+        String x;
+        if ((x = Results.getInstance().getProducts().get(mProduct).getPrice()) != null)
+            mEd2.setText(x);
+        else
+            Log.v("ShopAndShare", "Product not found in HashResult: " + mProduct);
+
+        mEd2.setOnKeyListener(new OnKeyListener() {
+
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction()) == KeyEvent.ACTION_DOWN
+                        && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(mEd2.getApplicationWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                    return true;
+                }
+                return false;
+            }
+
+        });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent home = new Intent(ShopAndShare.sContext, ListCreator.class);
+        startActivity(home);
+        finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        final String productText = mEd1.getText().toString().toUpperCase();
+        final String priceText = mEd2.getText().toString();
+
+        // If the product name has not been changed
+        if (mProduct.compareTo(productText) == 0) {
+            // Update product with price
+            Results.getInstance().getProducts().get(productText)
+                    .setPrice(priceText);
+        }
+
+        // If the product name has been changed
+        else {
+            Log.v("ShopAndShare", "Changing product name from: " + mProduct
+                    + " to: " + productText);
+            // Change the product name in the map
+            Results.getInstance().changeKey(mProduct, productText);
+
+            // Check to see if the product id was changed correctly
+            if (!Results.getInstance().getProducts().containsKey(productText))
+                Log.e("ShopAndShare", productText
+                        + " does not exist in HashResults");
+            else {
+                Results.getInstance().getProducts().get(productText)
+                        .setPrice(priceText);
+            }
+        }
+
+        // Restart the DisplayResults activity so that the new data is displayed
+        Intent home = new Intent(ShopAndShare.sContext, ListCreator.class);
+        startActivity(home);
+        finish();
+    }
+
+    // Create options menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.layout.default_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.exit:
+            finish();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

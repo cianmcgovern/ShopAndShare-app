@@ -16,57 +16,54 @@
 package com.cianmcgovern.android.ShopAndShare;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 
-public class Item implements Serializable{
+public class Item implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private String productName;
-	private String price;
-	private String time;
-	private int rating;
-	
-	public Item(String product, String price,int rating, String time){
-		this.productName=product;
-		this.price=price;
-		this.rating=rating;
-		this.time = time;
-	}
-	
-	public Item(String product, String price, String time){
-		this.productName=product;
-		this.price=price;
-		this.rating=0;
-		this.time = time;
-	}
-	
-	public String getProduct(){
-		return this.productName;
-	}
-	
-	public String getPrice(){
-		return this.price;
-	}
-	
-	public int getRating(){
-		return this.rating;
-	}
-	
-	public String getTime() {
-	    return this.time;
-	}
-	
-	public void setProduct(String product){
-		this.productName=product;
-	}
-	
-	public void setPrice(String price){
-		this.price=price;
-	}
-	
-	public void setRating(int rating){
-		this.rating=rating;
-	}
+    private static final long serialVersionUID = 1L;
+    private String mProductName;
+    private String mPrice;
+    private String mTime;
+    private int mRating;
+
+    public Item(String product, String price, int rating, String time) {
+        this.mProductName = product;
+        this.mPrice = price;
+        this.mRating = rating;
+        this.mTime = time;
+    }
+
+    public Item(String product, String price, String time) {
+        this.mProductName = product;
+        this.mPrice = price;
+        this.mRating = 0;
+        this.mTime = time;
+    }
+
+    public String getProduct() {
+        return this.mProductName;
+    }
+
+    public String getPrice() {
+        return this.mPrice;
+    }
+
+    public int getRating() {
+        return this.mRating;
+    }
+
+    public String getTime() {
+        return this.mTime;
+    }
+
+    public void setProduct(String product) {
+        this.mProductName = product;
+    }
+
+    public void setPrice(String price) {
+        this.mPrice = price;
+    }
+
+    public void setRating(int rating) {
+        this.mRating = rating;
+    }
 }

@@ -41,75 +41,77 @@ import com.cianmcgovern.android.ShopAndShare.Camera.TakePhoto;
 import com.cianmcgovern.android.ShopAndShare.Comparison.LoadFile;
 import com.cianmcgovern.android.ShopAndShare.DisplayResults.ListCreator;
 
-public class ShopAndShare extends Activity
-{
-    private Button callPhoto,callLoad,manual,mBrowser;
+public class ShopAndShare extends Activity {
+
+    private Button mCallPhoto, mCallLoad, mManual, mBrowser;
     public static Context sContext;
 
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         // Static application wide context
-        sContext=this.getApplicationContext();
+        sContext = this.getApplicationContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
         try {
             prepareFiles();
         } catch (IOException e) {
-            Log.e("ShopAndShare","Unable to execute prepareFiles()");
+            Log.e("ShopAndShare", "Unable to execute prepareFiles()");
             e.printStackTrace();
         }
 
-        callPhoto=(Button)findViewById(R.id.callPhotoButton);
-        callPhoto.setOnClickListener(new OnClickListener(){
+        mCallPhoto = (Button) findViewById(R.id.callPhotoButton);
+        mCallPhoto.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(!CheckFeatures.haveCamera())
+                if (!CheckFeatures.haveCamera())
                     new AlertDialog.Builder(sContext)
-                    .setTitle("Camera Required")
-                    .setMessage("You need to have a camera to use this feature")
-                    .show();
+                            .setTitle("Camera Required")
+                            .setMessage(
+                                    "You need to have a camera to use this feature")
+                            .show();
                 else {
-                    Intent photo = new Intent(ShopAndShare.sContext,TakePhoto.class);
+                    Intent photo = new Intent(ShopAndShare.sContext,
+                            TakePhoto.class);
                     startActivity(photo);
                 }
             }
-            
+
         });
-        callLoad=(Button)findViewById(R.id.callLoadButton);
-        callLoad.setOnClickListener(new OnClickListener(){
+        mCallLoad = (Button) findViewById(R.id.callLoadButton);
+        mCallLoad.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent x = new Intent(sContext,LoadResults.class);
+                Intent x = new Intent(sContext, LoadResults.class);
                 startActivity(x);
             }
 
         });
-        
-        manual = (Button) findViewById(R.id.manualButton);
-        manual.setOnClickListener(new OnClickListener(){
+
+        mManual = (Button) findViewById(R.id.manualButton);
+        mManual.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(ShopAndShare.sContext,ListCreator.class);
+                Intent in = new Intent(ShopAndShare.sContext, ListCreator.class);
                 startActivity(in);
             }
-            
+
         });
-        
+
         mBrowser = (Button) findViewById(R.id.webBrowser);
-        mBrowser.setOnClickListener(new OnClickListener(){
+        mBrowser.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse("http://108.60.143.109"));
+                Intent in = new Intent(Intent.ACTION_VIEW, Uri
+                        .parse(Constants.URL));
                 startActivity(in);
             }
-            
+
         });
     }
 
@@ -119,16 +121,16 @@ public class ShopAndShare extends Activity
      */
     private void prepareFiles() throws IOException {
 
-        Constants.filesDir=getFilesDir().toString();
+        Constants.FILES_DIR = getFilesDir().toString();
 
-        Constants.saveDir=Constants.filesDir.concat("/saves");
-        File saveDir = new File(Constants.saveDir);
+        Constants.SAVE_DIR = Constants.FILES_DIR.concat("/saves");
+        File saveDir = new File(Constants.SAVE_DIR);
         // Creates the saves directory if it doesn't exist
-        if(!saveDir.exists()) {
+        if (!saveDir.exists()) {
             saveDir.mkdir();
-            Log.w("ShopAndShare","Saves directory doesn't exists, creating!");
+            Log.w("ShopAndShare", "Saves directory doesn't exists, creating!");
         }
-        
+
         InputStream is;
         OutputStream os;
         BufferedInputStream bis;
@@ -136,35 +138,37 @@ public class ShopAndShare extends Activity
         byte[] buf = new byte[1024];
         int n = 0;
         int o = 0;
-        
+
         // Delete the wordlist if it exists then create and save it
-        File wordList = new File(Constants.filesDir.concat("/wordlist"));
-        if(wordList.exists()) {
+        File wordList = new File(Constants.FILES_DIR.concat("/wordlist"));
+        if (wordList.exists()) {
             wordList.delete();
-            Log.w("ShopAndShare","Wordlist exists, deleting!");
+            Log.w("ShopAndShare", "Wordlist exists, deleting!");
         }
         is = getResources().openRawResource(R.raw.wordlist);
         os = new FileOutputStream(wordList);
         bis = new BufferedInputStream(is);
         bos = new BufferedOutputStream(os);
         buf = new byte[1024];
-        n =0;
-        o =0;
-        while((n=bis.read(buf,o,buf.length))>0){
-            bos.write(buf,0,n);
+        n = 0;
+        o = 0;
+        while ((n = bis.read(buf, o, buf.length)) > 0) {
+            bos.write(buf, 0, n);
         }
         bis.close();
         bos.close();
-        Constants.wordList = LoadFile.fileToList(Constants.filesDir.concat("/wordlist"));
+        Constants.WORDLIST = LoadFile.fileToList(Constants.FILES_DIR
+                .concat("/wordlist"));
 
         // Delete the tesseract training data if it exists then create it
-        File tessDir =  new File(Constants.filesDir+"/tessdata");
-        if(tessDir.exists()) {
+        File tessDir = new File(Constants.FILES_DIR + "/tessdata");
+        if (tessDir.exists()) {
             tessDir.delete();
-            Log.w("ShopAndShare","Tesseract data directory exists, deleting!");
+            Log.w("ShopAndShare", "Tesseract data directory exists, deleting!");
         }
         tessDir.mkdir();
-        File tessData = new File(Constants.filesDir+"/tessdata/eng.traineddata");
+        File tessData = new File(Constants.FILES_DIR
+                + "/tessdata/eng.traineddata");
         is = getResources().openRawResource(R.raw.eng);
         os = new FileOutputStream(tessData);
         bis = new BufferedInputStream(is);
@@ -172,43 +176,42 @@ public class ShopAndShare extends Activity
         buf = new byte[1024];
         n = 0;
         o = 0;
-        while((n=bis.read(buf,o,buf.length))>0){
-            bos.write(buf,0,n);
+        while ((n = bis.read(buf, o, buf.length)) > 0) {
+            bos.write(buf, 0, n);
         }
         bis.close();
         bos.close();
-        
+
         // Delete any image files that may exist from previous uses
-        File image = new File(Constants.filesDir+"/image.jpg");
-        if(image.exists()) {
+        File image = new File(Constants.FILES_DIR + "/image.jpg");
+        if (image.exists()) {
             image.delete();
-            Log.w("ShopAndShare","Image file found, deleting!");
+            Log.w("ShopAndShare", "Image file found, deleting!");
         }
-        image = new File(Constants.filesDir+"/bgimage.tiff");
-        if(image.exists()) {
+        image = new File(Constants.FILES_DIR + "/bgimage.tiff");
+        if (image.exists()) {
             image.delete();
-            Log.w("ShopAndShare","TIFF image file found, deleting!");
+            Log.w("ShopAndShare", "TIFF image file found, deleting!");
         }
-        
-        Constants.uploads = Constants.filesDir + "/uploads";
+
+        Constants.UPLOADS = Constants.FILES_DIR + "/uploads";
         // Delete uploads directory if it exists and create it
-        File uploadsDir = new File(Constants.uploads);
-        if(uploadsDir.exists())
-            uploadsDir.delete();
+        File uploadsDir = new File(Constants.UPLOADS);
+        if (uploadsDir.exists()) uploadsDir.delete();
         uploadsDir.mkdir();
     }
 
     // Create options menu
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
         inf.inflate(R.layout.default_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
         case R.id.exit:
             System.runFinalizersOnExit(true);
             System.exit(0);
@@ -216,5 +219,5 @@ public class ShopAndShare extends Activity
         default:
             return super.onOptionsItemSelected(item);
         }
-    }	
+    }
 }

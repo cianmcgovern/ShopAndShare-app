@@ -27,35 +27,38 @@ import android.widget.TextView;
 import com.cianmcgovern.android.ShopAndShare.Item;
 import com.cianmcgovern.android.ShopAndShare.R;
 
-public class ItemAdapter extends ArrayAdapter<Item>{
+public class ItemAdapter extends ArrayAdapter<Item> {
 
-    private ArrayList<Item> items;
-    private Context con;
+    private ArrayList<Item> mItems;
+    private Context mCon;
 
-    public ItemAdapter(Context context, int textViewResourceId, ArrayList<Item> items) {
-        
+    public ItemAdapter(Context context, int textViewResourceId,
+            ArrayList<Item> items) {
+
         super(context, textViewResourceId, items);
-        this.con = context;
-        this.items = items;
+        this.mCon = context;
+        this.mItems = items;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         if (v == null) {
-            LayoutInflater vi = (LayoutInflater)con.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) mCon
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.display_results_row, null);
         }
 
-        Item o = items.get(position);
+        Item o = mItems.get(position);
 
         if (o != null) {
             TextView tt = (TextView) v.findViewById(R.id.toptext);
             TextView bt = (TextView) v.findViewById(R.id.bottomtext);
             if (tt != null) {
-                tt.setText("Product: "+o.getProduct());                            }
-            if(bt != null){
-                bt.setText("Price: "+ o.getPrice());
+                tt.setText("Product: " + o.getProduct());
+            }
+            if (bt != null) {
+                bt.setText("Price: " + o.getPrice());
             }
         }
         return v;

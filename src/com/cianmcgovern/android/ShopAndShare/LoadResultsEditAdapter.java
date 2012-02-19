@@ -29,31 +29,31 @@ public class LoadResultsEditAdapter<String> extends ArrayAdapter<String> {
 
     private Context mContext;
     private ArrayList<String> mList;
-    
+
     public LoadResultsEditAdapter(Context context, int textViewResourceId,
             List<String> objects) {
         super(context, textViewResourceId, objects);
         this.mContext = context;
         this.mList = (ArrayList<String>) objects;
     }
-    
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
-        
+    public View getView(int position, View convertView, ViewGroup parent) {
+
         View v = convertView;
-        if(v == null) {
-            LayoutInflater vi = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (v == null) {
+            LayoutInflater vi = (LayoutInflater) mContext
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.load_results_edit_row, null);
         }
-        
+
         String text = mList.get(position);
-        
-        if(text != null) {
-            TextView tv = (TextView)v.findViewById(R.id.loadResultsEditText);
-            if(tv != null)
-                tv.setText(text.toString());
+
+        if (text != null) {
+            TextView tv = (TextView) v.findViewById(R.id.loadResultsEditText);
+            if (tv != null) tv.setText(text.toString());
         }
-        
+
         return v;
     }
 }
