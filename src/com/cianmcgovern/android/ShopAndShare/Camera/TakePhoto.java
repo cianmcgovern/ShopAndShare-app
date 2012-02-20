@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import com.cianmcgovern.android.ShopAndShare.CheckFeatures;
 import com.cianmcgovern.android.ShopAndShare.Constants;
+import com.cianmcgovern.android.ShopAndShare.HelpDialog;
 import com.cianmcgovern.android.ShopAndShare.LoadingPage;
 import com.cianmcgovern.android.ShopAndShare.R;
 import com.cianmcgovern.android.ShopAndShare.ShopAndShare;
@@ -195,6 +196,9 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,
         switch (item.getItemId()) {
         case R.id.exit:
             finish();
+            return true;
+        case R.id.help:
+            new HelpDialog(this,this.getText(R.string.takePhotoHelpMessage).toString()).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);

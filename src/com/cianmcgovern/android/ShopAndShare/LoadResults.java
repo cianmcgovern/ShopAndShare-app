@@ -130,6 +130,9 @@ public class LoadResults extends ListActivity {
         case R.id.exit:
             finish();
             return true;
+        case R.id.help:
+            new HelpDialog(this,this.getText(R.string.loadResultsHelpMessage).toString()).show();
+            return true;
         default:
             return super.onOptionsItemSelected(it);
         }

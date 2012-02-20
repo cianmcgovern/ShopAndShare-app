@@ -18,6 +18,7 @@ package com.cianmcgovern.android.ShopAndShare.Camera;
 import java.util.ArrayList;
 
 import com.cianmcgovern.android.ShopAndShare.CheckFeatures;
+import com.cianmcgovern.android.ShopAndShare.HelpDialog;
 import com.cianmcgovern.android.ShopAndShare.R;
 import com.cianmcgovern.android.ShopAndShare.ShopAndShare;
 
@@ -127,6 +128,9 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
             Intent i = new Intent(ShopAndShare.sContext, TakePhoto.class);
             startActivity(i);
             finish();
+            return true;
+        case R.id.help:
+            new HelpDialog(this,this.getText(R.string.takePhotoOptionsHelpMessage).toString()).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);

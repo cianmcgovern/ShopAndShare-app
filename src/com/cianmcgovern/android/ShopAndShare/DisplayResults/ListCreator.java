@@ -23,6 +23,7 @@ import java.util.Map;
 import com.cianmcgovern.android.ShopAndShare.AddItem;
 import com.cianmcgovern.android.ShopAndShare.EditItem;
 import com.cianmcgovern.android.ShopAndShare.EmptyResult;
+import com.cianmcgovern.android.ShopAndShare.HelpDialog;
 import com.cianmcgovern.android.ShopAndShare.Item;
 import com.cianmcgovern.android.ShopAndShare.R;
 import com.cianmcgovern.android.ShopAndShare.Results;
@@ -193,6 +194,9 @@ public class ListCreator extends ListActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            return true;
+        case R.id.help:
+            new HelpDialog(this,this.getText(R.string.listCreatorHelpMessage).toString()).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);

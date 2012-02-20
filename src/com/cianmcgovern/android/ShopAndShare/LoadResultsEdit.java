@@ -23,6 +23,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -92,5 +95,26 @@ public class LoadResultsEdit extends LoadResults {
                             }
 
                         }).setNegativeButton(R.string.no, null).show();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.layout.load_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem it) {
+        switch (it.getItemId()) {
+        case R.id.exit:
+            finish();
+            return true;
+        case R.id.help:
+            new HelpDialog(this,this.getText(R.string.loadResultsEditHelpMessage).toString()).show();
+            return true;
+        default:
+            return super.onOptionsItemSelected(it);
+        }
     }
 }

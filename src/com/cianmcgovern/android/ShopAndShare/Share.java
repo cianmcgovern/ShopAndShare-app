@@ -383,6 +383,9 @@ public class Share extends Activity {
                 mLocationManager.removeUpdates(mLocationListener);
             finish();
             return true;
+        case R.id.help:
+            new HelpDialog(this,this.getText(R.string.shareHelpMessage).toString()).show();
+            return true;
         default:
             return super.onOptionsItemSelected(item);
         }

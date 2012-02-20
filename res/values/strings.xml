@@ -37,4 +37,15 @@
     <string name="emptyResultMessage">You must have at least one item to share</string>
     <string name="networkDisabled">Network unavailable</string>
     <string name="networkDisabledMessage">Network access must be available to use this feature</string>
+    <string name="mainHelpMessage">Analyse receipt allows you to take a photo of a receipt and the application will extract the product name and the price from the receipt.\n\nSaved results can be loaded from the Load Save File page.\n\nData can be manually entered using the Manual Entry page.\n\nYou can view results submitted through the View Results viewer.</string>
+    <string name="addItemHelpMessage">Enter the name of the product into the product text box.\n\nEnter the corresponding price of the product and press the Add Item button.</string>
+    <string name="editItemHelpMessage">Replace the text in the product and/or price text boxes with the edited version and click the Save button.\n\nThe item can be deleted by pressing the Delete button.\n\n</string>
+    <string name="emptyResultHelpMessage">Empty results can be caused by a number of things.\n\nEnsure that you are taking a photo in a well lit area and make sure the receipt is as clear as possible.\n\nIf you still have no success, you enter the data from the receipt manual by clicking on the Manual Entry button on the homepage.</string>
+    <string name="failedUploadHelpMessage">A failed upload occurs when an error message is returned from the server.\n\nThis normally occurs when there is poor network availability or when the target server is down.</string>
+    <string name="loadResultsHelpMessage">Previously saved results can be loaded by selecting the appropiate save file.\n\nSave files can be deleted by pressing the menu button on your device and selecting Edit</string>
+    <string name="loadResultsEditHelpMessage">Select an entry to delete the save file.</string>
+    <string name="shareHelpMessage">Enter the location of the store where the receipt is from in the location field.\n\nIf applicable, your current location can be obtained using GPS by clicking on the search icon beside the location field.\n\nWhen the form is filled out, you should click the Share button and your results will be uploaded to our server.</string>
+    <string name="takePhotoOptionsHelpMessage">By default, the camera options are set to the most optimal settings.\n\nIf needed, you can manually change these options here.</string>
+    <string name="listCreatorHelpMessage">The items displayed here are what will be uploaded to the server when you click share.\n\nThey can be edited or deleted by selecting an item.\n\nNew items can be added to the list by pressing the Add Item button.</string>
+    <string name="takePhotoHelpMessage">Align the receipt in the viewer and press the Take Photo button.\n\nDepending on the focus option selected, the photo will only be taken if correctly focused.</string>
 </resources>

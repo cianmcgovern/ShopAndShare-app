@@ -219,6 +219,9 @@ public class ShopAndShare extends Activity {
             System.runFinalizersOnExit(true);
             System.exit(0);
             return true;
+        case R.id.help:
+            new HelpDialog(this,this.getText(R.string.mainHelpMessage).toString()).show();
+            return true;
         default:
             return super.onOptionsItemSelected(item);
         }
