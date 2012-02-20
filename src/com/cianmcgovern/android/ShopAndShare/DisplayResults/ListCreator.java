@@ -111,7 +111,7 @@ public class ListCreator extends ListActivity {
 
         ArrayList<Item> products = new ArrayList<Item>();
 
-        if (Results.getInstance().getProducts().isEmpty()) {
+        if (!this.getIntent().getBooleanExtra("Manual Entry",false) && Results.getInstance().getProducts().isEmpty()) {
             Intent in = new Intent(ShopAndShare.sContext, EmptyResult.class);
             startActivity(in);
             finish();

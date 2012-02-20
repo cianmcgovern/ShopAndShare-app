@@ -97,6 +97,7 @@ public class ShopAndShare extends Activity {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(ShopAndShare.sContext, ListCreator.class);
+                in.putExtra("Manual Entry", true);
                 startActivity(in);
             }
 
