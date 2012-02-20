@@ -198,7 +198,8 @@ public class EditItem extends Activity implements OnClickListener {
             finish();
             return true;
         case R.id.help:
-            new HelpDialog(this,this.getText(R.string.editItemHelpMessage).toString()).show();
+            new HelpDialog(this, this.getText(R.string.editItemHelpMessage)
+                    .toString()).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);

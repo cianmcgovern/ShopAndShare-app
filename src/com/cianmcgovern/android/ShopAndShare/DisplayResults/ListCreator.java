@@ -112,7 +112,10 @@ public class ListCreator extends ListActivity {
 
         ArrayList<Item> products = new ArrayList<Item>();
 
-        if (!this.getIntent().getBooleanExtra("Manual Entry",false) && Results.getInstance().getProducts().isEmpty()) {
+        // If out activity has been started from the Take Photo chain, we should
+        // check for an empty result
+        if (this.getIntent().getBooleanExtra("Take Photo", false)
+                && Results.getInstance().getProducts().isEmpty()) {
             Intent in = new Intent(ShopAndShare.sContext, EmptyResult.class);
             startActivity(in);
             finish();
@@ -196,7 +199,8 @@ public class ListCreator extends ListActivity {
             }
             return true;
         case R.id.help:
-            new HelpDialog(this,this.getText(R.string.listCreatorHelpMessage).toString()).show();
+            new HelpDialog(this, this.getText(R.string.listCreatorHelpMessage)
+                    .toString()).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);

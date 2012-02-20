@@ -147,6 +147,7 @@ public class LoadingPage extends Activity {
                 mProgThread.setState(ProgressThread.mDone);
                 Intent disp = new Intent(ShopAndShare.sContext,
                         ListCreator.class);
+                disp.putExtra("Take Photo", true);
                 startActivity(disp);
                 finish();
             }

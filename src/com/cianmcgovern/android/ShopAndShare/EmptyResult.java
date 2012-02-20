@@ -36,7 +36,8 @@ public class EmptyResult extends Activity {
             finish();
             return true;
         case R.id.help:
-            new HelpDialog(this,this.getText(R.string.emptyResultHelpMessage).toString()).show();
+            new HelpDialog(this, this.getText(R.string.emptyResultHelpMessage)
+                    .toString()).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);

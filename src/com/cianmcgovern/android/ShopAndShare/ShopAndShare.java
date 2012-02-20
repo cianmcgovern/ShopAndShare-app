@@ -97,7 +97,6 @@ public class ShopAndShare extends Activity {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(ShopAndShare.sContext, ListCreator.class);
-                in.putExtra("Manual Entry", true);
                 startActivity(in);
             }
 
@@ -220,7 +219,8 @@ public class ShopAndShare extends Activity {
             System.exit(0);
             return true;
         case R.id.help:
-            new HelpDialog(this,this.getText(R.string.mainHelpMessage).toString()).show();
+            new HelpDialog(this, this.getText(R.string.mainHelpMessage)
+                    .toString()).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);

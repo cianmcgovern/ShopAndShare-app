@@ -130,7 +130,8 @@ public class TakePhotoOptionsActivity extends ExpandableListActivity {
             finish();
             return true;
         case R.id.help:
-            new HelpDialog(this,this.getText(R.string.takePhotoOptionsHelpMessage).toString()).show();
+            new HelpDialog(this, this.getText(
+                    R.string.takePhotoOptionsHelpMessage).toString()).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);

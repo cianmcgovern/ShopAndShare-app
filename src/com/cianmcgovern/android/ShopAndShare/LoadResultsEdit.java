@@ -96,7 +96,7 @@ public class LoadResultsEdit extends LoadResults {
 
                         }).setNegativeButton(R.string.no, null).show();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
@@ -111,7 +111,8 @@ public class LoadResultsEdit extends LoadResults {
             finish();
             return true;
         case R.id.help:
-            new HelpDialog(this,this.getText(R.string.loadResultsEditHelpMessage).toString()).show();
+            new HelpDialog(this, this.getText(
+                    R.string.loadResultsEditHelpMessage).toString()).show();
             return true;
         default:
             return super.onOptionsItemSelected(it);

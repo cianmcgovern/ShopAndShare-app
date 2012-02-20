@@ -198,7 +198,8 @@ public class TakePhoto extends Activity implements SurfaceHolder.Callback,
             finish();
             return true;
         case R.id.help:
-            new HelpDialog(this,this.getText(R.string.takePhotoHelpMessage).toString()).show();
+            new HelpDialog(this, this.getText(R.string.takePhotoHelpMessage)
+                    .toString()).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);

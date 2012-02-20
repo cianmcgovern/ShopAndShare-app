@@ -154,7 +154,8 @@ public class AddItem extends Activity {
             finish();
             return true;
         case R.id.help:
-            new HelpDialog(this,this.getText(R.string.addItemHelpMessage).toString()).show();
+            new HelpDialog(this, this.getText(R.string.addItemHelpMessage)
+                    .toString()).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);
