@@ -99,7 +99,6 @@ public class Share extends Activity {
                 // Don't allow empty text fields
                 if (userLoc.length() > 1 && userStore.length() > 1) {
                     runUpload(Results.getInstance(), userLoc, userStore);
-                    Results.getInstance().clearResults();
                 }
                 else
                     new AlertDialog.Builder(mContext)
@@ -202,18 +201,17 @@ public class Share extends Activity {
         try {
             address = geo.getFromLocation(mLocation.getLatitude(),
                     mLocation.getLongitude(), 1).get(0);
+
+            StringBuilder fullAddress = new StringBuilder();
+            for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                fullAddress.append(address.getAddressLine(i) + " ");
+            }
+            Log.v(Constants.LOG_TAG, "Got address: " + fullAddress.toString());
+
+            mLocationEdit.setText(fullAddress.toString().trim());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        StringBuilder fullAddress = new StringBuilder();
-        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-            fullAddress.append(address.getAddressLine(i) + " ");
-        }
-        Log.v(Constants.LOG_TAG, "Got address: " + fullAddress.toString());
-
-        mLocationEdit.setText(fullAddress.toString().trim());
-
         mSearch.setBackgroundResource(R.drawable.search);
     }
 
