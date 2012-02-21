@@ -289,7 +289,7 @@ public class Share extends Activity {
                 CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 
         String filename = Results.getInstance().toFile();
-        HttpPost httpPost = new HttpPost(Constants.URL);
+        HttpPost httpPost = new HttpPost(Constants.FULL_URL);
         File file = new File(filename);
 
         MultipartEntity entity = new MultipartEntity();
