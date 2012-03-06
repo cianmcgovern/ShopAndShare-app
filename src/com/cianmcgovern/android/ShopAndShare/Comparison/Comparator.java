@@ -30,9 +30,9 @@ public class Comparator {
 
         String bestMatch = string;
 
-        // Base score - Score must be higher than 0.7 before a string is
+        // Base score - Score must be higher than 0.9 before a string is
         // suggested
-        double previous = 0.8;
+        double previous = 0.9;
 
         // Loop through the wordlist and compare each string with the string to
         // compare
