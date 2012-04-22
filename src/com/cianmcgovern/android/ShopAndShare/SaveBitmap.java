@@ -18,6 +18,7 @@ package com.cianmcgovern.android.ShopAndShare;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -58,13 +59,14 @@ public class SaveBitmap {
         try {
             FileOutputStream out = new FileOutputStream(new File(mPath
                     + "/image.jpg"));
-            Bitmap bitmap = BitmapFactory.decodeByteArray(mOrigBmp, 0,
-                    mOrigBmp.length);
+            Bitmap bitmap = decodeSampledBitmapFromResource(mOrigBmp);
             Matrix mat = new Matrix();
             mat.postRotate(90);
             Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
                     bitmap.getWidth(), bitmap.getHeight(), mat, true);
             resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            bitmap.recycle();
+            resizedBitmap.recycle();
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,4 +74,35 @@ public class SaveBitmap {
         }
     }
 
+    public int calculateInSampleSize(
+            BitmapFactory.Options options) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > (height/2.5) || width > (width/2.5)) {
+            if (width > height) {
+                inSampleSize = Math.round((float)height / (float)(height/2.5));
+            } else {
+                inSampleSize = Math.round((float)width / (float)(width/2.5));
+            }
+        }
+        return inSampleSize;
+    }
+    
+    public Bitmap decodeSampledBitmapFromResource(byte[] mOrigBmp) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeByteArray(mOrigBmp, 0, mOrigBmp.length, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeByteArray(mOrigBmp, 0, mOrigBmp.length, options);
+    }
 }
